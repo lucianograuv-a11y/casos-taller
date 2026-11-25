@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Caso 13 · Posesión inscrita y DL 2.695</title>
+<meta name="theme-color" content="#f6f3ec">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>/* Layout: una columna para celular; bandas de color suaves por tema, como un folleto plegable */
+:root{
+  --bg:#f6f3ec; --fg:#24221f; --muted:#5f5a52; --line:#d9d2c4; --card:#fffdf8;
+  --mostaza:#e7d38f; --salvia:#bfd8b8; --cielo:#b9d3e4; --rosa:#ebc0c6; --durazno:#efc9a4;
+  --tinta:#3b5a73; --ok:#3f7a52; --warn:#9a5b1f;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif; --f-label:"Archivo Narrow","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header h1{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05;letter-spacing:-.02em;margin:.4rem 0 .3rem;text-wrap:balance}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 12px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav button:focus-visible,summary:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.band{border-radius:14px;padding:14px 16px;min-width:0}
+.mostaza{background:var(--mostaza)}.salvia{background:var(--salvia)}.cielo{background:var(--cielo)}.rosa{background:var(--rosa)}.durazno{background:var(--durazno)}
+h2{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.band h3{color:inherit;opacity:.75}
+p{margin:0}
+ul{margin:4px 0 0;padding-left:1.1em}
+li{margin:2px 0}
+.def{font-size:1rem;border-left:3px solid currentColor;padding-left:10px;margin-top:6px}
+.src{font-family:var(--f-label);font-size:.8rem;color:var(--muted);margin-top:6px}
+.band .src{color:inherit;opacity:.7}
+.star{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:var(--fg);color:var(--bg);border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.tag{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-label);font-weight:700;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .in{padding:0 14px 12px;color:var(--fg)}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0}
+.step b.n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-label);font-weight:700}
+.arrow{margin-left:13px;width:2px;height:10px;background:var(--line)}
+.cmp{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-top:1px solid var(--line);padding-top:8px}
+.row:first-child{border-top:0;padding-top:0}
+.k{font-family:var(--f-label);font-weight:700}
+.num{font-variant-numeric:tabular-nums;font-weight:800}
+.quiz details summary{font-weight:600}
+.quiz .in{border-top:1px dashed var(--line);padding-top:10px}
+footer{color:var(--muted);font-size:.85rem;margin-top:18px}
+@media (prefers-reduced-motion:no-preference){section{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+/* Agregados: barra de inicio, preguntas interactivas, avisos de discrepancia */
+.home{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta);text-decoration:none;margin-top:4px}
+.ojo{border:1.5px dashed var(--warn);border-radius:12px;padding:10px 12px;background:var(--card)}
+.ojo b.t{color:var(--warn);font-family:var(--f-label);letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+.pares{display:grid;gap:10px}
+.par{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.par h2{font-size:1.05rem;margin-bottom:8px}
+.par .split{margin-top:4px}
+.par .lado{border-left:3px solid var(--line);padding-left:9px;min-width:0}
+.par .lado .tag{display:block;margin-bottom:2px}
+.par .imp{margin-top:8px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:7px}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+.qbar button,.qfoot button{font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;cursor:pointer}
+.qbar button.pri,.qfoot button.pri{background:var(--fg);color:var(--bg)}
+.qbar select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 10px}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.q .qn{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.q .qt{margin:4px 0 8px;font-weight:600}
+.q .qt i{font-weight:500}
+.q label{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start;padding:6px 6px;border-radius:8px;cursor:pointer}
+.q label:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.q input{margin-top:4px;accent-color:var(--fg)}
+.q label.ok{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.q label.bad{background:color-mix(in srgb,var(--warn) 20%,transparent);text-decoration:line-through}
+.q .exp{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.done .exp{display:block}
+.q .res{font-family:var(--f-label);font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em}
+.q .res.ok{color:var(--ok)}.q .res.bad{color:var(--warn)}
+.q .vf{display:flex;gap:10px}
+.q .vf label{grid-template-columns:22px auto;border:1px solid var(--line);padding:6px 14px}
+.qfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.menu{display:grid;gap:10px}
+.menu a{display:block;text-decoration:none;color:inherit;border-radius:14px;padding:14px 16px}
+.menu a b{font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:block}
+.menu a span{color:inherit;opacity:.8;font-size:.92rem}
+.hora{font-family:var(--f-label);font-weight:700;font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{margin-top:4px;accent-color:var(--fg);width:18px;height:18px}
+/* Casos: desarrollo breve, artículos, cronología */
+.q textarea{width:100%;box-sizing:border-box;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.q .dbb{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .dbb button{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.q .dbb button.sel{background:var(--fg);color:var(--bg)}
+.q .modelo{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.visto .modelo,.q.done .modelo{display:block}
+.q.visto .ver,.q.done .ver{display:none}
+.art{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.art b.n{font-family:var(--f-label);letter-spacing:.03em;display:block;margin-bottom:2px}
+.arts{display:grid;gap:8px}
+#buscar{width:100%;box-sizing:border-box;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 14px;margin:6px 0 10px}
+.hito{border-left:4px solid var(--fg);padding:2px 0 2px 10px;margin:12px 0 6px}
+.hito b{font-family:var(--f-display);font-weight:800}
+.ley{margin:0 0 0 14px;padding:0}
+.ley li{margin:3px 0}
+.fase{counter-increment:f}
+</style>
+</head><body data-key="caso13">
+<div class="wrap">
+<header>
+  <a class="home" href="./">← Inicio</a>
+  <h3>Taller de integración · caso</h3>
+  <h1>Caso 13 · Posesión inscrita y DL 2.695</h1>
+  <p>Un ocupante regulariza por el DL 2.695 un retazo de un predio inscrito a nombre de una sociedad desde 1998.</p>
+</header>
+<nav role="tablist" aria-label="Partes">
+  <button role="tab" aria-selected="true" data-s="cro">Cronología</button>
+  <button role="tab" aria-selected="false" data-s="enu">Enunciado y preguntas</button>
+  <button role="tab" aria-selected="false" data-s="preg">Practicar</button>
+</nav>
+<section id="cro" role="tabpanel">
+  <div class="box"><div class="hito"><b>23-mar-1998</b> · La sociedad compra por escritura pública e inscribe.</div><ul class="ley"><li>Tradición por <b>inscripción</b> (art. 686): dueña y poseedora inscrita (art. 724).</li></ul><div class="hito"><b>Antes de 2023</b> · Herrera ocupa un retazo, se asienta y edifica.</div><ul class="ley"><li>Mientras subsista la inscripción, no adquiere posesión ni pone fin a la existente (art. 728).</li><li>Edifica en <b>suelo ajeno</b> (art. 669).</li><li>La sociedad pudo usar la <b>querella de amparo</b> (un año desde la turbación, arts. 918 y 920) y, sin inscripción del DL, la <b>reivindicatoria común</b> (CS 9.789-2022).</li></ul><div class="hito"><b>Antes de la inscripción</b> · Herrera tramita la regularización ante Bienes Nacionales.</div><ul class="ley"><li>Requisitos: posesión material <b>continua y exclusiva</b>, sin violencia ni clandestinidad, <b>5 años</b> (art. 2 DL); las inscripciones anteriores no obstan (art. 2 inc. final).</li><li>La sociedad pudo <b>oponerse</b> dentro de <b>60 días hábiles</b> desde la última publicación (arts. 19 N° 1 y 20).</li></ul><div class="hito"><b>30-jun-2023</b> · Se inscribe el retazo a nombre de Herrera.</div><ul class="ley"><li>La resolución es <b>justo título</b>: Herrera es <b>poseedor regular</b> aunque subsista la inscripción de la sociedad (art. 15).</li><li>Corren <b>2 años</b> (arts. 15, 16 y 26) y <b>5 años</b> (art. 29).</li><li>Prohibición legal de gravar por 2 años y enajenar por 5, inscrita de oficio (art. 17).</li><li>Desde aquí rige la <b>vía exclusiva</b> del DL (art. 18): fuera la reivindicatoria común y las posesorias.</li><li>Las leyes 21.633 y 21.737 son posteriores: no se le aplican (art. 18 CP).</li></ul><div class="hito"><b>30-jun-2025</b> · Dos años de posesión inscrita.</div><ul class="ley"><li>Herrera <b>dueño por prescripción</b>, que no se suspende (art. 15).</li><li>Prescriben las acciones de la sociedad y su inscripción se entiende <b>cancelada</b> por el solo ministerio de la ley (art. 16).</li><li>Vence la <b>acción de dominio</b> (art. 26), salvo que se haya demandado y notificado antes.</li><li>Subsiste la acción penal del art. 9 (5 años desde el delito, arts. 94 y 95 CP).</li></ul><div class="hito"><b>30-jun-2028</b> · Vence la compensación en dinero.</div><ul class="ley"><li>Arts. 28 y 29: 5 años desde la inscripción, juicio sumario ante el juez de San Vicente; valor sin las mejoras del poseedor; pago según el art. 30.</li></ul></div>
+</section>
+<section id="enu" role="tabpanel" hidden>
+  <div class="box"><h2>Hechos</h2><p>La Sociedad Agrícola y Forestal Telatinos Limitada es dueña de la «Hijuela Segunda de la Esperanza», parte del Fundo La Esperanza, comuna de San Vicente. La adquirió por compraventa por escritura pública de 23 de marzo de 1998, inscrita a fojas 8234, N° 5068, del Registro de Propiedad del Conservador de San Vicente de 1998.</p><p>Julio Hernán Herrera Villagra, pretendiéndose dueño y poseedor, ocupó un retazo del inmueble, se asentó en él e incluso edificó, privando a la sociedad de su posesión material. Se acogió al DL 2.695 y obtuvo del Ministerio de Bienes Nacionales la inscripción del retazo a su nombre, de 30 de junio de 2023, a fojas 2347, N° 227, del Registro de Propiedad de 2023.</p></div>
+  <div class="box"><h2>Preguntas del caso</h2><ol><li>Explique quién es el dueño actual de la propiedad.</li><li>Explique qué acciones corresponden a la sociedad y si se encuentran prescritas.</li><li><i>Procesal 1.</i> Señale qué recomendaría a su representado para asegurar el éxito de su solicitud.</li><li><i>Procesal 2.</i> ¿En qué procedimiento se tramitaría la acción civil seleccionada y por qué?</li><li><i>Procesal 3.</i> Explique los plazos para contestar la demanda, conforme a la acción a deducir.</li><li><i>Procesal 4.</i> ¿Qué podría deducir en su defensa el demandado?</li></ol><p class="src">En «Practicar», las preguntas de desarrollo breve son estas mismas, con la respuesta modelo; las de alternativas y V/F cubren los plazos, artículos y requisitos que las sostienen.</p></div>
+</section>
+<section id="preg" role="tabpanel" hidden>
+  <div class="qbar">
+    <select id="qfiltro" aria-label="Filtrar">
+      <option value="todo">Todas</option><option value="db">Solo desarrollo breve</option><option value="vf">Solo V/F</option><option value="sm">Solo alternativas</option>
+    </select>
+    <button data-q="mezclar">Mezclar</button>
+    <span class="score"></span>
+  </div>
+  <div id="quizbox" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div class="qfoot"><button class="pri" data-q="corregir">Corregir</button><button data-q="reiniciar">Borrar respuestas</button><span class="score"></span></div>
+</section>
+<footer>Fuente: «Casos integracion 2, 7 y 13» (versión de 24 páginas).</footer>
+</div>
+<script>
+window.PREG=[
+{t:'db',q:'<b>Civil 1.</b> Explique quién es el dueño actual de la propiedad.',e:'Depende de si la sociedad accionó a tiempo. Inscrita la resolución el 30-jun-2023, Herrera es poseedor regular aunque subsista la inscripción de la sociedad (art. 15 DL). Con dos años de posesión inscrita se hace dueño por prescripción, que no se suspende (art. 15); prescriben las acciones del dueño anterior y su inscripción se entiende cancelada (art. 16). Si la sociedad no demandó y notificó antes del 30-jun-2025, el dueño es Herrera (salvo condena por el art. 9, que obliga a cancelar su inscripción); si lo hizo, interrumpió y sigue siendo dueña mientras dure el juicio. El resto de la hijuela es de la sociedad.',s:'Arts. 9, 15 y 16 DL 2.695'},
+{t:'db',q:'<b>Civil 2.</b> Explique qué acciones corresponden a la sociedad y si se encuentran prescritas.',e:'Practicada la inscripción, los terceros solo pueden impugnar por las vías del DL (art. 18): quedan desplazadas las posesorias y la reivindicatoria común (que procedía antes de la inscripción, CS 9.789-2022). 1) Oposición (arts. 19 y 20), dentro de 60 días hábiles desde la última publicación: ya pasó. 2) Acción de dominio (arts. 26 y 27), dos años desde la inscripción, en juicio sumario: vence el 30-jun-2025; si se acoge, se cancela la inscripción de Herrera. 3) Compensación en dinero (arts. 28 a 30), cinco años, hasta el 30-jun-2028, sumario: vigente. 4) Acción penal del art. 9, si obtuvo la regularización maliciosamente: permite cancelar la inscripción; prescribe en cinco años. Lo edificado: art. 669.',s:'Arts. 9, 18 a 30 DL 2.695; art. 669'},
+{t:'db',q:'<b>Procesal 1.</b> Señale qué recomendaría a su representado para asegurar el éxito de su solicitud.',e:'1) Demandar y notificar antes del 30-jun-2025 (art. 2503 N° 1), porque la CS está dividida sobre la interrupción; si ya venció, pedir la compensación antes del 30-jun-2028. 2) Pedir prohibición de celebrar actos y contratos sobre el retazo e inscribirla (arts. 290 N° 4, 296 y 297 CPC), incluso como prejudicial (art. 279); complementa la prohibición legal del art. 17 DL. 3) Reunir la prueba del dominio (inscripción de 1998 y plano) y de que Herrera no cumplía el art. 2 del DL. 4) Evaluar la querella del art. 9.',s:'Arts. 279, 290, 296, 297 CPC; arts. 2, 9 y 17 DL'},
+{t:'db',q:'<b>Procesal 2.</b> ¿En qué procedimiento se tramitaría la acción civil seleccionada y por qué?',e:'En juicio sumario, porque la ley lo ordena: arts. 26 y 29 del DL, y el sumario se aplica cuando la ley manda proceder sumariamente (art. 680 N° 1 CPC); por eso no puede cambiarse al ordinario (art. 681). Tribunal: juez de letras en lo civil del lugar del predio, San Vicente (arts. 20, 26 y 29 DL). Etapas: demanda; audiencia al quinto día hábil (683); contestación, conciliación e incidentes en ella (690); prueba como incidentes (686); sentencia en 10 días (688); apelación en ambos efectos (691); cumplimiento con cancelación de la inscripción (art. 27 DL).',s:'Arts. 680 a 692 CPC; arts. 20, 26, 27 y 29 DL'},
+{t:'db',q:'<b>Procesal 3.</b> Explique los plazos para contestar la demanda, conforme a la acción a deducir.',e:'En el sumario no hay plazo en días para contestar: deducida la demanda, se cita a una audiencia al quinto día hábil después de la última notificación, y ahí se contesta; si el demandado no está en el lugar del juicio, se aumenta según la tabla de emplazamiento (arts. 683 y 259 CPC). Para comparar: en la reivindicatoria común en juicio ordinario serían 18 días (art. 258), pero esa vía está excluida por el art. 18 del DL.',s:'Arts. 258, 259 y 683 CPC'},
+{t:'db',q:'<b>Procesal 4.</b> ¿Qué podría deducir en su defensa el demandado?',e:'1) Prescripción y caducidad: si se notificó después del 30-jun-2025, la acción está extinguida y él ya es dueño (arts. 15, 16 y 26 DL). 2) Que cumplió los requisitos del art. 2: posesión material continua y exclusiva por cinco años, sin violencia ni clandestinidad; las inscripciones anteriores no obstan. 3) Falta de legitimación si el actor fuera solo comunero (art. 19 N° 1; CS 19.944-2023): no aplica a la sociedad. 4) Sobre lo edificado, sus derechos en las prestaciones mutuas (arts. 908 y 909), o el art. 669 inc. 2 si construyó a ciencia y paciencia del dueño. 5) En la compensación, discutir el valor (art. 28).',s:'Arts. 2, 15, 16, 19, 26 y 28 DL; arts. 669, 908 y 909'},
+{t:'sm',q:'¿Cuándo vence el plazo de la acción de dominio de la sociedad?',o:['30 de junio de 2025.','30 de junio de 2024.','30 de junio de 2028.','30 de junio de 2033.'],a:0,e:'Dos años desde la inscripción del 30-jun-2023 (art. 26 DL). El 2028 es la compensación (art. 29).',s:'Art. 26 DL 2.695'},
+{t:'vf',q:'Antes de la inscripción del DL a nombre de Herrera, la sociedad podía usar la reivindicatoria común.',a:true,e:'La exclusividad del art. 18 opera desde la inscripción (CS 9.789-2022). También pudo usar la querella de amparo.',s:'CS 9.789-2022'},
+{t:'vf',q:'Después del 30 de junio de 2023, la sociedad puede deducir una querella de amparo contra Herrera.',a:false,e:'Las posesorias quedan desplazadas por la vía exclusiva del DL (art. 18); además Herrera ya es poseedor regular inscrito (art. 15).',s:'Art. 18 DL 2.695'},
+{t:'sm',q:'En la compensación en dinero, el valor del retazo se fija:',o:['Por su valor comercial a la fecha de la tasación, sin las mejoras del poseedor material.','Por el avalúo fiscal de 1998.','Por el valor que fije el Conservador.','Incluyendo lo edificado por Herrera.'],a:0,e:'Art. 28 DL, oyendo al SAG o la Conaf por ser predio rural; no puede ser inferior al avalúo fiscal o proporcional.',s:'Art. 28 DL 2.695'},
+{t:'vf',q:'Si la acción de dominio se acoge, se cancela la inscripción de Herrera y la de la sociedad conserva su plena vigencia.',a:true,e:'Art. 27 DL.',s:'Art. 27 DL 2.695'},
+{t:'vf',q:'La acción del art. 9 contra Herrera se beneficia de la presunción de dolo por juicio pendiente de usurpación de la Ley 21.633.',a:false,e:'La Ley 21.633 (24-nov-2023) es posterior a la inscripción y no se aplica a hechos anteriores (art. 18 CP). La sociedad debe probar el dolo.',s:'Art. 18 CP'},
+{t:'sm',q:'Para impedir que Herrera venda o hipoteque el retazo durante el juicio, conviene pedir:',o:['Prohibición de celebrar actos y contratos, e inscribirla.','Secuestro del retazo.','Retención de las rentas.','Nombramiento de interventor.'],a:0,e:'Arts. 290 N° 4, 296 y 297 CPC; complementa la prohibición legal del art. 17 DL, que tiene excepciones.',s:'Arts. 290 y 297 CPC'},
+{t:'vf',q:'La sociedad podía demandar la acción de dominio del art. 26 aunque no se hubiera opuesto a la solicitud.',a:true,e:'El art. 26 la concede «sin perjuicio» del art. 19: son vías distintas.',s:'Art. 26 DL 2.695'},
+{t:'sm',q:'Según la CS (14.300-2024), la acción de dominio del art. 26:',o:['Es la reivindicatoria, con los requisitos del art. 889, y admite la compensación en subsidio.','Es una acción posesoria especial.','Es una acción de nulidad de la resolución administrativa.','Solo procede si el actor tenía posesión exclusiva.'],a:0,e:'La posesión del demandado se acredita con la propia inscripción del DL (art. 15). Las normas decisorias son los arts. 26 y 27 (CS 29.037-2025).',s:'CS 14.300-2024'}
+];
+
+</script>
+
+<script>
+/* Pestañas + motor de preguntas. Datos en window.PREG = [{t:'sm'|'vf'|'db', q, o:[...], a:indice|true|false, e, s, k}]
+   'db' = desarrollo breve: q (pregunta), e (respuesta modelo); se responde escribiendo y luego se autocorrige («La sabía» / «No la sabía»). */
+(function(){
+  var KEY=document.body.dataset.key||'casos';
+  function sget(k){try{return JSON.parse(localStorage.getItem(KEY+'-'+k))}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+
+  // Pestañas
+  var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+  function show(id){
+    tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);var p=document.getElementById(t.dataset.s);if(p)p.hidden=!on;});
+    sset('tab',id);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.s);window.scrollTo({top:0});});});
+  var s=sget('tab'); if(s&&document.getElementById(s)&&tabs.length)show(s);
+
+  // Buscador de artículos (pestaña Artículos)
+  var bus=document.getElementById('buscar');
+  if(bus){bus.addEventListener('input',function(){
+    var v=bus.value.trim().toLowerCase();
+    [].forEach.call(document.querySelectorAll('.art'),function(a){a.hidden=v&&a.textContent.toLowerCase().indexOf(v)<0;});
+    if(v){[].forEach.call(document.querySelectorAll('section[role=tabpanel]'),function(p){p.hidden=false;});}
+    else{var t=sget('tab')||(tabs[0]&&tabs[0].dataset.s);if(t)show(t);}
+  });}
+
+  // Preguntas
+  var box=document.getElementById('quizbox'); if(!box||!window.PREG)return;
+  var L='abcdefgh';
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  var data=window.PREG.map(function(x,i){
+    x.id=i;
+    if(x.t==='db')x.a=true;
+    if(x.t==='sm'&&!x.fijo){
+      var r=rng(i*7919+(document.body.dataset.key||'').length*31+17), idx=x.o.map(function(_,j){return j;});
+      for(var k=idx.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var t=idx[k];idx[k]=idx[j];idx[j]=t;}
+      x.o=idx.map(function(j){return x.o[j];}); x.a=idx.indexOf(x.a);
+    }
+    return x;
+  });
+  var resp=sget('resp')||{}; var txt=sget('txt')||{}; var corregido=false;
+  var filtro=document.getElementById('qfiltro');
+  var NOM={vf:'Verdadero o falso',sm:'Selección múltiple',db:'Desarrollo breve'};
+  function lista(){
+    var f=filtro?filtro.value:'todo';
+    var orden=sget('orden');
+    var arr=data.filter(function(x){return f==='todo'||x.t===f||(x.k&&x.k===f);});
+    if(orden){var pos={};orden.forEach(function(id,i){pos[id]=i});arr.sort(function(a,b){return (pos[a.id]??a.id)-(pos[b.id]??b.id)});}
+    return arr;
+  }
+  function render(){
+    var arr=lista(); box.innerHTML='';
+    arr.forEach(function(x,n){
+      var d=document.createElement('div'); d.className='q'+(corregido?' done':'')+(x.t==='db'&&resp[x.id]!==undefined?' visto':'');
+      var head='<div class="qn"><span>'+(n+1)+' · '+NOM[x.t]+'</span>'+(x.k?'<span>· '+x.k+'</span>':'')+'</div>';
+      var body='<p class="qt">'+x.q+'</p>';
+      var nm='q'+x.id;
+      if(x.t==='db'){
+        body+='<textarea rows="4" placeholder="Escribe tu respuesta (o dila en voz alta) y luego abre la respuesta modelo"'+(corregido?' disabled':'')+'>'+(txt[x.id]||'').replace(/</g,'&lt;')+'</textarea>';
+        body+='<div class="dbb"><button type="button" class="ver">Ver respuesta modelo</button></div>';
+        body+='<div class="modelo"><p class="res">Respuesta modelo</p><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+
+              '<div class="dbb"><button type="button" data-v="1"'+(resp[x.id]===true?' class="sel"':'')+'>La sabía</button><button type="button" data-v="0"'+(resp[x.id]===false?' class="sel"':'')+'>No la sabía</button></div></div>';
+      }else if(x.t==='vf'){
+        body+='<div class="vf">'+[['V',true],['F',false]].map(function(p){
+          var ch=resp[x.id]===p[1]?' checked':'';
+          var cls=corregido?(p[1]===x.a?' class="ok"':(resp[x.id]===p[1]?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+p[1]+'"'+ch+(corregido?' disabled':'')+'><span><b>'+p[0]+'</b></span></label>';
+        }).join('')+'</div>';
+      }else{
+        body+=x.o.map(function(o,j){
+          var ch=resp[x.id]===j?' checked':'';
+          var cls=corregido?(j===x.a?' class="ok"':(resp[x.id]===j?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+j+'"'+ch+(corregido?' disabled':'')+'><span>'+L[j]+') '+o+'</span></label>';
+        }).join('');
+      }
+      if(x.t!=='db'){
+        var ok=resp[x.id]===x.a;
+        var correcta=x.t==='vf'?(x.a?'Verdadero':'Falso'):(L[x.a]+')');
+        body+='<div class="exp"><span class="res '+(ok?'ok':'bad')+'">'+(resp[x.id]===undefined?'Sin responder':(ok?'Correcta':'Incorrecta'))+' · respuesta: '+correcta+'</span><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+'</div>';
+      }
+      d.innerHTML=head+body; box.appendChild(d);
+      [].forEach.call(d.querySelectorAll('input'),function(inp){inp.addEventListener('change',function(){
+        resp[x.id]=x.t==='vf'?(inp.value==='true'):parseInt(inp.value,10); sset('resp',resp); cuenta();
+      });});
+      if(x.t==='db'){
+        var ta=d.querySelector('textarea');
+        ta.addEventListener('input',function(){txt[x.id]=ta.value;sset('txt',txt);});
+        d.querySelector('.ver').addEventListener('click',function(){d.classList.add('visto');});
+        [].forEach.call(d.querySelectorAll('[data-v]'),function(b){b.addEventListener('click',function(){
+          resp[x.id]=b.dataset.v==='1'; sset('resp',resp);
+          [].forEach.call(d.querySelectorAll('[data-v]'),function(o){o.classList.toggle('sel',o===b);}); cuenta();
+        });});
+      }
+    });
+    cuenta();
+  }
+  function cuenta(){
+    var arr=lista(), r=0, b=0;
+    arr.forEach(function(x){if(resp[x.id]!==undefined){r++; if(resp[x.id]===x.a)b++;}});
+    [].forEach.call(document.querySelectorAll('.score'),function(el){
+      if(el.id==='tiempo')return;
+      el.textContent=corregido?('Puntaje: '+b+' de '+arr.length+(arr.length?' ('+Math.round(100*b/arr.length)+' %)':'')):('Respondidas: '+r+' de '+arr.length);
+    });
+  }
+  function corregir(){corregido=true;render();window.scrollTo({top:box.offsetTop-80});}
+  function reiniciar(){resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();window.scrollTo({top:0});}
+  function mezclar(){var ids=data.map(function(x){return x.id});for(var i=ids.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=ids[i];ids[i]=ids[j];ids[j]=t;}sset('orden',ids);resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();}
+  [].forEach.call(document.querySelectorAll('[data-q=corregir]'),function(b){b.addEventListener('click',corregir)});
+  [].forEach.call(document.querySelectorAll('[data-q=reiniciar]'),function(b){b.addEventListener('click',reiniciar)});
+  [].forEach.call(document.querySelectorAll('[data-q=mezclar]'),function(b){b.addEventListener('click',mezclar)});
+  if(filtro)filtro.addEventListener('change',function(){corregido=false;render();});
+  render();
+})();
+
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body></html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Caso 7 · Confección de obra e incumplimiento</title>
+<meta name="theme-color" content="#f6f3ec">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>/* Layout: una columna para celular; bandas de color suaves por tema, como un folleto plegable */
+:root{
+  --bg:#f6f3ec; --fg:#24221f; --muted:#5f5a52; --line:#d9d2c4; --card:#fffdf8;
+  --mostaza:#e7d38f; --salvia:#bfd8b8; --cielo:#b9d3e4; --rosa:#ebc0c6; --durazno:#efc9a4;
+  --tinta:#3b5a73; --ok:#3f7a52; --warn:#9a5b1f;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif; --f-label:"Archivo Narrow","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header h1{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05;letter-spacing:-.02em;margin:.4rem 0 .3rem;text-wrap:balance}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 12px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav button:focus-visible,summary:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.band{border-radius:14px;padding:14px 16px;min-width:0}
+.mostaza{background:var(--mostaza)}.salvia{background:var(--salvia)}.cielo{background:var(--cielo)}.rosa{background:var(--rosa)}.durazno{background:var(--durazno)}
+h2{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.band h3{color:inherit;opacity:.75}
+p{margin:0}
+ul{margin:4px 0 0;padding-left:1.1em}
+li{margin:2px 0}
+.def{font-size:1rem;border-left:3px solid currentColor;padding-left:10px;margin-top:6px}
+.src{font-family:var(--f-label);font-size:.8rem;color:var(--muted);margin-top:6px}
+.band .src{color:inherit;opacity:.7}
+.star{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:var(--fg);color:var(--bg);border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.tag{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-label);font-weight:700;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .in{padding:0 14px 12px;color:var(--fg)}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0}
+.step b.n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-label);font-weight:700}
+.arrow{margin-left:13px;width:2px;height:10px;background:var(--line)}
+.cmp{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-top:1px solid var(--line);padding-top:8px}
+.row:first-child{border-top:0;padding-top:0}
+.k{font-family:var(--f-label);font-weight:700}
+.num{font-variant-numeric:tabular-nums;font-weight:800}
+.quiz details summary{font-weight:600}
+.quiz .in{border-top:1px dashed var(--line);padding-top:10px}
+footer{color:var(--muted);font-size:.85rem;margin-top:18px}
+@media (prefers-reduced-motion:no-preference){section{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+/* Agregados: barra de inicio, preguntas interactivas, avisos de discrepancia */
+.home{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta);text-decoration:none;margin-top:4px}
+.ojo{border:1.5px dashed var(--warn);border-radius:12px;padding:10px 12px;background:var(--card)}
+.ojo b.t{color:var(--warn);font-family:var(--f-label);letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+.pares{display:grid;gap:10px}
+.par{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.par h2{font-size:1.05rem;margin-bottom:8px}
+.par .split{margin-top:4px}
+.par .lado{border-left:3px solid var(--line);padding-left:9px;min-width:0}
+.par .lado .tag{display:block;margin-bottom:2px}
+.par .imp{margin-top:8px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:7px}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+.qbar button,.qfoot button{font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;cursor:pointer}
+.qbar button.pri,.qfoot button.pri{background:var(--fg);color:var(--bg)}
+.qbar select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 10px}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.q .qn{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.q .qt{margin:4px 0 8px;font-weight:600}
+.q .qt i{font-weight:500}
+.q label{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start;padding:6px 6px;border-radius:8px;cursor:pointer}
+.q label:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.q input{margin-top:4px;accent-color:var(--fg)}
+.q label.ok{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.q label.bad{background:color-mix(in srgb,var(--warn) 20%,transparent);text-decoration:line-through}
+.q .exp{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.done .exp{display:block}
+.q .res{font-family:var(--f-label);font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em}
+.q .res.ok{color:var(--ok)}.q .res.bad{color:var(--warn)}
+.q .vf{display:flex;gap:10px}
+.q .vf label{grid-template-columns:22px auto;border:1px solid var(--line);padding:6px 14px}
+.qfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.menu{display:grid;gap:10px}
+.menu a{display:block;text-decoration:none;color:inherit;border-radius:14px;padding:14px 16px}
+.menu a b{font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:block}
+.menu a span{color:inherit;opacity:.8;font-size:.92rem}
+.hora{font-family:var(--f-label);font-weight:700;font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{margin-top:4px;accent-color:var(--fg);width:18px;height:18px}
+/* Casos: desarrollo breve, artículos, cronología */
+.q textarea{width:100%;box-sizing:border-box;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.q .dbb{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .dbb button{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.q .dbb button.sel{background:var(--fg);color:var(--bg)}
+.q .modelo{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.visto .modelo,.q.done .modelo{display:block}
+.q.visto .ver,.q.done .ver{display:none}
+.art{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.art b.n{font-family:var(--f-label);letter-spacing:.03em;display:block;margin-bottom:2px}
+.arts{display:grid;gap:8px}
+#buscar{width:100%;box-sizing:border-box;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 14px;margin:6px 0 10px}
+.hito{border-left:4px solid var(--fg);padding:2px 0 2px 10px;margin:12px 0 6px}
+.hito b{font-family:var(--f-display);font-weight:800}
+.ley{margin:0 0 0 14px;padding:0}
+.ley li{margin:3px 0}
+.fase{counter-increment:f}
+</style>
+</head><body data-key="caso7">
+<div class="wrap">
+<header>
+  <a class="home" href="./">← Inicio</a>
+  <h3>Taller de integración · caso</h3>
+  <h1>Caso 7 · Confección de obra e incumplimiento</h1>
+  <p>Casa prefabricada «llave en mano» entregada sin luz ni recepción municipal; demanda de resolución cinco años después.</p>
+</header>
+<nav role="tablist" aria-label="Partes">
+  <button role="tab" aria-selected="true" data-s="cro">Cronología</button>
+  <button role="tab" aria-selected="false" data-s="enu">Enunciado y preguntas</button>
+  <button role="tab" aria-selected="false" data-s="preg">Practicar</button>
+</nav>
+<section id="cro" role="tabpanel">
+  <div class="box"><div class="hito"><b>5-mar-2019</b> · Contrato escrito ante notario; Javier paga $50.000.000.</div><ul class="ley"><li>La empresa pone la materia: es <b>venta</b> (art. 1996), con las reglas de la construcción por precio único (art. 2003).</li><li>Obligación de <b>dar</b> (la casa como especie o cuerpo cierto) y de <b>hacer</b> (construir e instalar).</li><li>Instrumento privado ante notario: no es escritura pública → no es título ejecutivo (art. 434 N° 2 CPC).</li></ul><div class="hito"><b>5-abr-2019</b> · Vence el plazo de entrega de un mes (art. 48). La casa se entrega sin luz y sin recepción.</div><ul class="ley"><li>La obligación se hace <b>exigible</b>: desde aquí corre la prescripción (art. 2514).</li><li><b>Cumplimiento imperfecto</b> (arts. 1546 y 1556): sin recepción definitiva no se puede habitar (art. 145 LGUC).</li><li>La empresa queda <b>en mora</b> por vencer el término estipulado (art. 1551 N° 1).</li><li>Javier no paga el saldo y <b>no está en mora</b>: la mora purga la mora (art. 1552).</li></ul><div class="hito"><b>5-abr-2022</b> · Habría prescrito la acción ejecutiva (3 años, art. 2515), si hubiera título.</div><ul class="ley"><li>La resolución es <b>ordinaria</b> desde el principio: 5 años (art. 2515 inc. 1).</li></ul><div class="hito"><b>4-mar-2024</b> · Javier demanda resolución + indemnización ($5 MM + $50 MM + $15 MM).</div><ul class="ley"><li>Condición resolutoria tácita (art. 1489) en <b>juicio ordinario de mayor cuantía</b> (art. 3 CPC; más de 500 UTM).</li><li>El precio no es perjuicio: es restitución (art. 1487). Daño moral: solo el de Javier (art. 1545).</li><li>Tribunal: juez civil de Puerto Montt (COT 45 N° 2, 138 y 142), salvo que contratara otra oficina (142 inc. 2).</li></ul><div class="hito"><b>6-mar-2024</b> · «A la demanda interpuesta, traslado».</div><ul class="ley"><li>Primera resolución del ordinario (art. 257 CPC); 18 días para contestar si se notifica en el territorio (art. 258).</li></ul><div class="hito"><b>5-abr-2024</b> · Vencen los 5 años de la acción ordinaria.</div><ul class="ley"><li>La demanda interrumpe si se notifica legalmente (arts. 2518 y 2503 N° 1). CS dividida: presentación (12.249-2024) o notificación dentro de plazo (31.699-2024). <b>El caso no da la fecha de notificación.</b></li><li>Solo se declara si la empresa la alega (art. 2493): en la contestación (art. 309) o como excepción anómala (art. 310).</li></ul></div>
+</section>
+<section id="enu" role="tabpanel" hidden>
+  <div class="box"><h2>Hechos</h2><p>El 5 de marzo de 2019, Javier Fernández León, domiciliado en Santiago, celebró por escrito, firmando ante notario, un contrato con Construcciones S.A., domiciliada en Puerto Montt, por el que la empresa se obligó a venderle una casa prefabricada de 80 m², mediante su construcción e instalación en calle Las Azucenas N° 5638, Llanquihue.</p><p>La vivienda se destinaría a habitación, con instalaciones sanitarias y eléctricas (llave en mano). Precio: $100.000.000; 50 % pagado al contratar con vale vista y el saldo una vez entregada la vivienda. Plazo de entrega: un mes desde el contrato, como especie o cuerpo cierto.</p><p>Llegado el plazo, la empresa entrega la vivienda sin las instalaciones de luz terminadas y sin la recepción definitiva municipal. Javier se niega a pagar el saldo.</p><p>El 4 de marzo de 2024 Javier demanda la resolución con indemnización: $5.000.000 de daño emergente (arriendos), $50.000.000 del precio pagado y $15.000.000 de daño moral por los sufrimientos causados a él y su familia. El 6 de marzo de 2024 el tribunal provee: «A la demanda interpuesta, traslado».</p></div>
+  <div class="box"><h2>Preguntas del caso</h2><ol><li>Establezca si existe incumplimiento contractual por parte de la empresa y explique por qué.</li><li>Identifique las posibilidades que tenía Javier, la acción ejercida y analice sus requisitos.</li><li>Evalúe si la acción ejercida se encuentra prescrita.</li><li>Explique las consecuencias de que Javier aún no haya pagado el saldo del precio.</li><li>Evalúe si se cumplen los requisitos para que la empresa sea condenada a pagar los perjuicios que alega Javier.</li><li><i>Procesal 1.</i> Determine el procedimiento aplicable a la demanda y el tribunal competente.</li><li><i>Procesal 2.</i> Estructure la suma del escrito de demanda de Javier.</li><li><i>Procesal 3.</i> Una vez notificada la demanda, ¿qué plazo tiene la sociedad demandada para contestar?</li><li><i>Procesal 4.</i> Si fuera el abogado de la constructora, ¿qué actitud asumiría frente a la demanda? Justifique.</li><li><i>Procesal 5.</i> Si considera que la acción está prescrita, mencione las oportunidades procesales para interponer la excepción y cómo se tramitaría.</li></ol><p class="src">En «Practicar», las preguntas de desarrollo breve son estas mismas, con la respuesta modelo; las de alternativas y V/F cubren los plazos, artículos y requisitos que las sostienen.</p></div>
+</section>
+<section id="preg" role="tabpanel" hidden>
+  <div class="qbar">
+    <select id="qfiltro" aria-label="Filtrar">
+      <option value="todo">Todas</option><option value="db">Solo desarrollo breve</option><option value="vf">Solo V/F</option><option value="sm">Solo alternativas</option>
+    </select>
+    <button data-q="mezclar">Mezclar</button>
+    <span class="score"></span>
+  </div>
+  <div id="quizbox" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div class="qfoot"><button class="pri" data-q="corregir">Corregir</button><button data-q="reiniciar">Borrar respuestas</button><span class="score"></span></div>
+</section>
+<footer>Fuente: «Casos integracion 2, 7 y 13» (versión de 24 páginas).</footer>
+</div>
+<script>
+window.PREG=[
+{t:'db',q:'<b>Civil 1.</b> Establezca si existe incumplimiento contractual por parte de la empresa y explique por qué.',e:'Sí. Se pactó una casa «llave en mano» para habitar, con instalaciones eléctricas, y se entregó sin luz y sin recepción definitiva. Entregar no es cumplir: el contrato es ley para las partes (art. 1545) y obliga a lo que emana de la naturaleza de la obligación (art. 1546), y sin recepción definitiva ninguna obra puede habitarse (art. 145 LGUC). Es cumplimiento imperfecto (art. 1556), con mora desde el 5-abr-2019 (art. 1551 N° 1). El contrato es venta porque la empresa pone la materia (arts. 1996 y 2003).',s:'Arts. 1545, 1546, 1551, 1556, 1996; art. 145 LGUC'},
+{t:'db',q:'<b>Civil 2.</b> Identifique las posibilidades que tenía Javier, la acción ejercida y analice sus requisitos.',e:'Posibilidades: resolución o cumplimiento, ambos con indemnización (art. 1489); el cumplimiento de la obligación de hacer por las tres vías del art. 1553; retener el saldo (art. 1552), y la indemnización autónoma (Corral nº 426). Ejerció la resolución con indemnización. Requisitos: contrato bilateral (es venta); incumplimiento, que la doctrina tradicional exige imputable, con culpa presunta (art. 1547), y que la CS exige esencial (230.406-2023): lo es, porque la casa no puede habitarse; que el actor haya cumplido o esté llano a cumplir (pagó el 50 % y el saldo dependía de la entrega conforme); y declaración judicial.',s:'Arts. 1489, 1547, 1552, 1553; CS 230.406-2023'},
+{t:'db',q:'<b>Civil 3.</b> Evalúe si la acción ejercida se encuentra prescrita.',e:'No, si se notificó a tiempo. Es acción ordinaria: cinco años (art. 2515) desde que la obligación se hizo exigible (art. 2514), el 5-abr-2019 (art. 48): vence el 5-abr-2024. Se presentó el 4-mar-2024. La interrupción exige notificación legal (arts. 2518 y 2503 N° 1) y la CS está dividida: basta la presentación (12.249-2024) o hay que notificar dentro del plazo (31.699-2024). El caso no da la fecha de notificación. Solo se declara si la empresa la alega (art. 2493). Contar desde la firma (5-mar-2024) es un error.',s:'Arts. 48, 2493, 2503, 2514, 2515, 2518'},
+{t:'db',q:'<b>Civil 4.</b> Explique las consecuencias de que Javier aún no haya pagado el saldo del precio.',e:'Javier no está en mora: la mora purga la mora (art. 1552), y el saldo solo era exigible con la entrega conforme. La empresa no puede pedir la resolución ni cobrarle el saldo: él opondría la excepción de contrato no cumplido; y eso no le impide demandar, porque está llano a cumplir. Declarada la resolución, se extingue el saldo y hay restituciones mutuas: la empresa devuelve los $50.000.000 reajustados y Javier restituye la casa (art. 1487); si el terreno es suyo, la casa es inmueble (art. 568) y se restituye en especie o valor (Corral nº 546 y 548).',s:'Arts. 568, 1487 y 1552'},
+{t:'db',q:'<b>Civil 5.</b> Evalúe si se cumplen los requisitos para que la empresa sea condenada a pagar los perjuicios que alega Javier.',e:'Requisitos: incumplimiento, imputabilidad (culpa presunta, art. 1547), mora (art. 1557), daño cierto y causalidad con previsibilidad (art. 1558). Arriendos ($5 MM): daño emergente directo y previsible; procede si se prueba, con posible rebaja por la carga de mitigar. Precio ($50 MM): no es perjuicio sino restitución (art. 1487). Daño moral ($15 MM): la CS lo acepta si es significativo y previsible, y lo es en una vivienda (217.959-2023 y 194.783-2023), pero solo el de Javier: la familia es tercera (art. 1545; Corral nº 468). Lucro cesante: no se pide.',s:'Arts. 1487, 1545, 1547, 1556 a 1558'},
+{t:'db',q:'<b>Procesal 1.</b> Determine el procedimiento aplicable a la demanda y el tribunal competente.',e:'Juicio ordinario de mayor cuantía: la resolución es declarativa y no hay obligación líquida que ejecutar (art. 438); el ordinario es la regla general (art. 3); se reclaman más de 500 UTM, y el «traslado» lo confirma (art. 257). El ejecutivo de hacer no procede: no hay título (instrumento privado, no escritura pública; art. 435 solo para dinero) y la acción ejecutiva prescribió el 5-abr-2022. Tribunal: juez de letras civil en primera instancia (COT 45 N° 2); acción mueble (art. 580): juez estipulado o del domicilio del demandado (COT 138), que para la sociedad es Puerto Montt (COT 142), salvo que contratara otra oficina (inc. 2).',s:'Arts. 3, 257, 434, 435, 438 CPC; COT 45, 138, 142'},
+{t:'db',q:'<b>Procesal 2.</b> Estructure la suma del escrito de demanda de Javier.',e:'En lo principal: demanda de resolución de contrato con indemnización de perjuicios. Primer otrosí: acompaña documentos, bajo el apercibimiento del art. 346 N° 3 CPC (si no se objetan en seis días, se tienen por reconocidos). Segundo otrosí: patrocinio y poder. El cuerpo, con los requisitos del art. 254 CPC. Si fuera ejecutivo: demanda ejecutiva y mandamiento; acompaña título con citación; patrocinio y poder.',s:'Arts. 254 y 346 N° 3 CPC'},
+{t:'db',q:'<b>Procesal 3.</b> Una vez notificada la demanda, ¿qué plazo tiene la sociedad demandada para contestar?',e:'Dieciocho días si se notifica en el territorio jurisdiccional del tribunal (art. 258), más el aumento de la tabla de emplazamiento si es en otro (art. 259). Si opone dilatorias y se rechazan, diez días (art. 308). Los plazos de días del CPC se suspenden en feriados (art. 66). En el ejecutivo serían ocho días para oponerse (arts. 459 y 460).',s:'Arts. 66, 258, 259, 308, 459 CPC'},
+{t:'db',q:'<b>Procesal 4.</b> Si fuera el abogado de la constructora, ¿qué actitud asumiría frente a la demanda? Justifique.',e:'Contestar y: oponer la prescripción, si se notificó después del 5-abr-2024; en subsidio, discutir que el incumplimiento sea esencial (débil por el art. 145 LGUC); controvertir los perjuicios (los $50 MM son restitución; el daño moral es solo de Javier); invocar la carga de mitigar, porque Javier pagó arriendo cinco años sin pedir que un tercero terminara la obra (art. 1553 N° 2), y evaluar conciliación (art. 262). No reconvenir por el saldo: Javier opondría la excepción de contrato no cumplido (art. 1552). En el ejecutivo: art. 464 N° 17 y N° 7, y art. 534.',s:'Arts. 262, 464, 534 CPC; arts. 1552 y 1553'},
+{t:'db',q:'<b>Procesal 5.</b> Si considera que la acción está prescrita, mencione las oportunidades procesales para interponer la excepción y cómo se tramitaría.',e:'Es excepción perentoria: se opone en la contestación (art. 309) y se resuelve en la sentencia; o como anómala, por escrito, hasta la citación para oír sentencia en primera instancia o la vista de la causa en segunda (art. 310). Después de recibida la causa a prueba, se tramita como incidente y se reserva para la definitiva; en segunda, la Corte la falla en única instancia. No es dilatoria y no se declara de oficio (art. 2493). En el ejecutivo: art. 464 N° 17 dentro de 8 días, y el tribunal deniega de oficio la ejecución si la acción ejecutiva está prescrita (art. 442).',s:'Arts. 309, 310, 442, 464 CPC; art. 2493'},
+{t:'sm',q:'¿Qué día venció el plazo de entrega de la casa?',o:['5 de abril de 2019.','5 de marzo de 2019.','4 de abril de 2019.','6 de abril de 2019.'],a:0,e:'Un mes desde el 5-mar-2019: vence el día de igual número del mes siguiente (art. 48).',s:'Art. 48'},
+{t:'sm',q:'¿Cuándo prescribe la acción de resolución de Javier?',o:['5 de abril de 2024.','5 de marzo de 2024.','5 de abril de 2022.','5 de abril de 2026.'],a:0,e:'Cinco años desde la exigibilidad (arts. 2514 y 2515). El 5-abr-2022 es la acción ejecutiva.',s:'Arts. 2514 y 2515'},
+{t:'vf',q:'El contrato entre Javier y la empresa es de arrendamiento de obra, porque la empresa construye la casa.',a:false,e:'Como la empresa pone la materia, es venta (art. 1996).',s:'Art. 1996'},
+{t:'vf',q:'Los $50.000.000 del precio pagado deben pedirse como daño emergente.',a:false,e:'Son restitución consecuencial de la resolución (art. 1487). Javier puede aclararlo en la réplica (art. 312 CPC).',s:'Art. 1487'},
+{t:'sm',q:'La resolución «A la demanda interpuesta, traslado» indica que el procedimiento es:',o:['Ordinario.','Sumario.','Ejecutivo.','Monitorio.'],a:0,e:'Es la primera resolución típica del juicio ordinario (art. 257 CPC). En el sumario se cita a audiencia (art. 683); en el ejecutivo se despacha mandamiento.',s:'Art. 257 CPC'},
+{t:'vf',q:'La empresa puede reconvenir con éxito por el saldo del precio.',a:false,e:'Javier opondría la excepción de contrato no cumplido: la mora purga la mora (art. 1552).',s:'Art. 1552'},
+{t:'vf',q:'Si el contrato lo firmó una oficina de la empresa en Santiago, el tribunal competente sería uno de Santiago.',a:true,e:'Art. 142 inc. 2 COT: la sociedad con varias oficinas se demanda ante el juez del lugar de la oficina que celebró el contrato.',s:'COT 142'}
+];
+
+</script>
+
+<script>
+/* Pestañas + motor de preguntas. Datos en window.PREG = [{t:'sm'|'vf'|'db', q, o:[...], a:indice|true|false, e, s, k}]
+   'db' = desarrollo breve: q (pregunta), e (respuesta modelo); se responde escribiendo y luego se autocorrige («La sabía» / «No la sabía»). */
+(function(){
+  var KEY=document.body.dataset.key||'casos';
+  function sget(k){try{return JSON.parse(localStorage.getItem(KEY+'-'+k))}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+
+  // Pestañas
+  var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+  function show(id){
+    tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);var p=document.getElementById(t.dataset.s);if(p)p.hidden=!on;});
+    sset('tab',id);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.s);window.scrollTo({top:0});});});
+  var s=sget('tab'); if(s&&document.getElementById(s)&&tabs.length)show(s);
+
+  // Buscador de artículos (pestaña Artículos)
+  var bus=document.getElementById('buscar');
+  if(bus){bus.addEventListener('input',function(){
+    var v=bus.value.trim().toLowerCase();
+    [].forEach.call(document.querySelectorAll('.art'),function(a){a.hidden=v&&a.textContent.toLowerCase().indexOf(v)<0;});
+    if(v){[].forEach.call(document.querySelectorAll('section[role=tabpanel]'),function(p){p.hidden=false;});}
+    else{var t=sget('tab')||(tabs[0]&&tabs[0].dataset.s);if(t)show(t);}
+  });}
+
+  // Preguntas
+  var box=document.getElementById('quizbox'); if(!box||!window.PREG)return;
+  var L='abcdefgh';
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  var data=window.PREG.map(function(x,i){
+    x.id=i;
+    if(x.t==='db')x.a=true;
+    if(x.t==='sm'&&!x.fijo){
+      var r=rng(i*7919+(document.body.dataset.key||'').length*31+17), idx=x.o.map(function(_,j){return j;});
+      for(var k=idx.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var t=idx[k];idx[k]=idx[j];idx[j]=t;}
+      x.o=idx.map(function(j){return x.o[j];}); x.a=idx.indexOf(x.a);
+    }
+    return x;
+  });
+  var resp=sget('resp')||{}; var txt=sget('txt')||{}; var corregido=false;
+  var filtro=document.getElementById('qfiltro');
+  var NOM={vf:'Verdadero o falso',sm:'Selección múltiple',db:'Desarrollo breve'};
+  function lista(){
+    var f=filtro?filtro.value:'todo';
+    var orden=sget('orden');
+    var arr=data.filter(function(x){return f==='todo'||x.t===f||(x.k&&x.k===f);});
+    if(orden){var pos={};orden.forEach(function(id,i){pos[id]=i});arr.sort(function(a,b){return (pos[a.id]??a.id)-(pos[b.id]??b.id)});}
+    return arr;
+  }
+  function render(){
+    var arr=lista(); box.innerHTML='';
+    arr.forEach(function(x,n){
+      var d=document.createElement('div'); d.className='q'+(corregido?' done':'')+(x.t==='db'&&resp[x.id]!==undefined?' visto':'');
+      var head='<div class="qn"><span>'+(n+1)+' · '+NOM[x.t]+'</span>'+(x.k?'<span>· '+x.k+'</span>':'')+'</div>';
+      var body='<p class="qt">'+x.q+'</p>';
+      var nm='q'+x.id;
+      if(x.t==='db'){
+        body+='<textarea rows="4" placeholder="Escribe tu respuesta (o dila en voz alta) y luego abre la respuesta modelo"'+(corregido?' disabled':'')+'>'+(txt[x.id]||'').replace(/</g,'&lt;')+'</textarea>';
+        body+='<div class="dbb"><button type="button" class="ver">Ver respuesta modelo</button></div>';
+        body+='<div class="modelo"><p class="res">Respuesta modelo</p><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+
+              '<div class="dbb"><button type="button" data-v="1"'+(resp[x.id]===true?' class="sel"':'')+'>La sabía</button><button type="button" data-v="0"'+(resp[x.id]===false?' class="sel"':'')+'>No la sabía</button></div></div>';
+      }else if(x.t==='vf'){
+        body+='<div class="vf">'+[['V',true],['F',false]].map(function(p){
+          var ch=resp[x.id]===p[1]?' checked':'';
+          var cls=corregido?(p[1]===x.a?' class="ok"':(resp[x.id]===p[1]?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+p[1]+'"'+ch+(corregido?' disabled':'')+'><span><b>'+p[0]+'</b></span></label>';
+        }).join('')+'</div>';
+      }else{
+        body+=x.o.map(function(o,j){
+          var ch=resp[x.id]===j?' checked':'';
+          var cls=corregido?(j===x.a?' class="ok"':(resp[x.id]===j?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+j+'"'+ch+(corregido?' disabled':'')+'><span>'+L[j]+') '+o+'</span></label>';
+        }).join('');
+      }
+      if(x.t!=='db'){
+        var ok=resp[x.id]===x.a;
+        var correcta=x.t==='vf'?(x.a?'Verdadero':'Falso'):(L[x.a]+')');
+        body+='<div class="exp"><span class="res '+(ok?'ok':'bad')+'">'+(resp[x.id]===undefined?'Sin responder':(ok?'Correcta':'Incorrecta'))+' · respuesta: '+correcta+'</span><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+'</div>';
+      }
+      d.innerHTML=head+body; box.appendChild(d);
+      [].forEach.call(d.querySelectorAll('input'),function(inp){inp.addEventListener('change',function(){
+        resp[x.id]=x.t==='vf'?(inp.value==='true'):parseInt(inp.value,10); sset('resp',resp); cuenta();
+      });});
+      if(x.t==='db'){
+        var ta=d.querySelector('textarea');
+        ta.addEventListener('input',function(){txt[x.id]=ta.value;sset('txt',txt);});
+        d.querySelector('.ver').addEventListener('click',function(){d.classList.add('visto');});
+        [].forEach.call(d.querySelectorAll('[data-v]'),function(b){b.addEventListener('click',function(){
+          resp[x.id]=b.dataset.v==='1'; sset('resp',resp);
+          [].forEach.call(d.querySelectorAll('[data-v]'),function(o){o.classList.toggle('sel',o===b);}); cuenta();
+        });});
+      }
+    });
+    cuenta();
+  }
+  function cuenta(){
+    var arr=lista(), r=0, b=0;
+    arr.forEach(function(x){if(resp[x.id]!==undefined){r++; if(resp[x.id]===x.a)b++;}});
+    [].forEach.call(document.querySelectorAll('.score'),function(el){
+      if(el.id==='tiempo')return;
+      el.textContent=corregido?('Puntaje: '+b+' de '+arr.length+(arr.length?' ('+Math.round(100*b/arr.length)+' %)':'')):('Respondidas: '+r+' de '+arr.length);
+    });
+  }
+  function corregir(){corregido=true;render();window.scrollTo({top:box.offsetTop-80});}
+  function reiniciar(){resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();window.scrollTo({top:0});}
+  function mezclar(){var ids=data.map(function(x){return x.id});for(var i=ids.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=ids[i];ids[i]=ids[j];ids[j]=t;}sset('orden',ids);resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();}
+  [].forEach.call(document.querySelectorAll('[data-q=corregir]'),function(b){b.addEventListener('click',corregir)});
+  [].forEach.call(document.querySelectorAll('[data-q=reiniciar]'),function(b){b.addEventListener('click',reiniciar)});
+  [].forEach.call(document.querySelectorAll('[data-q=mezclar]'),function(b){b.addEventListener('click',mezclar)});
+  if(filtro)filtro.addEventListener('change',function(){corregido=false;render();});
+  render();
+})();
+
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body></html>

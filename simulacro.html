@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Simulacro · Casos</title>
+<meta name="theme-color" content="#f6f3ec">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>/* Layout: una columna para celular; bandas de color suaves por tema, como un folleto plegable */
+:root{
+  --bg:#f6f3ec; --fg:#24221f; --muted:#5f5a52; --line:#d9d2c4; --card:#fffdf8;
+  --mostaza:#e7d38f; --salvia:#bfd8b8; --cielo:#b9d3e4; --rosa:#ebc0c6; --durazno:#efc9a4;
+  --tinta:#3b5a73; --ok:#3f7a52; --warn:#9a5b1f;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif; --f-label:"Archivo Narrow","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header h1{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05;letter-spacing:-.02em;margin:.4rem 0 .3rem;text-wrap:balance}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 12px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav button:focus-visible,summary:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.band{border-radius:14px;padding:14px 16px;min-width:0}
+.mostaza{background:var(--mostaza)}.salvia{background:var(--salvia)}.cielo{background:var(--cielo)}.rosa{background:var(--rosa)}.durazno{background:var(--durazno)}
+h2{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.band h3{color:inherit;opacity:.75}
+p{margin:0}
+ul{margin:4px 0 0;padding-left:1.1em}
+li{margin:2px 0}
+.def{font-size:1rem;border-left:3px solid currentColor;padding-left:10px;margin-top:6px}
+.src{font-family:var(--f-label);font-size:.8rem;color:var(--muted);margin-top:6px}
+.band .src{color:inherit;opacity:.7}
+.star{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:var(--fg);color:var(--bg);border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.tag{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-label);font-weight:700;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .in{padding:0 14px 12px;color:var(--fg)}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0}
+.step b.n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-label);font-weight:700}
+.arrow{margin-left:13px;width:2px;height:10px;background:var(--line)}
+.cmp{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-top:1px solid var(--line);padding-top:8px}
+.row:first-child{border-top:0;padding-top:0}
+.k{font-family:var(--f-label);font-weight:700}
+.num{font-variant-numeric:tabular-nums;font-weight:800}
+.quiz details summary{font-weight:600}
+.quiz .in{border-top:1px dashed var(--line);padding-top:10px}
+footer{color:var(--muted);font-size:.85rem;margin-top:18px}
+@media (prefers-reduced-motion:no-preference){section{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+/* Agregados: barra de inicio, preguntas interactivas, avisos de discrepancia */
+.home{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta);text-decoration:none;margin-top:4px}
+.ojo{border:1.5px dashed var(--warn);border-radius:12px;padding:10px 12px;background:var(--card)}
+.ojo b.t{color:var(--warn);font-family:var(--f-label);letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+.pares{display:grid;gap:10px}
+.par{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.par h2{font-size:1.05rem;margin-bottom:8px}
+.par .split{margin-top:4px}
+.par .lado{border-left:3px solid var(--line);padding-left:9px;min-width:0}
+.par .lado .tag{display:block;margin-bottom:2px}
+.par .imp{margin-top:8px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:7px}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+.qbar button,.qfoot button{font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;cursor:pointer}
+.qbar button.pri,.qfoot button.pri{background:var(--fg);color:var(--bg)}
+.qbar select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 10px}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.q .qn{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.q .qt{margin:4px 0 8px;font-weight:600}
+.q .qt i{font-weight:500}
+.q label{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start;padding:6px 6px;border-radius:8px;cursor:pointer}
+.q label:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.q input{margin-top:4px;accent-color:var(--fg)}
+.q label.ok{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.q label.bad{background:color-mix(in srgb,var(--warn) 20%,transparent);text-decoration:line-through}
+.q .exp{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.done .exp{display:block}
+.q .res{font-family:var(--f-label);font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em}
+.q .res.ok{color:var(--ok)}.q .res.bad{color:var(--warn)}
+.q .vf{display:flex;gap:10px}
+.q .vf label{grid-template-columns:22px auto;border:1px solid var(--line);padding:6px 14px}
+.qfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.menu{display:grid;gap:10px}
+.menu a{display:block;text-decoration:none;color:inherit;border-radius:14px;padding:14px 16px}
+.menu a b{font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:block}
+.menu a span{color:inherit;opacity:.8;font-size:.92rem}
+.hora{font-family:var(--f-label);font-weight:700;font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{margin-top:4px;accent-color:var(--fg);width:18px;height:18px}
+/* Casos: desarrollo breve, artículos, cronología */
+.q textarea{width:100%;box-sizing:border-box;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.q .dbb{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .dbb button{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.q .dbb button.sel{background:var(--fg);color:var(--bg)}
+.q .modelo{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.visto .modelo,.q.done .modelo{display:block}
+.q.visto .ver,.q.done .ver{display:none}
+.art{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.art b.n{font-family:var(--f-label);letter-spacing:.03em;display:block;margin-bottom:2px}
+.arts{display:grid;gap:8px}
+#buscar{width:100%;box-sizing:border-box;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 14px;margin:6px 0 10px}
+.hito{border-left:4px solid var(--fg);padding:2px 0 2px 10px;margin:12px 0 6px}
+.hito b{font-family:var(--f-display);font-weight:800}
+.ley{margin:0 0 0 14px;padding:0}
+.ley li{margin:3px 0}
+.fase{counter-increment:f}
+</style>
+</head><body data-key="simulacro">
+<div class="wrap">
+<header>
+  <a class="home" href="./">← Inicio</a>
+  <h3>Casos 2, 7 y 13</h3>
+  <h1>Simulacro</h1>
+  <p>30 preguntas sorteadas: 10 de verdadero o falso, 12 de alternativas y 8 de desarrollo breve, de las fichas y de los tres casos. Tienes 45 minutos. Corrige solo al final.</p>
+</header>
+<section style="padding-top:12px">
+  <div class="qbar">
+    <select id="qfiltro" aria-label="Filtrar">
+      <option value="todo">Todas</option><option value="vf">Solo V/F</option><option value="sm">Solo alternativas</option><option value="db">Solo desarrollo breve</option>
+      <option value="Civil">Civil</option><option value="Procesal">Procesal</option><option value="Caso 2">Caso 2</option><option value="Caso 7">Caso 7</option><option value="Caso 13">Caso 13</option>
+    </select>
+    <button id="nuevo">Nuevo simulacro</button>
+    <span class="score"></span>
+  </div>
+  <div class="box" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="score" id="tiempo">45:00</span><button id="iniciar" style="font-family:var(--f-label);font-weight:700;text-transform:uppercase;border:1px solid var(--fg);background:var(--fg);color:var(--bg);border-radius:999px;padding:8px 14px;cursor:pointer">Iniciar 45 min</button></div>
+  <div id="quizbox" style="display:flex;flex-direction:column;gap:10px;margin-top:10px"></div>
+  <div class="qfoot"><button class="pri" data-q="corregir">Corregir</button><button data-q="reiniciar">Borrar respuestas</button><span class="score"></span></div>
+</section>
+<footer>Preguntas tomadas de los bancos de cada pestaña. Al corregir, cada una indica su artículo.</footer>
+</div>
+<script>window.ALL=[];window.addBank=function(k){window.ALL=window.ALL.concat(window.PREG.map(function(x){var y=JSON.parse(JSON.stringify(x));y.k=k;return y;}));};</script>
+<script>
+window.PREG=[
+// POSESIÓN Y TENENCIA
+{t:'sm',q:'El arrendatario de una casa amoblada, respecto de los muebles del inventario, es:',o:['Mero tenedor.','Poseedor irregular.','Poseedor regular.','Usufructuario.'],a:0,e:'Tiene las cosas reconociendo dominio ajeno, en lugar y a nombre del dueño (art. 714).',s:'Art. 714'},
+{t:'vf',q:'El arrendador pierde la posesión de la cosa al entregarla en arriendo, porque deja de tenerla materialmente.',a:false,e:'El poseedor conserva la posesión aunque transfiera la tenencia dándola en arriendo, comodato, prenda, depósito o usufructo (art. 725). Posee por medio del arrendatario (art. 700).',s:'Arts. 700 y 725'},
+{t:'vf',q:'Terminado el arrendamiento, si el arrendatario sigue con las cosas por varios años, su mera tenencia se transforma en posesión.',a:false,e:'El simple lapso de tiempo no muda la mera tenencia en posesión, salvo el caso del art. 2510 regla 3.ª (art. 716).',s:'Art. 716'},
+{t:'sm',q:'Según el art. 730, si el mero tenedor usurpa la cosa dándose por dueño, pero sin enajenarla:',o:['Ni el poseedor pierde la posesión ni el usurpador la adquiere.','El usurpador adquiere la posesión irregular.','El poseedor pierde la posesión, pero conserva el dominio.','Se produce interrupción natural de la posesión.'],a:0,e:'Solo si el usurpador enajena a su propio nombre, el adquirente adquiere la posesión y pone fin a la anterior (art. 730).',s:'Art. 730'},
+{t:'vf',q:'Si el mero tenedor de un mueble lo vende y entrega a un tercero a su propio nombre, el tercero adquiere la posesión y se pone fin a la del poseedor anterior.',a:true,e:'Es la segunda parte del art. 730. Por eso Andrés perdió la posesión del Smart TV, aunque sigue siendo dueño.',s:'Art. 730'},
+{t:'sm',q:'Son requisitos de la posesión regular:',o:['Justo título, buena fe al adquirir y tradición si el título es translaticio.','Justo título y buena fe que subsista durante todo el plazo.','Buena fe y posesión no interrumpida por cinco años.','Título inscrito y ánimo de señor.'],a:0,e:'Art. 702: la buena fe se exige al adquirir, aunque no subsista después; y si el título es translaticio, también la tradición.',s:'Art. 702'},
+{t:'vf',q:'La compraventa de cosa ajena no puede servir de justo título, porque es nula.',a:false,e:'La venta de cosa ajena vale (art. 1815) y la compraventa es título translaticio de dominio (art. 703).',s:'Arts. 703 y 1815'},
+{t:'sm',q:'La buena fe posesoria, en los títulos translaticios de dominio, consiste en:',o:['La persuasión de haber recibido la cosa de quien tenía la facultad de enajenarla.','Ejecutar el contrato conforme a lo que emana de su naturaleza.','No haber celebrado el contrato con dolo.','Pagar un precio justo por la cosa.'],a:0,e:'Art. 706 inc. 2. Es buena fe subjetiva, distinta de la buena fe contractual objetiva del art. 1546.',s:'Art. 706'},
+{t:'vf',q:'La buena fe se presume, y la mala fe debe probarse, salvo los casos en que la ley establece la presunción contraria.',a:true,e:'Art. 707. Un caso de presunción contraria es el título de mera tenencia en la prescripción extraordinaria (art. 2510 regla 3.ª) y el error de derecho (art. 706 inc. final).',s:'Art. 707'},
+{t:'sm',q:'Quien en ausencia del dueño se apodera de la cosa y, volviendo el dueño, le repele, es:',o:['Poseedor violento.','Poseedor clandestino.','Mero tenedor.','Poseedor irregular de buena fe.'],a:0,e:'Art. 711. La posesión violenta es la que se adquiere por la fuerza (art. 710); la clandestina se ejerce ocultándola (art. 713).',s:'Arts. 710, 711 y 713'},
+{t:'vf',q:'Sacar los muebles de una casa arrendada a la medianoche, a escondidas, es un apoderamiento clandestino.',a:true,e:'La posesión clandestina es la que se ejerce ocultándola a los que tienen derecho para oponerse a ella (art. 713); es viciosa (art. 709).',s:'Arts. 709 y 713'},
+{t:'sm',q:'Si quien hace la tradición no es dueño de la cosa:',o:['El adquirente no adquiere el dominio, pero sí la posesión y el derecho a ganarlo por prescripción.','La tradición es nula.','El adquirente adquiere el dominio si está de buena fe.','El adquirente solo adquiere la mera tenencia.'],a:0,e:'No se adquieren más derechos que los transmisibles del tradente (art. 682), pero la tradición da derecho a ganar el dominio por prescripción (art. 683).',s:'Arts. 682 y 683'},
+{t:'vf',q:'En un inmueble inscrito, quien se apodera materialmente del predio adquiere la posesión si actúa con ánimo de dueño.',a:false,e:'Mientras subsista la inscripción, el que se apodera de la cosa no adquiere posesión de ella ni pone fin a la existente (art. 728).',s:'Arts. 724 y 728'},
+{t:'sm',q:'Si alguien edifica en terreno ajeno a ciencia y paciencia del dueño del terreno:',o:['El dueño, para recobrar el terreno, debe pagar el valor del edificio.','El dueño hace suyo el edificio sin pagar nada.','El que edificó adquiere el terreno por accesión.','El dueño solo puede exigir el justo precio del terreno.'],a:0,e:'Art. 669 inc. 2. Si se edificó sin su conocimiento, el dueño elige entre hacer suyo el edificio pagando las indemnizaciones o exigir el justo precio del terreno con intereses (inc. 1).',s:'Art. 669'},
+// PRESCRIPCIÓN
+{t:'sm',q:'El plazo de la prescripción adquisitiva ordinaria de un bien mueble es:',o:['Dos años.','Cinco años.','Diez años.','Un año.'],a:0,e:'Dos años para muebles y cinco para inmuebles (art. 2508).',s:'Art. 2508'},
+{t:'vf',q:'La prescripción adquisitiva extraordinaria requiere diez años y justo título.',a:false,e:'Son diez años (art. 2511), pero no se necesita título alguno (art. 2510 regla 1.ª).',s:'Arts. 2510 y 2511'},
+{t:'sm',q:'Para que un mero tenedor pueda prescribir extraordinariamente (art. 2510 regla 3.ª) se requiere:',o:['Que el dueño no pueda probar que en los últimos diez años se reconoció su dominio, y que el tenedor pruebe haber poseído sin violencia, clandestinidad ni interrupción por el mismo tiempo.','Que haya transcurrido el doble del plazo ordinario.','Que el dueño haya abandonado la cosa.','Que el tenedor haya pagado todas las rentas.'],a:0,e:'Son dos circunstancias copulativas. En el caso 2 no se cumplen: el contrato reconoce el dominio, el apoderamiento fue clandestino y no han pasado diez años.',s:'Art. 2510 regla 3.ª'},
+{t:'vf',q:'El juez puede declarar de oficio la prescripción si consta en el proceso que el plazo venció.',a:false,e:'El que quiera aprovecharse de la prescripción debe alegarla; el juez no puede declararla de oficio (art. 2493). En el ejecutivo, el tribunal debe denegar la ejecución si la acción ejecutiva está prescrita (art. 442 CPC), que es otra cosa.',s:'Art. 2493'},
+{t:'sm',q:'La prescripción extintiva de las acciones ordinarias es, en general, de:',o:['Cinco años.','Tres años.','Dos años.','Diez años.'],a:0,e:'Tres años las ejecutivas y cinco las ordinarias (art. 2515).',s:'Art. 2515'},
+{t:'sm',q:'La prescripción extintiva se cuenta:',o:['Desde que la obligación se haya hecho exigible.','Desde la celebración del contrato.','Desde la notificación de la demanda.','Desde que el acreedor conoce el incumplimiento.'],a:0,e:'Art. 2514. En el caso 7: desde el 5-abr-2019, no desde la firma.',s:'Art. 2514'},
+{t:'vf',q:'La acción ejecutiva se convierte en ordinaria por el lapso de tres años y, convertida, dura solamente otros dos.',a:true,e:'Art. 2515 inc. 2. Los «dos años más» rigen solo para la acción ejecutiva convertida; la de resolución es ordinaria desde el principio.',s:'Art. 2515'},
+{t:'sm',q:'Según el art. 2503, NO se produce interrupción civil cuando:',o:['La demanda no se notificó en forma legal.','El demandado contestó la demanda.','El juicio se tramitó en procedimiento sumario.','La demanda se presentó ante tribunal incompetente.'],a:0,e:'Los tres casos son: notificación no legal, desistimiento o abandono, y sentencia absolutoria (art. 2503).',s:'Art. 2503'},
+{t:'vf',q:'La Corte Suprema tiene una jurisprudencia uniforme según la cual basta presentar la demanda dentro de plazo para interrumpir la prescripción.',a:false,e:'Está dividida: CS 12.249-2024 (tesis de la presentación) y CS 31.699-2024 (tesis de la notificación), ambas 3 a 2 en la misma sala.',s:'Caso 7'},
+{t:'vf',q:'Contra un título inscrito no tiene lugar la prescripción adquisitiva de inmuebles sino en virtud de otro título inscrito.',a:true,e:'Art. 2505. En el caso 13, vencido el plazo del DL, es el regularizado quien queda protegido por esta norma (CS 19.261-2018).',s:'Art. 2505'},
+// REIVINDICACIÓN
+{t:'sm',q:'Son requisitos de la acción reivindicatoria:',o:['Dominio del actor, cosa singular reivindicable y posesión del demandado.','Posesión del actor y despojo violento.','Dominio inscrito del actor y mala fe del demandado.','Contrato entre las partes y su incumplimiento.'],a:0,e:'Art. 889: la tiene el dueño de una cosa singular de que no está en posesión, contra el poseedor.',s:'Art. 889'},
+{t:'vf',q:'La reivindicación también puede dirigirse contra quien, poseyendo a nombre ajeno, retiene indebidamente una cosa.',a:true,e:'Art. 915. Sirve contra el mero tenedor, como Joaquín.',s:'Art. 915'},
+{t:'sm',q:'Si el dueño recibe de quien enajenó su cosa lo que este obtuvo por ella (art. 898):',o:['Confirma por ese hecho la enajenación.','Conserva la reivindicatoria contra el adquirente.','Debe restituir lo recibido si reivindica.','Interrumpe la prescripción del adquirente.'],a:0,e:'Art. 898. Por eso Andrés debe elegir: o reivindica de Paulina o cobra a Joaquín.',s:'Art. 898'},
+{t:'sm',q:'El poseedor vencido de buena fe, en las prestaciones mutuas:',o:['No restituye los frutos percibidos antes de la contestación de la demanda.','Restituye todos los frutos, incluso los que el dueño pudo percibir.','No tiene derecho a que se le abonen las expensas necesarias.','Responde de todos los deterioros, aun sin culpa.'],a:0,e:'Art. 907. El de mala fe restituye todos los frutos; el de buena fe solo los posteriores a la contestación.',s:'Arts. 906 a 910'},
+{t:'vf',q:'Al poseedor de mala fe vencido no se le abonan las mejoras útiles, pero puede llevarse los materiales si se separan sin detrimento y el dueño no paga su precio.',a:true,e:'Art. 910. Las mejoras voluptuarias no se pagan a nadie (art. 911).',s:'Arts. 910 y 911'},
+{t:'vf',q:'Quien compra un mueble en una feria o tienda donde se venden cosas de la misma clase no está obligado a restituirlo al dueño mientras no se le reembolse lo que pagó.',a:true,e:'Excepción del art. 890 inc. 2. En el caso 2 difícilmente aplica: Paulina compró a un particular por Marketplace.',s:'Art. 890'},
+// EVICCIÓN
+{t:'sm',q:'Hay evicción cuando el comprador:',o:['Es privado del todo o parte de la cosa por sentencia judicial, por causa anterior a la venta.','Devuelve voluntariamente la cosa al verdadero dueño.','Descubre que la cosa tiene vicios ocultos.','No recibe la cosa en el plazo convenido.'],a:0,e:'Arts. 1838 y 1839. Si se devuelve sin juicio, no hay evicción.',s:'Arts. 1838 y 1839'},
+{t:'vf',q:'Si el comprador demandado no cita de evicción al vendedor y la cosa es evicta, el vendedor no queda obligado al saneamiento.',a:true,e:'Art. 1843. La citación se pide antes de contestar la demanda (art. 584 CPC).',s:'Art. 1843; art. 584 CPC'},
+{t:'sm',q:'¿Cuál de estas partidas NO está comprendida en el saneamiento de evicción del art. 1847?',o:['La diferencia entre el precio pagado y el avalúo comercial de la cosa al tiempo de la venta.','La restitución del precio.','Las costas legales del contrato.','El aumento de valor que la cosa tomó en poder del comprador.'],a:0,e:'El art. 1847 comprende precio, costas del contrato, frutos restituidos, costas del juicio y aumento de valor en poder del comprador. El avalúo al vender no es «aumento de valor».',s:'Art. 1847'},
+{t:'vf',q:'El vendedor de mala fe debe pagar todo el aumento de valor de la cosa, sin el límite de la cuarta parte del precio.',a:true,e:'Art. 1850. Además reembolsa incluso las mejoras voluptuarias (art. 1849).',s:'Arts. 1849 y 1850'},
+{t:'vf',q:'Quien compra sabiendo que la cosa era ajena conserva el derecho a que se le restituya el precio en caso de evicción.',a:false,e:'Lo pierde (art. 1852 inc. 3), lo que coincide con que quien paga a sabiendas por objeto ilícito no repite (art. 1468).',s:'Art. 1852'},
+{t:'sm',q:'La acción de saneamiento por evicción prescribe en:',o:['Cuatro años desde la sentencia de evicción.','Cinco años desde la compraventa.','Un año desde la entrega.','Dos años desde la citación de evicción.'],a:0,e:'Art. 1856; la sola restitución del precio sigue las reglas generales.',s:'Art. 1856'},
+{t:'vf',q:'Si un mueble se vende en menos de la mitad de su justo precio, el vendedor puede pedir la rescisión por lesión enorme.',a:false,e:'No hay lesión enorme en la venta de bienes muebles (art. 1891).',s:'Arts. 1889 y 1891'},
+// INCUMPLIMIENTO
+{t:'sm',q:'Si el artífice suministra la materia para la confección de una obra material, el contrato es:',o:['Compraventa, que se perfecciona con la aprobación de quien encargó la obra.','Arrendamiento de obra.','Mandato.','Contrato innominado de construcción.'],a:0,e:'Art. 1996. Si la materia la pone quien encarga la obra, es arrendamiento.',s:'Art. 1996'},
+{t:'sm',q:'Según el art. 1489, ante el incumplimiento de un contrato bilateral, el otro contratante puede pedir:',o:['A su arbitrio, la resolución o el cumplimiento, en ambos casos con indemnización de perjuicios.','Solo la resolución, y la indemnización por separado.','El cumplimiento y, si no lo obtiene, la nulidad.','La resolución, sin indemnización.'],a:0,e:'Art. 1489 inc. 2.',s:'Art. 1489'},
+{t:'vf',q:'Para la Corte Suprema (CS 230.406-2023), la resolución exige un incumplimiento esencial, sea o no imputable.',a:true,e:'Fijó tres criterios: lo pactado como esencial, la privación sustancial previsible y la pérdida de confianza en el cumplimiento.',s:'CS 230.406-2023'},
+{t:'sm',q:'En un contrato bilateral, el comprador que no paga el saldo porque el vendedor entregó la obra incompleta:',o:['No está en mora, porque la mora purga la mora.','Está en mora desde el vencimiento del plazo.','Pierde la acción resolutoria.','Debe consignar el saldo para demandar.'],a:0,e:'Art. 1552. Además cumple el requisito de estar llano a cumplir.',s:'Art. 1552'},
+{t:'vf',q:'El deudor está en mora, entre otros casos, cuando no ha cumplido la obligación dentro del término estipulado.',a:true,e:'Art. 1551 N° 1. La indemnización se debe desde la mora (art. 1557).',s:'Arts. 1551 y 1557'},
+{t:'sm',q:'En una obligación de hacer, si el deudor está en mora, el acreedor puede pedir, además de la indemnización de la mora:',o:['Que se apremie al deudor, que se le autorice a hacerla ejecutar por un tercero a costa del deudor, o que se le indemnicen los perjuicios.','Solo la resolución del contrato.','La nulidad del contrato.','Que el deudor rinda caución.'],a:0,e:'Art. 1553, a elección del acreedor.',s:'Art. 1553'},
+{t:'vf',q:'Declarada la resolución, el precio pagado se recupera como indemnización de daño emergente.',a:false,e:'Se recupera como restitución (art. 1487), no como perjuicio. Solo si se demandara la indemnización sin resolución podría cobrarse como daño emergente (Corral nº 426).',s:'Art. 1487'},
+{t:'sm',q:'Sin dolo, el deudor contractual responde:',o:['De los perjuicios que se previeron o pudieron preverse al tiempo del contrato.','De todos los perjuicios directos e indirectos.','Solo del daño emergente.','Solo de los perjuicios que el acreedor pruebe con documentos.'],a:0,e:'Art. 1558. Con dolo, de todos los que fueron consecuencia inmediata o directa.',s:'Art. 1558'},
+{t:'vf',q:'La Corte Suprema acepta el daño moral contractual si es significativo y previsible, y lo ha considerado previsible cuando la cosa es una vivienda.',a:true,e:'CS 194.783-2023 y CS 217.959-2023.',s:'Caso 7'},
+{t:'vf',q:'En la acción contractual, el contratante puede cobrar el daño moral sufrido por su familia.',a:false,e:'Los familiares son terceros: el contrato solo obliga y protege a las partes (art. 1545; Corral nº 468).',s:'Art. 1545'},
+{t:'sm',q:'Para que el arrendador pueda hacer cesar el arriendo por mora en la renta, el art. 1977 exige:',o:['Mora de un período entero y dos reconvenciones con al menos cuatro días entre ellas.','Mora de tres meses y una reconvención.','Mora de cualquier período y aviso por carta certificada.','Sentencia ejecutiva previa.'],a:0,e:'Art. 1977, salvo que se preste seguridad de pago en un plazo no menor a 30 días.',s:'Art. 1977'},
+// DL 2.695
+{t:'sm',q:'Hoy, el DL 2.695 permite regularizar inmuebles cuyo avalúo fiscal sea:',o:['Igual o inferior a 1.000 UTM, rurales o urbanos.','Inferior a 800 UTM los rurales y a 380 UTM los urbanos.','Inferior a 500 UTM.','Cualquier avalúo, si son rurales.'],a:0,e:'Art. 1, texto de la Ley 21.737 (2025). Los límites de 800 y 380 eran los anteriores.',s:'Art. 1 DL 2.695'},
+{t:'sm',q:'El solicitante de la regularización debe acreditar posesión material:',o:['Continua y exclusiva, sin violencia ni clandestinidad, por cinco años a lo menos.','Inscrita, por dos años.','Tranquila, por un año.','De buena fe, por diez años.'],a:0,e:'Art. 2 N° 1 DL. Además: no tener juicio pendiente sobre el dominio o la posesión, y la declaración jurada sobre usurpación.',s:'Art. 2 DL 2.695'},
+{t:'vf',q:'La existencia de una inscripción de dominio anterior sobre el inmueble impide la regularización.',a:false,e:'No es obstáculo (art. 2 inc. final DL). Da, en cambio, la causal de oposición del art. 19 N° 1 y la acción del art. 26.',s:'Art. 2 DL 2.695'},
+{t:'sm',q:'Practicada la inscripción conforme al DL 2.695, el regularizado se hace dueño por prescripción tras:',o:['Dos años completos de posesión inscrita no interrumpida, sin suspensión.','Un año de posesión inscrita.','Cinco años de posesión inscrita.','Diez años, como en la extraordinaria.'],a:0,e:'Art. 15 DL. La Ley 21.108 (2018) subió el plazo de uno a dos años.',s:'Art. 15 DL 2.695'},
+{t:'vf',q:'Vencido el plazo del art. 15, las inscripciones anteriores se entienden canceladas por el solo ministerio de la ley.',a:true,e:'Art. 16 DL; además prescriben las acciones de los derechos reales sobre el inmueble.',s:'Art. 16 DL 2.695'},
+{t:'sm',q:'La acción de dominio de los terceros del art. 26 DL 2.695 debe deducirse:',o:['Dentro de dos años desde la inscripción, en juicio sumario.','Dentro de cinco años desde la inscripción, en juicio ordinario.','Dentro de 60 días hábiles desde la última publicación.','En cualquier tiempo, porque la reivindicatoria es imprescriptible.'],a:0,e:'Art. 26 DL. Los 60 días hábiles son para la oposición (art. 20); los cinco años, para la compensación (art. 29).',s:'Art. 26 DL 2.695'},
+{t:'vf',q:'Para ejercer la acción de dominio del art. 26, el tercero debe haberse opuesto antes a la solicitud.',a:false,e:'El art. 26 la concede «sin perjuicio» del art. 19: son vías distintas.',s:'Art. 26 DL 2.695'},
+{t:'sm',q:'Los terceros que acrediten dominio y no ejercieron a tiempo la acción de dominio pueden:',o:['Pedir que sus derechos se les compensen en dinero, dentro de cinco años desde la inscripción.','Reivindicar por la vía común en juicio ordinario.','Interponer una querella de restitución.','Pedir la nulidad de la resolución administrativa en cualquier tiempo.'],a:0,e:'Arts. 28 y 29 DL, en juicio sumario. El valor se fija sin las mejoras del poseedor (art. 28).',s:'Arts. 28 y 29 DL 2.695'},
+{t:'vf',q:'Según el art. 18 DL 2.695, después de la inscripción los terceros solo pueden impugnar ejerciendo los derechos del propio título IV del DL.',a:true,e:'Por eso quedan desplazadas las posesorias y la reivindicatoria común. Antes de la inscripción, la reivindicatoria común procede (CS 9.789-2022).',s:'Art. 18 DL 2.695'},
+{t:'vf',q:'El comunero puede ejercer la acción de dominio del art. 26 contra el comunero que regularizó el inmueble común.',a:false,e:'El art. 19 N° 1 se lo impide: solo puede pedir compensación en dinero (CS 19.944-2023). Frente a un tercero extraño, sí puede reivindicar.',s:'CS 19.944-2023'},
+{t:'sm',q:'El delito del art. 9 DL 2.695 consiste en:',o:['Obtener maliciosamente el reconocimiento de la calidad de poseedor regular.','Ocupar un inmueble ajeno sin título.','No pagar la compensación del art. 30.','Enajenar el inmueble regularizado antes de cinco años.'],a:0,e:'Pena del art. 473 CP; si se acoge, se cancela la inscripción (art. 9 inc. 3). Prescribe en cinco años desde el delito.',s:'Art. 9 DL 2.695'},
+{t:'vf',q:'La presunción de dolo por juicio pendiente de usurpación, agregada por la Ley 21.633, se aplica a Herrera, que inscribió el 30 de junio de 2023.',a:false,e:'La Ley 21.633 se publicó el 24-nov-2023, después de la inscripción, y no puede aplicarse a un hecho anterior (art. 18 CP).',s:'Art. 18 CP'},
+// DESARROLLO BREVE
+{t:'db',q:'Distinga posesión y mera tenencia, con sus artículos, y diga por qué la mera tenencia no permite prescribir.',e:'Posesión: tenencia de una cosa determinada con ánimo de señor o dueño (art. 700), con corpus y animus; el poseedor se reputa dueño. Mera tenencia: se ejerce no como dueño sino en lugar o a nombre del dueño, reconociendo dominio ajeno (art. 714). La prescripción adquisitiva exige posesión (art. 2492), y el simple lapso no muda la mera tenencia en posesión (art. 716). La única excepción es el art. 2510 regla 3.ª, con sus dos requisitos y diez años.',s:'Arts. 700, 714, 716 y 2510'},
+{t:'db',q:'Explique el art. 730 y sus dos hipótesis.',e:'Regula al que tiene la cosa en lugar y a nombre de otro y se la apropia. Si solo la usurpa dándose por dueño, no se pierde por una parte la posesión ni se adquiere por otra. Si la enajena a su propio nombre, el adquirente adquiere la posesión y pone fin a la anterior. Si el poseedor es inscrito, se requiere además la competente inscripción.',s:'Art. 730'},
+{t:'db',q:'¿Qué es la posesión regular y qué importancia práctica tiene?',e:'La que procede de justo título y fue adquirida de buena fe, más la tradición si el título es translaticio (art. 702). Es la que permite la prescripción ordinaria (art. 2507): dos años para muebles y cinco para inmuebles (art. 2508). La irregular (art. 708) solo permite la extraordinaria de diez años (arts. 2510 y 2511). Además, la buena fe incide en las prestaciones mutuas (arts. 906 a 910).',s:'Arts. 702, 708, 2507, 2508'},
+{t:'db',q:'Requisitos de la acción resolutoria del art. 1489 y diferencia entre la doctrina tradicional y la moderna.',e:'Contrato bilateral; incumplimiento del demandado; que el actor haya cumplido o esté llano a cumplir (art. 1552), y declaración judicial. La tradicional exige incumplimiento imputable, con culpa presunta (art. 1547). La moderna, acogida por la CS (230.406-2023), exige incumplimiento esencial, sea o no imputable, con tres criterios: lo pactado como esencial, la privación sustancial previsible y la pérdida de confianza en el cumplimiento.',s:'Arts. 1489, 1547 y 1552'},
+{t:'db',q:'Requisitos de la indemnización de perjuicios contractual y tipos de daño.',e:'Incumplimiento (incluso imperfecto o tardío, art. 1556), imputabilidad (culpa presunta, art. 1547), mora (art. 1557), daño cierto y causalidad, con previsibilidad: sin dolo, solo los perjuicios previstos o previsibles al contratar (art. 1558). Daños: emergente (pérdida efectiva), lucro cesante (ganancia que se deja de obtener) y daño moral, que la CS acepta si es significativo y previsible.',s:'Arts. 1547, 1556 a 1558'},
+{t:'db',q:'Prescripción extintiva: plazos, cómputo, interrupción y alegación.',e:'Tres años las acciones ejecutivas y cinco las ordinarias; la ejecutiva se convierte en ordinaria y dura otros dos (art. 2515). Se cuenta desde que la obligación se hizo exigible (art. 2514); los plazos de años vencen el día de igual número (art. 48). Se interrumpe naturalmente por reconocimiento del deudor y civilmente por la demanda, salvo los casos del art. 2503 (art. 2518). Debe alegarse; no se declara de oficio (art. 2493).',s:'Arts. 48, 2493, 2503, 2514, 2515, 2518'},
+{t:'db',q:'Saneamiento de evicción: qué es, requisitos, citación y qué comprende.',e:'Obligación del vendedor de amparar al comprador en el dominio y la posesión pacífica (art. 1837). Requisitos: privación por sentencia judicial (art. 1838) y causa anterior a la venta (art. 1839). El comprador demandado debe citar al vendedor antes de contestar (art. 1843; art. 584 CPC), o pierde el saneamiento. Comprende el precio, las costas del contrato, los frutos restituidos, las costas del juicio y el aumento de valor (art. 1847); el vendedor de mala fe, además, todas las mejoras y todo el aumento (arts. 1849 y 1850). Prescribe en cuatro años desde la sentencia (art. 1856).',s:'Arts. 1837 a 1856'},
+{t:'db',q:'Explique las vías que el DL 2.695 da a los terceros y sus plazos.',e:'Vía exclusiva (art. 18). 1) Oposición ante el Servicio, hasta 60 días hábiles desde la última publicación, por las causales del art. 19 (arts. 19 y 20). 2) Acción de dominio, dos años desde la inscripción, juicio sumario ante el juez del predio (arts. 26 y 27). 3) Compensación en dinero, cinco años, sumario (arts. 28 a 30). 4) Fuera del título IV, la acción penal del art. 9, que permite cancelar la inscripción.',s:'Arts. 9, 18 a 30 DL 2.695'},
+{t:'db',q:'¿Qué efectos produce la inscripción practicada conforme al DL 2.695?',e:'La resolución es justo título y el interesado queda como poseedor regular aunque existan inscripciones no canceladas (art. 15). A los dos años de posesión inscrita no interrumpida se hace dueño por prescripción, que no se suspende (art. 15); prescriben las acciones de los derechos reales anteriores y sus inscripciones se entienden canceladas por el solo ministerio de la ley (art. 16). Además, el Conservador inscribe de oficio la prohibición de gravar por dos años y de enajenar por cinco (art. 17).',s:'Arts. 15 a 17 DL 2.695'},
+{t:'db',q:'Prestaciones mutuas: qué son y cómo influye la buena o mala fe.',e:'Obligaciones recíprocas entre el reivindicante vencedor y el poseedor vencido (arts. 904 a 915). El poseedor restituye la cosa, responde de deterioros y restituye frutos; el dueño abona expensas y mejoras. De buena fe: deterioros solo si se aprovechó; no restituye frutos anteriores a la contestación; se le abonan mejoras útiles anteriores a la contestación. De mala fe: deterioros por su culpa, todos los frutos, sin mejoras útiles. Se aplican también contra el que retiene indebidamente (art. 915).',s:'Arts. 904 a 915'}
+];
+
+</script>
+<script>addBank('Civil')</script>
+<script>
+window.PREG=[
+// ORDINARIO
+{t:'sm',q:'El procedimiento ordinario se aplica:',o:['A todas las gestiones que no estén sometidas a una regla especial diversa.','Solo a los juicios de más de 500 UTM.','Solo cuando las partes lo eligen.','Solo a las acciones reales.'],a:0,e:'Es la regla general y supletoria (art. 3 CPC). La cuantía distingue mayor (más de 500 UTM) y menor cuantía (art. 698).',s:'Art. 3 CPC'},
+{t:'sm',q:'Notificada la demanda en el territorio jurisdiccional del tribunal, el plazo para contestar en el juicio ordinario de mayor cuantía es:',o:['18 días.','15 días.','10 días.','8 días.'],a:0,e:'Art. 258; se aumenta según la tabla de emplazamiento si se notifica en otro territorio (art. 259). Ocho días es el de menor cuantía (art. 698) y el de oposición en el ejecutivo (art. 459).',s:'Arts. 258 y 259 CPC'},
+{t:'vf',q:'Si se rechazan las excepciones dilatorias, el demandado tiene diez días para contestar.',a:true,e:'Art. 308 CPC.',s:'Art. 308 CPC'},
+{t:'sm',q:'El traslado para replicar y para duplicar en el juicio ordinario es de:',o:['Seis días cada uno.','Tres días cada uno.','Diez días cada uno.','Quince días cada uno.'],a:0,e:'Art. 311 CPC.',s:'Art. 311 CPC'},
+{t:'vf',q:'La conciliación es obligatoria en el juicio ordinario y se intercala entre la discusión y la prueba.',a:true,e:'Art. 262 CPC: audiencia entre el quinto y el decimoquinto día; el juez propone bases de arreglo.',s:'Art. 262 CPC'},
+{t:'sm',q:'Contra la resolución que recibe la causa a prueba procede:',o:['Reposición dentro de tercero día y apelación solo en subsidio.','Solo apelación en ambos efectos.','Ningún recurso.','Casación en la forma.'],a:0,e:'Art. 319 CPC.',s:'Art. 319 CPC'},
+{t:'sm',q:'El término probatorio ordinario para rendir prueba dentro del territorio del tribunal es de:',o:['20 días.','8 días.','10 días.','30 días.'],a:0,e:'Art. 328 CPC; se amplía según la tabla si se rinde fuera (art. 329). Ocho días es el término de los incidentes, que usa el sumario.',s:'Art. 328 CPC'},
+{t:'vf',q:'Vencido el término de prueba, las partes tienen diez días para formular observaciones a la prueba.',a:true,e:'Art. 430 CPC. Luego viene la citación para oír sentencia (art. 432).',s:'Art. 430 CPC'},
+{t:'sm',q:'La sentencia definitiva en el juicio ordinario debe pronunciarse dentro de:',o:['60 días desde que la causa queda en estado de sentencia.','10 días desde la citación para oír sentencia.','30 días desde la última diligencia.','No tiene plazo legal.'],a:0,e:'Art. 162 CPC. Diez días es el plazo del sumario (art. 688).',s:'Art. 162 CPC'},
+{t:'sm',q:'El plazo para apelar de una sentencia definitiva es:',o:['10 días.','5 días.','15 días.','3 días.'],a:0,e:'Art. 189: cinco días por regla general, diez contra las sentencias definitivas. La casación es de quince (art. 770).',s:'Arts. 189 y 770 CPC'},
+{t:'vf',q:'Si se pide el cumplimiento de la sentencia ante el tribunal que la dictó dentro de un año desde que se hizo exigible, se tramita incidentalmente.',a:true,e:'Art. 233 CPC. Pasado el año, la sentencia firme es título para el juicio ejecutivo (art. 434 N° 1).',s:'Arts. 233 y 434 CPC'},
+// SUMARIO
+{t:'sm',q:'El juicio sumario se aplica, entre otros casos:',o:['Cuando la ley ordena proceder sumariamente o breve y sumariamente.','A todos los juicios de menor cuantía.','Solo a las acciones posesorias.','Cuando el demandado no contesta.'],a:0,e:'Art. 680 N° 1 CPC; y, en general, a las acciones que por su naturaleza requieren tramitación rápida (inc. 1).',s:'Art. 680 CPC'},
+{t:'vf',q:'En el juicio sumario el demandado tiene 18 días para contestar por escrito.',a:false,e:'No hay plazo en días: se cita a audiencia al quinto día hábil después de la última notificación, y ahí se contesta (art. 683), con el aumento de la tabla si no está en el lugar del juicio.',s:'Art. 683 CPC'},
+{t:'vf',q:'Un juicio sumario ordenado por ley (art. 680 N° 1) puede sustituirse por el ordinario si hay motivos fundados.',a:false,e:'El art. 681 solo permite el cambio en los casos del inciso primero del art. 680, no en los que la ley manda proceder sumariamente.',s:'Art. 681 CPC'},
+{t:'sm',q:'En el juicio sumario la prueba se rinde:',o:['En el plazo y la forma de los incidentes.','En un término de veinte días.','Solo por documentos.','En la audiencia de contestación, sin término.'],a:0,e:'Art. 686: término de ocho días (art. 90), ampliable hasta treinta si hay diligencias fuera.',s:'Arts. 686 y 90 CPC'},
+{t:'sm',q:'En el sumario, la sentencia definitiva debe dictarse:',o:['Dentro de los 10 días siguientes a la citación para oír sentencia.','Dentro de 60 días.','Dentro de segundo día.','En la misma audiencia.'],a:0,e:'Art. 688; las demás resoluciones, dentro de segundo día.',s:'Art. 688 CPC'},
+{t:'vf',q:'Si el demandado no comparece a la audiencia del sumario, el actor puede pedir, con fundamento plausible, que se acceda provisionalmente a la demanda.',a:true,e:'Art. 684; el demandado puede oponerse dentro de cinco días, sin que se suspenda lo decretado (art. 685).',s:'Arts. 684 y 685 CPC'},
+{t:'sm',q:'La sentencia definitiva del juicio sumario es apelable:',o:['En ambos efectos, salvo que así hayan de eludirse sus resultados.','Solo en el efecto devolutivo.','No es apelable.','Solo por casación.'],a:0,e:'Art. 691 CPC; las demás resoluciones, en el solo efecto devolutivo.',s:'Art. 691 CPC'},
+// LEY 18.101 Y MONITORIO
+{t:'sm',q:'En los juicios de la Ley 18.101, para la notificación del art. 44 CPC se presume de pleno derecho que el domicilio del demandado es:',o:['El inmueble arrendado.','El lugar donde se firmó el contrato.','El último domicilio informado al Registro Civil.','El domicilio del arrendador.'],a:0,e:'Art. 8 N° 2 Ley 18.101, en relación con el art. 553 inc. 1 CPC. No fija competencia ni sirve fuera de esos juicios.',s:'Art. 8 N° 2 Ley 18.101'},
+{t:'vf',q:'En el procedimiento de la Ley 18.101 la apelación de la sentencia definitiva se concede en el solo efecto devolutivo.',a:true,e:'Art. 8 N° 9: además tiene preferencia y no procede orden de no innovar.',s:'Art. 8 N° 9 Ley 18.101'},
+{t:'sm',q:'En el juicio de arrendamiento de la Ley 18.101, la audiencia se celebra:',o:['Al quinto día hábil después de la última notificación.','A los 18 días de notificada la demanda.','Dentro de tercero día.','Entre el quinto y el decimoquinto día.'],a:0,e:'Art. 8 N° 1. Cada parte puede presentar hasta cuatro testigos (art. 8 N° 3); la prueba se aprecia según la sana crítica (art. 8 N° 7).',s:'Art. 8 Ley 18.101'},
+{t:'vf',q:'Si el arrendatario abandona el inmueble, el arrendador puede pedir al juez que se lo entregue sin forma de juicio, con la sola certificación del abandono por un ministro de fe.',a:true,e:'Art. 6 inc. 2 Ley 18.101; el ministro de fe levanta acta del estado del inmueble.',s:'Art. 6 Ley 18.101'},
+{t:'sm',q:'En el monitorio de arriendo, el plazo para pagar desde el requerimiento es de:',o:['Diez días corridos.','Diez días hábiles.','Cinco días hábiles.','Quince días corridos.'],a:0,e:'Arts. 18-A y 18-C Ley 18.101.',s:'Art. 18-C Ley 18.101'},
+{t:'vf',q:'En el monitorio, la notificación de la demanda vale como primer requerimiento de pago, y el segundo se entiende hecho cinco días después por el solo ministerio de la ley.',a:true,e:'Art. 18-D. Cumplen la función de las dos reconvenciones del art. 1977.',s:'Art. 18-D Ley 18.101'},
+{t:'sm',q:'Si en el monitorio el deudor se opone con excepciones distintas de las dilatorias:',o:['Termina el monitorio y el arrendador puede iniciar el juicio declarativo, delimitado por la oposición.','El juez falla la oposición en el mismo monitorio.','Se le tiene por condenado.','Se suspende el juicio hasta que pague.'],a:0,e:'Art. 18-H. Si solo opone dilatorias, se tramitan como incidente (art. 18-G).',s:'Art. 18-H Ley 18.101'},
+{t:'vf',q:'El monitorio le permite al arrendador cobrar, en el mismo procedimiento, las rentas y la indemnización por los muebles que el arrendatario se llevó.',a:false,e:'Solo sirve para el cobro de rentas y cuentas y la restitución consecuencial del inmueble (art. 18-A). Por eso al caso 2 le conviene el juicio de la Ley 18.101 (art. 7 N° 2, 5 y 6).',s:'Art. 18-A Ley 18.101'},
+// EJECUTIVO
+{t:'sm',q:'¿Cuál de estos es título ejecutivo según el art. 434 CPC?',o:['La sentencia firme, definitiva o interlocutoria.','El instrumento privado firmado ante notario, cualquiera sea su contenido.','La demanda notificada.','El contrato verbal reconocido por testigos.'],a:0,e:'Art. 434 N° 1. El instrumento privado debe estar reconocido; la firma autorizada ante notario basta solo en la letra, el pagaré y el cheque (N° 4).',s:'Art. 434 CPC'},
+{t:'vf',q:'Hoy la gestión preparatoria de reconocimiento de firma sirve para obtener título en obligaciones de hacer.',a:false,e:'Solo procede respecto de obligaciones de dinero líquidas (art. 435). Por eso Javier no podía preparar la vía ejecutiva.',s:'Art. 435 CPC'},
+{t:'sm',q:'El ejecutado requerido en el territorio del tribunal tiene para oponerse:',o:['Ocho días.','Dieciocho días.','Cinco días.','Diez días.'],a:0,e:'Art. 459; con aumento si es requerido fuera (art. 460).',s:'Art. 459 CPC'},
+{t:'sm',q:'La prescripción en el juicio ejecutivo se opone como excepción del:',o:['Art. 464 N° 17.','Art. 303 N° 1.','Art. 464 N° 7.','Art. 310.'],a:0,e:'N° 17: prescripción de la deuda o solo de la acción ejecutiva. El N° 7 es la insuficiencia del título.',s:'Art. 464 CPC'},
+{t:'vf',q:'En el juicio ejecutivo, el tribunal debe denegar la ejecución si la acción ejecutiva está prescrita, aunque el deudor no lo alegue.',a:true,e:'Art. 442 CPC. Es distinto del juicio ordinario, donde rige el art. 2493 CC.',s:'Art. 442 CPC'},
+// COMPETENCIA Y NOTIFICACIÓN
+{t:'sm',q:'Si la acción es mueble y no hay estipulación, es competente el juez:',o:['Del domicilio del demandado.','Del lugar donde se contrajo la obligación.','Del lugar donde está la cosa.','Del domicilio del demandante.'],a:0,e:'Art. 138 COT. Las acciones son muebles o inmuebles según la cosa (art. 580 CC).',s:'Art. 138 COT'},
+{t:'sm',q:'Si se acumulan varias acciones y al menos una es inmueble, es competente:',o:['El juez del lugar del inmueble.','El juez del domicilio del demandado.','Cualquier juez, a elección del demandante.','El juez del lugar del contrato.'],a:0,e:'Art. 137 COT. En el caso 2 no aplica, porque la casa ya se recuperó y todas las acciones restantes son muebles.',s:'Art. 137 COT'},
+{t:'vf',q:'Si una sociedad tiene oficinas en distintos lugares, debe ser demandada ante el juez del lugar de la oficina que celebró el contrato.',a:true,e:'Art. 142 inc. 2 COT. En el caso 7: Puerto Montt, salvo que contratara una oficina en Santiago.',s:'Art. 142 COT'},
+{t:'sm',q:'La acción de dominio del art. 26 del DL 2.695 se deduce ante:',o:['El juez de letras en lo civil del lugar del predio.','El juez del domicilio del demandado.','El Ministerio de Bienes Nacionales.','La Corte de Apelaciones respectiva.'],a:0,e:'Arts. 20 y 26 DL 2.695. En el caso 13, San Vicente.',s:'Arts. 20 y 26 DL 2.695'},
+{t:'vf',q:'La notificación por avisos procede respecto de personas cuya residencia sea difícil de determinar, con autorización del tribunal con conocimiento de causa.',a:true,e:'Art. 54 CPC. Por ser la primera notificación, se publica también en el Diario Oficial del 1 o 15 de algún mes.',s:'Art. 54 CPC'},
+{t:'vf',q:'Los plazos de días del CPC se suspenden durante los días feriados.',a:true,e:'Art. 66 CPC.',s:'Art. 66 CPC'},
+// EXCEPCIONES Y MEDIDAS
+{t:'sm',q:'¿Cuál de estas es una excepción dilatoria?',o:['La ineptitud del libelo.','La prescripción.','El pago.','La cosa juzgada.'],a:0,e:'Art. 303 N° 4. Las demás son perentorias; la prescripción, la cosa juzgada, la transacción y el pago documentado pueden además oponerse como anómalas (art. 310).',s:'Art. 303 CPC'},
+{t:'vf',q:'Las excepciones dilatorias deben oponerse todas en un mismo escrito y dentro del término de emplazamiento.',a:true,e:'Art. 305 CPC; si no, solo como alegación o defensa en el progreso del juicio.',s:'Art. 305 CPC'},
+{t:'sm',q:'Como excepción anómala, la prescripción puede oponerse en primera instancia hasta:',o:['La citación para oír sentencia.','La contestación de la demanda.','La recepción de la causa a prueba.','La notificación de la sentencia.'],a:0,e:'Art. 310: por escrito, antes de la citación para oír sentencia en primera instancia o de la vista de la causa en segunda.',s:'Art. 310 CPC'},
+{t:'vf',q:'Si la prescripción se opone en primera instancia después de recibida la causa a prueba, se tramita como incidente y su resolución se reserva para la sentencia definitiva.',a:true,e:'Art. 310 inc. 2; en segunda instancia, la Corte la falla en única instancia.',s:'Art. 310 CPC'},
+{t:'sm',q:'¿Cuál NO es una medida precautoria del art. 290 CPC?',o:['La citación de evicción.','El secuestro de la cosa.','La retención de bienes determinados.','La prohibición de celebrar actos o contratos sobre bienes determinados.'],a:0,e:'Las cuatro del art. 290 son secuestro, interventor, retención y prohibición de celebrar actos o contratos.',s:'Art. 290 CPC'},
+{t:'vf',q:'La prohibición de celebrar actos o contratos sobre un inmueble produce efecto respecto de terceros aunque no se inscriba.',a:false,e:'Respecto de terceros, solo produce efecto si se inscribe en el Conservador (art. 297 CPC).',s:'Art. 297 CPC'},
+{t:'sm',q:'Concedida una medida prejudicial precautoria, el solicitante debe presentar la demanda en:',o:['Diez días, ampliables hasta treinta por motivos fundados.','Treinta días, improrrogables.','Cinco días.','El plazo que fije el juez, sin límite.'],a:0,e:'Art. 280; si no, responde de los perjuicios y su procedimiento se considera doloso.',s:'Art. 280 CPC'},
+{t:'vf',q:'La citación de evicción debe pedirse antes de la contestación de la demanda.',a:true,e:'Art. 584 CPC; decretada, el juicio se suspende por diez días para practicarla (art. 585).',s:'Art. 584 CPC'},
+// PENAL
+{t:'sm',q:'Si hay proceso penal por apropiación indebida, la acción civil que solo busca la restitución de la cosa:',o:['Debe interponerse siempre en el procedimiento penal.','Puede deducirse en sede civil o penal, a elección.','Solo procede en sede civil.','Se extingue con la querella.'],a:0,e:'Art. 59 inc. 1 CPP y COT 171. La indemnización contra el imputado puede ir a una u otra sede, no a ambas.',s:'Art. 59 CPP'},
+{t:'sm',q:'El procedimiento simplificado procede cuando el fiscal requiere una pena que no excede de:',o:['Presidio menor en su grado mínimo.','Presidio menor en su grado máximo.','Presidio mayor en su grado mínimo.','Multa.'],a:0,e:'Art. 388 CPP. Contra la sentencia solo procede el recurso de nulidad (art. 399).',s:'Art. 388 CPP'},
+{t:'vf',q:'El delito se considera cometido en el lugar donde se dio comienzo a su ejecución, para fijar la competencia penal.',a:true,e:'COT 157. En el caso 2, Osorno.',s:'COT 157'},
+// DESARROLLO BREVE
+{t:'db',q:'Enumere las etapas del juicio ordinario de mayor cuantía con sus plazos.',e:'1) Discusión: demanda (arts. 253 y 254), traslado (257), contestación en 18 días (258, más tabla, 259; 10 si se rechazan dilatorias, 308), réplica y dúplica de 6 días (311). 2) Conciliación obligatoria (262). 3) Recepción a prueba (318), reposición en 3 días (319), minuta y testigos en 5 (320). 4) Término probatorio de 20 días (328). 5) Observaciones en 10 días (430) y citación para oír sentencia (432). 6) Sentencia en 60 días (162). 7) Apelación en 10 días (189), casación en 15 (770), cumplimiento incidental dentro de un año (233).',s:'CPC'},
+{t:'db',q:'Enumere las etapas del juicio sumario y diga en qué se diferencia del ordinario.',e:'Demanda verbal o con minuta (682); citación a audiencia al quinto día hábil después de la última notificación, más tabla (683); audiencia: contestación, conciliación, incidentes en la misma audiencia (690), y en rebeldía se puede acceder provisionalmente (684); prueba como incidentes, 8 días (686 y 90); citación inmediata y sentencia en 10 días (687 y 688); apelación en ambos efectos (691). Diferencias: verbal y concentrado, sin plazo en días para contestar, sin réplica ni dúplica, prueba breve.',s:'Arts. 680 a 692 CPC'},
+{t:'db',q:'Etapas del juicio de arrendamiento de la Ley 18.101.',e:'1) Demanda con medios de prueba y nómina de hasta 4 testigos (art. 8 N° 3). 2) Notificación por el art. 553 inc. 1 CPC, con presunción de domicilio en el inmueble (art. 8 N° 2), y audiencia al quinto día hábil (art. 8 N° 1). 3) Audiencia: contestación verbal, reconvención, conciliación obligatoria, incidentes (art. 8 N° 4, 5 y 8). 4) Prueba inmediata, sana crítica (art. 8 N° 6 y 7). 5) Sentencia; apelación en el solo efecto devolutivo (art. 8 N° 9). 6) Cumplimiento y lanzamiento (art. 13).',s:'Arts. 7 y 8 Ley 18.101'},
+{t:'db',q:'Etapas del procedimiento monitorio de arriendo.',e:'1) Demanda monitoria (18-A). 2) Control de admisibilidad (18-B). 3) Resolución que acoge y requiere el pago en 10 días corridos, con apercibimiento de condena y lanzamiento (18-C). 4) Notificación: primer requerimiento; el segundo se entiende hecho a los 5 días (18-D). 5) Conducta del deudor: paga (18-E), se opone (18-F), dilatorias como incidente (18-G), otras excepciones terminan el monitorio y abren el declarativo (18-H). 6) Costas del 18-C y apelación solo de la resolución sobre la oposición (18-I y 18-J).',s:'Arts. 18-A a 18-J Ley 18.101'},
+{t:'db',q:'Actitudes del demandado y diferencia entre excepciones dilatorias, perentorias y anómalas.',e:'Puede no contestar, allanarse, oponer dilatorias, contestar con perentorias o reconvenir. Dilatorias: corrigen el procedimiento sin afectar el fondo (art. 303), todas en un escrito dentro del emplazamiento (305). Perentorias: atacan el fondo, se oponen en la contestación (309) y se resuelven en la sentencia. Anómalas: prescripción, cosa juzgada, transacción y pago documentado, en cualquier estado hasta la citación para oír sentencia o la vista de la causa (310).',s:'Arts. 303, 305, 309 y 310 CPC'},
+{t:'db',q:'Medidas precautorias y prejudiciales: cuáles son y sus requisitos.',e:'Precautorias (art. 290): secuestro, interventor, retención y prohibición de celebrar actos o contratos, en cualquier estado del juicio; exigen comprobantes de presunción grave del derecho (298); la prohibición sobre inmuebles se inscribe (297). Como prejudiciales (279): motivos graves y calificados, monto de los bienes y garantía; luego demandar en 10 días, ampliables a 30 (280). Las preparatorias (273) son otra cosa: preparan la demanda.',s:'Arts. 273, 279, 280, 290 a 301 CPC'},
+{t:'db',q:'Reglas de competencia relativa en materia civil que se usan en los casos.',e:'Acción inmueble: juez estipulado o, a elección, el del lugar del contrato o el de la especie (COT 135). Mixta o acumuladas con una inmueble: juez del inmueble (137). Mueble: juez estipulado o del domicilio del demandado (138). Persona jurídica: su asiento o la oficina que contrató (142). DL 2.695: juez civil del lugar del predio (art. 20 DL).',s:'COT 135, 137, 138, 142'}
+];
+
+</script>
+<script>addBank('Procesal')</script>
+<script>
+window.PREG=[
+{t:'db',q:'<b>Civil 1.</b> Explique qué calidad tenían Joaquín González y Andrés Salamanca en relación con el inmueble y los muebles arrendados después de la celebración del contrato y después de su término.',e:'Durante el contrato, Andrés es dueño y poseedor, y posee por medio de Joaquín (art. 700): el poseedor conserva la posesión aunque dé la cosa en arriendo (art. 725). Joaquín es mero tenedor (art. 714). Terminado el contrato, nada cambia: el simple lapso no muda la mera tenencia en posesión (art. 716); solo nace la obligación de restituir (art. 1947). El art. 730 obliga a distinguir: en los muebles que se llevó, Andrés sigue dueño y poseedor y Joaquín mero tenedor, porque usurpar no hace perder la posesión; en el Smart TV, Andrés sigue dueño pero perdió la posesión, que tiene Paulina, porque Joaquín lo enajenó a su propio nombre.',s:'Arts. 700, 714, 716, 725, 730 y 1947'},
+{t:'db',q:'<b>Civil 2.</b> Explique si Joaquín González puede adquirir por prescripción los bienes muebles, ya que los tiene en su poder, y de ser procedente, en qué plazo.',e:'No por la ordinaria: no es poseedor sino mero tenedor (art. 716). Solo cabría la extraordinaria de diez años (arts. 2510 regla 3.ª y 2511), pero el título de mera tenencia hace presumir mala fe, salvo que Andrés no pueda probar que en los últimos diez años se reconoció su dominio y que Joaquín pruebe haber poseído sin violencia, clandestinidad ni interrupción. No se cumple: el contrato reconoce el dominio, el apoderamiento fue clandestino (arts. 709 y 713) y, además, no han pasado diez años: tiene los muebles desde 2023.',s:'Arts. 709, 713, 716, 2510 y 2511'},
+{t:'db',q:'<b>Civil 3.</b> Determine qué calidad tiene Paulina Arancibia Luna en relación con el Smart TV que compró y si puede adquirir su dominio y, de ser posible, por qué modo.',e:'Es poseedora, porque Joaquín enajenó a nombre propio (art. 730), y poseedora regular (art. 702): justo título translaticio, la compraventa, válida aunque la cosa sea ajena (arts. 703 y 1815); buena fe presunta (arts. 706 y 707), y tradición (art. 684). No adquiere el dominio por tradición, porque Joaquín no era dueño (art. 682), pero sí el derecho a ganarlo por prescripción (art. 683): ordinaria de dos años desde el 10-dic-2023 (art. 2508). Si Andrés no la demanda y notifica antes del 10-dic-2025, Paulina se hace dueña.',s:'Arts. 682, 683, 702, 703, 706, 707, 730, 1815 y 2508'},
+{t:'db',q:'<b>Civil 4.</b> Evalúe si tiene alguna importancia que Paulina desconociera que el Smart TV no pertenecía a Joaquín.',e:'Sí: es su buena fe posesoria (art. 706 inc. 2), que se presume (art. 707), distinta de la buena fe contractual del art. 1546. Importa en tres planos: 1) posesión regular y prescripción de dos años en vez de diez (arts. 2508 y 2511); 2) prestaciones mutuas si la reivindican: no responde de los deterioros salvo provecho, no restituye frutos anteriores a la contestación y se le abonan las mejoras útiles (arts. 904 a 914); 3) el reembolso del art. 890, que difícilmente aplica a la compra a un particular por Marketplace. Si se probara mala fe (el precio vil es indicio): poseedora irregular, diez años, pierde el precio en la evicción (art. 1852 inc. 3) y posible receptación (art. 456 bis A CP).',s:'Arts. 706, 707, 890, 904 a 914, 1852'},
+{t:'db',q:'<b>Procesal 1.</b> Asesore a Andrés Salamanca y determine las acciones que puede ejercer para recuperar sus bienes.',e:'Contra Joaquín, por los muebles: acción personal de restitución del contrato (art. 1947), por el procedimiento de la Ley 18.101 (art. 7 N° 6), acumulando rentas e indemnización; o la reivindicatoria contra el que retiene indebidamente (art. 915). Contra Paulina, por el Smart TV: reivindicatoria (arts. 889 y 895), antes del 10-dic-2025, con secuestro como medida prejudicial precautoria (art. 901 CC; arts. 279, 290 N° 1 y 291 CPC). Alternativa contra Joaquín por el televisor: art. 898 (lo que recibió más perjuicios), pero si Andrés lo recibe confirma la venta. Además, querella por apropiación indebida (art. 470 N° 1 CP).',s:'Arts. 889, 895, 898, 901, 915, 1947'},
+{t:'db',q:'<b>Procesal 2.</b> Determine qué tribunal sería competente para conocer de las acciones derivadas del contrato.',e:'Absoluta: juez de letras, según las reglas generales del COT (art. 17 Ley 18.101). Relativa: como la casa ya se recuperó, todas las acciones que quedan son muebles (art. 580 CC): no rige el art. 137 COT sino el 138: juez estipulado o, a falta, el del domicilio del demandado (o el domicilio especial del art. 69 CC). Contra Paulina, el de su domicilio. Joaquín se notifica en la casa por la presunción del art. 8 N° 2 Ley 18.101. En lo penal: juez de garantía de Osorno (COT 157).',s:'COT 137, 138, 157; art. 17 Ley 18.101'},
+{t:'db',q:'<b>Procesal 3.</b> Explique cuál es el procedimiento aplicable para pedir la terminación del contrato de arrendamiento y en qué se fundaría.',e:'El especial de la Ley 18.101 (arts. 7 N° 2 y 5 y 8): verbal; audiencia al quinto día hábil después de la última notificación; notificación en el inmueble (art. 8 N° 2); en la audiencia, contestación, conciliación obligatoria y prueba; sana crítica; apelación en el solo efecto devolutivo. Fundamento: la mora en la renta (art. 1977): tres rentas, con dos reconvenciones separadas por al menos cuatro días. Como Joaquín abandonó, Andrés recuperó la casa sin juicio (art. 6 inc. 2), y la demanda sirve para terminar, cobrar las rentas hasta la entrega (art. 6 inc. 1) e indemnizar. El monitorio (arts. 18-A y ss.) es más rápido pero solo cobra rentas: conviene la Ley 18.101.',s:'Arts. 6, 7 y 8 Ley 18.101; art. 1977'},
+{t:'db',q:'<b>Procesal 4.</b> Explique qué acción podría ejercer Paulina Arancibia si es obligada a devolver el Smart TV, su fundamento y la petición concreta.',e:'Saneamiento de evicción contra Joaquín (art. 1837): venta válida aunque la cosa sea ajena (art. 1815), causa anterior (art. 1839) y privación por sentencia (art. 1838). Debe citarlo de evicción antes de contestar (art. 1843; art. 584 CPC), o pierde el saneamiento. Petición (art. 1847): el precio ($300.000), las costas del contrato, el valor de los frutos restituidos, las costas del juicio y el aumento de valor; como Joaquín vendió de mala fe, además todas las mejoras y todo el aumento (arts. 1849 y 1850). Prescribe en cuatro años desde la sentencia (art. 1856).',s:'Arts. 1837 a 1856; arts. 584 a 587 CPC'},
+{t:'sm',q:'Después del 21 de mayo de 2024, respecto de los muebles que Joaquín se llevó (no del Smart TV), Andrés es:',o:['Dueño y poseedor.','Dueño, pero no poseedor.','Solo poseedor.','Ni dueño ni poseedor.'],a:0,e:'La usurpación del mero tenedor no hace perder la posesión (art. 730). Solo con el Smart TV, enajenado a nombre propio, perdió la posesión.',s:'Art. 730'},
+{t:'sm',q:'¿Hasta cuándo tiene Andrés para demandar y notificar a Paulina antes de que ella se haga dueña?',o:['10 de diciembre de 2025.','10 de diciembre de 2028.','21 de mayo de 2026.','10 de diciembre de 2033.'],a:0,e:'Prescripción ordinaria de muebles, dos años desde la entrega del 10-dic-2023 (art. 2508).',s:'Art. 2508'},
+{t:'vf',q:'El instrumento privado firmado ante notario permite a Andrés cobrar las rentas en juicio ejecutivo.',a:false,e:'La firma autorizada por notario da mérito ejecutivo solo a la letra, el pagaré y el cheque (art. 434 N° 4 CPC).',s:'Art. 434 CPC'},
+{t:'vf',q:'Como la casa ya fue recuperada, la competencia relativa para las acciones contra Joaquín se rige por el art. 138 COT.',a:true,e:'Todas las acciones que quedan son muebles (rentas, indemnización, muebles): no hay acción inmueble para aplicar los arts. 135 o 137.',s:'COT 138'},
+{t:'sm',q:'Si hay proceso penal por apropiación indebida, la restitución de los muebles se pide:',o:['En el proceso penal.','Solo ante el juez civil.','En el juicio de la Ley 18.101, necesariamente.','Por la vía monitoria.'],a:0,e:'La acción civil que solo persigue la restitución de la cosa se interpone siempre en el procedimiento penal (art. 59 inc. 1 CPP).',s:'Art. 59 CPP'},
+{t:'vf',q:'El precio vil ($300.000 por un TV de $1.200.000) permite a Joaquín pedir la rescisión por lesión enorme.',a:false,e:'No hay lesión enorme en la venta de muebles (art. 1891). El precio vil sirve como indicio contra la buena fe de Paulina y de receptación.',s:'Art. 1891'},
+{t:'sm',q:'Si Andrés recibe de Joaquín el precio que este obtuvo por el Smart TV:',o:['Confirma la venta y ya no puede reivindicarlo de Paulina.','Conserva la reivindicatoria contra Paulina.','Paulina pierde la posesión.','Se interrumpe la prescripción de Paulina.'],a:0,e:'Art. 898.',s:'Art. 898'},
+{t:'vf',q:'La presunción de domicilio en el inmueble arrendado sirve también para notificar a Joaquín la acción del art. 915.',a:false,e:'Solo opera en los juicios de la Ley 18.101; la del art. 915 no deriva del contrato. Para ubicarlo: art. 54 CPC (avisos).',s:'Art. 8 N° 2 Ley 18.101'}
+];
+
+</script>
+<script>addBank('Caso 2')</script>
+<script>
+window.PREG=[
+{t:'db',q:'<b>Civil 1.</b> Establezca si existe incumplimiento contractual por parte de la empresa y explique por qué.',e:'Sí. Se pactó una casa «llave en mano» para habitar, con instalaciones eléctricas, y se entregó sin luz y sin recepción definitiva. Entregar no es cumplir: el contrato es ley para las partes (art. 1545) y obliga a lo que emana de la naturaleza de la obligación (art. 1546), y sin recepción definitiva ninguna obra puede habitarse (art. 145 LGUC). Es cumplimiento imperfecto (art. 1556), con mora desde el 5-abr-2019 (art. 1551 N° 1). El contrato es venta porque la empresa pone la materia (arts. 1996 y 2003).',s:'Arts. 1545, 1546, 1551, 1556, 1996; art. 145 LGUC'},
+{t:'db',q:'<b>Civil 2.</b> Identifique las posibilidades que tenía Javier, la acción ejercida y analice sus requisitos.',e:'Posibilidades: resolución o cumplimiento, ambos con indemnización (art. 1489); el cumplimiento de la obligación de hacer por las tres vías del art. 1553; retener el saldo (art. 1552), y la indemnización autónoma (Corral nº 426). Ejerció la resolución con indemnización. Requisitos: contrato bilateral (es venta); incumplimiento, que la doctrina tradicional exige imputable, con culpa presunta (art. 1547), y que la CS exige esencial (230.406-2023): lo es, porque la casa no puede habitarse; que el actor haya cumplido o esté llano a cumplir (pagó el 50 % y el saldo dependía de la entrega conforme); y declaración judicial.',s:'Arts. 1489, 1547, 1552, 1553; CS 230.406-2023'},
+{t:'db',q:'<b>Civil 3.</b> Evalúe si la acción ejercida se encuentra prescrita.',e:'No, si se notificó a tiempo. Es acción ordinaria: cinco años (art. 2515) desde que la obligación se hizo exigible (art. 2514), el 5-abr-2019 (art. 48): vence el 5-abr-2024. Se presentó el 4-mar-2024. La interrupción exige notificación legal (arts. 2518 y 2503 N° 1) y la CS está dividida: basta la presentación (12.249-2024) o hay que notificar dentro del plazo (31.699-2024). El caso no da la fecha de notificación. Solo se declara si la empresa la alega (art. 2493). Contar desde la firma (5-mar-2024) es un error.',s:'Arts. 48, 2493, 2503, 2514, 2515, 2518'},
+{t:'db',q:'<b>Civil 4.</b> Explique las consecuencias de que Javier aún no haya pagado el saldo del precio.',e:'Javier no está en mora: la mora purga la mora (art. 1552), y el saldo solo era exigible con la entrega conforme. La empresa no puede pedir la resolución ni cobrarle el saldo: él opondría la excepción de contrato no cumplido; y eso no le impide demandar, porque está llano a cumplir. Declarada la resolución, se extingue el saldo y hay restituciones mutuas: la empresa devuelve los $50.000.000 reajustados y Javier restituye la casa (art. 1487); si el terreno es suyo, la casa es inmueble (art. 568) y se restituye en especie o valor (Corral nº 546 y 548).',s:'Arts. 568, 1487 y 1552'},
+{t:'db',q:'<b>Civil 5.</b> Evalúe si se cumplen los requisitos para que la empresa sea condenada a pagar los perjuicios que alega Javier.',e:'Requisitos: incumplimiento, imputabilidad (culpa presunta, art. 1547), mora (art. 1557), daño cierto y causalidad con previsibilidad (art. 1558). Arriendos ($5 MM): daño emergente directo y previsible; procede si se prueba, con posible rebaja por la carga de mitigar. Precio ($50 MM): no es perjuicio sino restitución (art. 1487). Daño moral ($15 MM): la CS lo acepta si es significativo y previsible, y lo es en una vivienda (217.959-2023 y 194.783-2023), pero solo el de Javier: la familia es tercera (art. 1545; Corral nº 468). Lucro cesante: no se pide.',s:'Arts. 1487, 1545, 1547, 1556 a 1558'},
+{t:'db',q:'<b>Procesal 1.</b> Determine el procedimiento aplicable a la demanda y el tribunal competente.',e:'Juicio ordinario de mayor cuantía: la resolución es declarativa y no hay obligación líquida que ejecutar (art. 438); el ordinario es la regla general (art. 3); se reclaman más de 500 UTM, y el «traslado» lo confirma (art. 257). El ejecutivo de hacer no procede: no hay título (instrumento privado, no escritura pública; art. 435 solo para dinero) y la acción ejecutiva prescribió el 5-abr-2022. Tribunal: juez de letras civil en primera instancia (COT 45 N° 2); acción mueble (art. 580): juez estipulado o del domicilio del demandado (COT 138), que para la sociedad es Puerto Montt (COT 142), salvo que contratara otra oficina (inc. 2).',s:'Arts. 3, 257, 434, 435, 438 CPC; COT 45, 138, 142'},
+{t:'db',q:'<b>Procesal 2.</b> Estructure la suma del escrito de demanda de Javier.',e:'En lo principal: demanda de resolución de contrato con indemnización de perjuicios. Primer otrosí: acompaña documentos, bajo el apercibimiento del art. 346 N° 3 CPC (si no se objetan en seis días, se tienen por reconocidos). Segundo otrosí: patrocinio y poder. El cuerpo, con los requisitos del art. 254 CPC. Si fuera ejecutivo: demanda ejecutiva y mandamiento; acompaña título con citación; patrocinio y poder.',s:'Arts. 254 y 346 N° 3 CPC'},
+{t:'db',q:'<b>Procesal 3.</b> Una vez notificada la demanda, ¿qué plazo tiene la sociedad demandada para contestar?',e:'Dieciocho días si se notifica en el territorio jurisdiccional del tribunal (art. 258), más el aumento de la tabla de emplazamiento si es en otro (art. 259). Si opone dilatorias y se rechazan, diez días (art. 308). Los plazos de días del CPC se suspenden en feriados (art. 66). En el ejecutivo serían ocho días para oponerse (arts. 459 y 460).',s:'Arts. 66, 258, 259, 308, 459 CPC'},
+{t:'db',q:'<b>Procesal 4.</b> Si fuera el abogado de la constructora, ¿qué actitud asumiría frente a la demanda? Justifique.',e:'Contestar y: oponer la prescripción, si se notificó después del 5-abr-2024; en subsidio, discutir que el incumplimiento sea esencial (débil por el art. 145 LGUC); controvertir los perjuicios (los $50 MM son restitución; el daño moral es solo de Javier); invocar la carga de mitigar, porque Javier pagó arriendo cinco años sin pedir que un tercero terminara la obra (art. 1553 N° 2), y evaluar conciliación (art. 262). No reconvenir por el saldo: Javier opondría la excepción de contrato no cumplido (art. 1552). En el ejecutivo: art. 464 N° 17 y N° 7, y art. 534.',s:'Arts. 262, 464, 534 CPC; arts. 1552 y 1553'},
+{t:'db',q:'<b>Procesal 5.</b> Si considera que la acción está prescrita, mencione las oportunidades procesales para interponer la excepción y cómo se tramitaría.',e:'Es excepción perentoria: se opone en la contestación (art. 309) y se resuelve en la sentencia; o como anómala, por escrito, hasta la citación para oír sentencia en primera instancia o la vista de la causa en segunda (art. 310). Después de recibida la causa a prueba, se tramita como incidente y se reserva para la definitiva; en segunda, la Corte la falla en única instancia. No es dilatoria y no se declara de oficio (art. 2493). En el ejecutivo: art. 464 N° 17 dentro de 8 días, y el tribunal deniega de oficio la ejecución si la acción ejecutiva está prescrita (art. 442).',s:'Arts. 309, 310, 442, 464 CPC; art. 2493'},
+{t:'sm',q:'¿Qué día venció el plazo de entrega de la casa?',o:['5 de abril de 2019.','5 de marzo de 2019.','4 de abril de 2019.','6 de abril de 2019.'],a:0,e:'Un mes desde el 5-mar-2019: vence el día de igual número del mes siguiente (art. 48).',s:'Art. 48'},
+{t:'sm',q:'¿Cuándo prescribe la acción de resolución de Javier?',o:['5 de abril de 2024.','5 de marzo de 2024.','5 de abril de 2022.','5 de abril de 2026.'],a:0,e:'Cinco años desde la exigibilidad (arts. 2514 y 2515). El 5-abr-2022 es la acción ejecutiva.',s:'Arts. 2514 y 2515'},
+{t:'vf',q:'El contrato entre Javier y la empresa es de arrendamiento de obra, porque la empresa construye la casa.',a:false,e:'Como la empresa pone la materia, es venta (art. 1996).',s:'Art. 1996'},
+{t:'vf',q:'Los $50.000.000 del precio pagado deben pedirse como daño emergente.',a:false,e:'Son restitución consecuencial de la resolución (art. 1487). Javier puede aclararlo en la réplica (art. 312 CPC).',s:'Art. 1487'},
+{t:'sm',q:'La resolución «A la demanda interpuesta, traslado» indica que el procedimiento es:',o:['Ordinario.','Sumario.','Ejecutivo.','Monitorio.'],a:0,e:'Es la primera resolución típica del juicio ordinario (art. 257 CPC). En el sumario se cita a audiencia (art. 683); en el ejecutivo se despacha mandamiento.',s:'Art. 257 CPC'},
+{t:'vf',q:'La empresa puede reconvenir con éxito por el saldo del precio.',a:false,e:'Javier opondría la excepción de contrato no cumplido: la mora purga la mora (art. 1552).',s:'Art. 1552'},
+{t:'vf',q:'Si el contrato lo firmó una oficina de la empresa en Santiago, el tribunal competente sería uno de Santiago.',a:true,e:'Art. 142 inc. 2 COT: la sociedad con varias oficinas se demanda ante el juez del lugar de la oficina que celebró el contrato.',s:'COT 142'}
+];
+
+</script>
+<script>addBank('Caso 7')</script>
+<script>
+window.PREG=[
+{t:'db',q:'<b>Civil 1.</b> Explique quién es el dueño actual de la propiedad.',e:'Depende de si la sociedad accionó a tiempo. Inscrita la resolución el 30-jun-2023, Herrera es poseedor regular aunque subsista la inscripción de la sociedad (art. 15 DL). Con dos años de posesión inscrita se hace dueño por prescripción, que no se suspende (art. 15); prescriben las acciones del dueño anterior y su inscripción se entiende cancelada (art. 16). Si la sociedad no demandó y notificó antes del 30-jun-2025, el dueño es Herrera (salvo condena por el art. 9, que obliga a cancelar su inscripción); si lo hizo, interrumpió y sigue siendo dueña mientras dure el juicio. El resto de la hijuela es de la sociedad.',s:'Arts. 9, 15 y 16 DL 2.695'},
+{t:'db',q:'<b>Civil 2.</b> Explique qué acciones corresponden a la sociedad y si se encuentran prescritas.',e:'Practicada la inscripción, los terceros solo pueden impugnar por las vías del DL (art. 18): quedan desplazadas las posesorias y la reivindicatoria común (que procedía antes de la inscripción, CS 9.789-2022). 1) Oposición (arts. 19 y 20), dentro de 60 días hábiles desde la última publicación: ya pasó. 2) Acción de dominio (arts. 26 y 27), dos años desde la inscripción, en juicio sumario: vence el 30-jun-2025; si se acoge, se cancela la inscripción de Herrera. 3) Compensación en dinero (arts. 28 a 30), cinco años, hasta el 30-jun-2028, sumario: vigente. 4) Acción penal del art. 9, si obtuvo la regularización maliciosamente: permite cancelar la inscripción; prescribe en cinco años. Lo edificado: art. 669.',s:'Arts. 9, 18 a 30 DL 2.695; art. 669'},
+{t:'db',q:'<b>Procesal 1.</b> Señale qué recomendaría a su representado para asegurar el éxito de su solicitud.',e:'1) Demandar y notificar antes del 30-jun-2025 (art. 2503 N° 1), porque la CS está dividida sobre la interrupción; si ya venció, pedir la compensación antes del 30-jun-2028. 2) Pedir prohibición de celebrar actos y contratos sobre el retazo e inscribirla (arts. 290 N° 4, 296 y 297 CPC), incluso como prejudicial (art. 279); complementa la prohibición legal del art. 17 DL. 3) Reunir la prueba del dominio (inscripción de 1998 y plano) y de que Herrera no cumplía el art. 2 del DL. 4) Evaluar la querella del art. 9.',s:'Arts. 279, 290, 296, 297 CPC; arts. 2, 9 y 17 DL'},
+{t:'db',q:'<b>Procesal 2.</b> ¿En qué procedimiento se tramitaría la acción civil seleccionada y por qué?',e:'En juicio sumario, porque la ley lo ordena: arts. 26 y 29 del DL, y el sumario se aplica cuando la ley manda proceder sumariamente (art. 680 N° 1 CPC); por eso no puede cambiarse al ordinario (art. 681). Tribunal: juez de letras en lo civil del lugar del predio, San Vicente (arts. 20, 26 y 29 DL). Etapas: demanda; audiencia al quinto día hábil (683); contestación, conciliación e incidentes en ella (690); prueba como incidentes (686); sentencia en 10 días (688); apelación en ambos efectos (691); cumplimiento con cancelación de la inscripción (art. 27 DL).',s:'Arts. 680 a 692 CPC; arts. 20, 26, 27 y 29 DL'},
+{t:'db',q:'<b>Procesal 3.</b> Explique los plazos para contestar la demanda, conforme a la acción a deducir.',e:'En el sumario no hay plazo en días para contestar: deducida la demanda, se cita a una audiencia al quinto día hábil después de la última notificación, y ahí se contesta; si el demandado no está en el lugar del juicio, se aumenta según la tabla de emplazamiento (arts. 683 y 259 CPC). Para comparar: en la reivindicatoria común en juicio ordinario serían 18 días (art. 258), pero esa vía está excluida por el art. 18 del DL.',s:'Arts. 258, 259 y 683 CPC'},
+{t:'db',q:'<b>Procesal 4.</b> ¿Qué podría deducir en su defensa el demandado?',e:'1) Prescripción y caducidad: si se notificó después del 30-jun-2025, la acción está extinguida y él ya es dueño (arts. 15, 16 y 26 DL). 2) Que cumplió los requisitos del art. 2: posesión material continua y exclusiva por cinco años, sin violencia ni clandestinidad; las inscripciones anteriores no obstan. 3) Falta de legitimación si el actor fuera solo comunero (art. 19 N° 1; CS 19.944-2023): no aplica a la sociedad. 4) Sobre lo edificado, sus derechos en las prestaciones mutuas (arts. 908 y 909), o el art. 669 inc. 2 si construyó a ciencia y paciencia del dueño. 5) En la compensación, discutir el valor (art. 28).',s:'Arts. 2, 15, 16, 19, 26 y 28 DL; arts. 669, 908 y 909'},
+{t:'sm',q:'¿Cuándo vence el plazo de la acción de dominio de la sociedad?',o:['30 de junio de 2025.','30 de junio de 2024.','30 de junio de 2028.','30 de junio de 2033.'],a:0,e:'Dos años desde la inscripción del 30-jun-2023 (art. 26 DL). El 2028 es la compensación (art. 29).',s:'Art. 26 DL 2.695'},
+{t:'vf',q:'Antes de la inscripción del DL a nombre de Herrera, la sociedad podía usar la reivindicatoria común.',a:true,e:'La exclusividad del art. 18 opera desde la inscripción (CS 9.789-2022). También pudo usar la querella de amparo.',s:'CS 9.789-2022'},
+{t:'vf',q:'Después del 30 de junio de 2023, la sociedad puede deducir una querella de amparo contra Herrera.',a:false,e:'Las posesorias quedan desplazadas por la vía exclusiva del DL (art. 18); además Herrera ya es poseedor regular inscrito (art. 15).',s:'Art. 18 DL 2.695'},
+{t:'sm',q:'En la compensación en dinero, el valor del retazo se fija:',o:['Por su valor comercial a la fecha de la tasación, sin las mejoras del poseedor material.','Por el avalúo fiscal de 1998.','Por el valor que fije el Conservador.','Incluyendo lo edificado por Herrera.'],a:0,e:'Art. 28 DL, oyendo al SAG o la Conaf por ser predio rural; no puede ser inferior al avalúo fiscal o proporcional.',s:'Art. 28 DL 2.695'},
+{t:'vf',q:'Si la acción de dominio se acoge, se cancela la inscripción de Herrera y la de la sociedad conserva su plena vigencia.',a:true,e:'Art. 27 DL.',s:'Art. 27 DL 2.695'},
+{t:'vf',q:'La acción del art. 9 contra Herrera se beneficia de la presunción de dolo por juicio pendiente de usurpación de la Ley 21.633.',a:false,e:'La Ley 21.633 (24-nov-2023) es posterior a la inscripción y no se aplica a hechos anteriores (art. 18 CP). La sociedad debe probar el dolo.',s:'Art. 18 CP'},
+{t:'sm',q:'Para impedir que Herrera venda o hipoteque el retazo durante el juicio, conviene pedir:',o:['Prohibición de celebrar actos y contratos, e inscribirla.','Secuestro del retazo.','Retención de las rentas.','Nombramiento de interventor.'],a:0,e:'Arts. 290 N° 4, 296 y 297 CPC; complementa la prohibición legal del art. 17 DL, que tiene excepciones.',s:'Arts. 290 y 297 CPC'},
+{t:'vf',q:'La sociedad podía demandar la acción de dominio del art. 26 aunque no se hubiera opuesto a la solicitud.',a:true,e:'El art. 26 la concede «sin perjuicio» del art. 19: son vías distintas.',s:'Art. 26 DL 2.695'},
+{t:'sm',q:'Según la CS (14.300-2024), la acción de dominio del art. 26:',o:['Es la reivindicatoria, con los requisitos del art. 889, y admite la compensación en subsidio.','Es una acción posesoria especial.','Es una acción de nulidad de la resolución administrativa.','Solo procede si el actor tenía posesión exclusiva.'],a:0,e:'La posesión del demandado se acredita con la propia inscripción del DL (art. 15). Las normas decisorias son los arts. 26 y 27 (CS 29.037-2025).',s:'CS 14.300-2024'}
+];
+
+</script>
+<script>addBank('Caso 13')</script>
+<script>
+(function(){
+  var seed; try{seed=parseInt(localStorage.getItem('simulacro-seed'),10)}catch(e){}
+  if(!seed){seed=Math.floor(Math.random()*1e9)+1;try{localStorage.setItem('simulacro-seed',seed)}catch(e){}}
+  function rng(s){return function(){s=(s*1103515245+12345)%2147483648;return s/2147483648;};}
+  var r=rng(seed);
+  function mez(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function pick(k,t,n){return mez(ALL.filter(function(x){return x.k===k&&x.t===t;})).slice(0,n);}
+  var cupo={vf:[['Civil',4],['Procesal',4],['Caso 2',1],['Caso 7',1]],
+            sm:[['Civil',4],['Procesal',4],['Caso 2',1],['Caso 7',1],['Caso 13',2]],
+            db:[['Civil',2],['Procesal',2],['Caso 2',2],['Caso 7',1],['Caso 13',1]]};
+  var out=[];
+  ['vf','sm','db'].forEach(function(t){var a=[];cupo[t].forEach(function(c){a=a.concat(pick(c[0],t,c[1]));});out=out.concat(mez(a));});
+  window.PREG=out;
+  document.getElementById('nuevo').addEventListener('click',function(){
+    try{localStorage.setItem('simulacro-seed',Math.floor(Math.random()*1e9)+1);['resp','orden','txt'].forEach(function(k){localStorage.removeItem('simulacro-'+k)});}catch(e){}
+    location.reload();
+  });
+  var fin=null,tid=null,el=document.getElementById('tiempo');
+  function tick(){var s=Math.max(0,Math.round((fin-Date.now())/1000));el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');if(s===0){clearInterval(tid);el.textContent='Tiempo cumplido: corrige';}}
+  document.getElementById('iniciar').addEventListener('click',function(){fin=Date.now()+45*60*1000;clearInterval(tid);tid=setInterval(tick,1000);tick();});
+})();
+</script>
+
+<script>
+/* Pestañas + motor de preguntas. Datos en window.PREG = [{t:'sm'|'vf'|'db', q, o:[...], a:indice|true|false, e, s, k}]
+   'db' = desarrollo breve: q (pregunta), e (respuesta modelo); se responde escribiendo y luego se autocorrige («La sabía» / «No la sabía»). */
+(function(){
+  var KEY=document.body.dataset.key||'casos';
+  function sget(k){try{return JSON.parse(localStorage.getItem(KEY+'-'+k))}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+
+  // Pestañas
+  var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+  function show(id){
+    tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);var p=document.getElementById(t.dataset.s);if(p)p.hidden=!on;});
+    sset('tab',id);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.s);window.scrollTo({top:0});});});
+  var s=sget('tab'); if(s&&document.getElementById(s)&&tabs.length)show(s);
+
+  // Buscador de artículos (pestaña Artículos)
+  var bus=document.getElementById('buscar');
+  if(bus){bus.addEventListener('input',function(){
+    var v=bus.value.trim().toLowerCase();
+    [].forEach.call(document.querySelectorAll('.art'),function(a){a.hidden=v&&a.textContent.toLowerCase().indexOf(v)<0;});
+    if(v){[].forEach.call(document.querySelectorAll('section[role=tabpanel]'),function(p){p.hidden=false;});}
+    else{var t=sget('tab')||(tabs[0]&&tabs[0].dataset.s);if(t)show(t);}
+  });}
+
+  // Preguntas
+  var box=document.getElementById('quizbox'); if(!box||!window.PREG)return;
+  var L='abcdefgh';
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  var data=window.PREG.map(function(x,i){
+    x.id=i;
+    if(x.t==='db')x.a=true;
+    if(x.t==='sm'&&!x.fijo){
+      var r=rng(i*7919+(document.body.dataset.key||'').length*31+17), idx=x.o.map(function(_,j){return j;});
+      for(var k=idx.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var t=idx[k];idx[k]=idx[j];idx[j]=t;}
+      x.o=idx.map(function(j){return x.o[j];}); x.a=idx.indexOf(x.a);
+    }
+    return x;
+  });
+  var resp=sget('resp')||{}; var txt=sget('txt')||{}; var corregido=false;
+  var filtro=document.getElementById('qfiltro');
+  var NOM={vf:'Verdadero o falso',sm:'Selección múltiple',db:'Desarrollo breve'};
+  function lista(){
+    var f=filtro?filtro.value:'todo';
+    var orden=sget('orden');
+    var arr=data.filter(function(x){return f==='todo'||x.t===f||(x.k&&x.k===f);});
+    if(orden){var pos={};orden.forEach(function(id,i){pos[id]=i});arr.sort(function(a,b){return (pos[a.id]??a.id)-(pos[b.id]??b.id)});}
+    return arr;
+  }
+  function render(){
+    var arr=lista(); box.innerHTML='';
+    arr.forEach(function(x,n){
+      var d=document.createElement('div'); d.className='q'+(corregido?' done':'')+(x.t==='db'&&resp[x.id]!==undefined?' visto':'');
+      var head='<div class="qn"><span>'+(n+1)+' · '+NOM[x.t]+'</span>'+(x.k?'<span>· '+x.k+'</span>':'')+'</div>';
+      var body='<p class="qt">'+x.q+'</p>';
+      var nm='q'+x.id;
+      if(x.t==='db'){
+        body+='<textarea rows="4" placeholder="Escribe tu respuesta (o dila en voz alta) y luego abre la respuesta modelo"'+(corregido?' disabled':'')+'>'+(txt[x.id]||'').replace(/</g,'&lt;')+'</textarea>';
+        body+='<div class="dbb"><button type="button" class="ver">Ver respuesta modelo</button></div>';
+        body+='<div class="modelo"><p class="res">Respuesta modelo</p><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+
+              '<div class="dbb"><button type="button" data-v="1"'+(resp[x.id]===true?' class="sel"':'')+'>La sabía</button><button type="button" data-v="0"'+(resp[x.id]===false?' class="sel"':'')+'>No la sabía</button></div></div>';
+      }else if(x.t==='vf'){
+        body+='<div class="vf">'+[['V',true],['F',false]].map(function(p){
+          var ch=resp[x.id]===p[1]?' checked':'';
+          var cls=corregido?(p[1]===x.a?' class="ok"':(resp[x.id]===p[1]?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+p[1]+'"'+ch+(corregido?' disabled':'')+'><span><b>'+p[0]+'</b></span></label>';
+        }).join('')+'</div>';
+      }else{
+        body+=x.o.map(function(o,j){
+          var ch=resp[x.id]===j?' checked':'';
+          var cls=corregido?(j===x.a?' class="ok"':(resp[x.id]===j?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+j+'"'+ch+(corregido?' disabled':'')+'><span>'+L[j]+') '+o+'</span></label>';
+        }).join('');
+      }
+      if(x.t!=='db'){
+        var ok=resp[x.id]===x.a;
+        var correcta=x.t==='vf'?(x.a?'Verdadero':'Falso'):(L[x.a]+')');
+        body+='<div class="exp"><span class="res '+(ok?'ok':'bad')+'">'+(resp[x.id]===undefined?'Sin responder':(ok?'Correcta':'Incorrecta'))+' · respuesta: '+correcta+'</span><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+'</div>';
+      }
+      d.innerHTML=head+body; box.appendChild(d);
+      [].forEach.call(d.querySelectorAll('input'),function(inp){inp.addEventListener('change',function(){
+        resp[x.id]=x.t==='vf'?(inp.value==='true'):parseInt(inp.value,10); sset('resp',resp); cuenta();
+      });});
+      if(x.t==='db'){
+        var ta=d.querySelector('textarea');
+        ta.addEventListener('input',function(){txt[x.id]=ta.value;sset('txt',txt);});
+        d.querySelector('.ver').addEventListener('click',function(){d.classList.add('visto');});
+        [].forEach.call(d.querySelectorAll('[data-v]'),function(b){b.addEventListener('click',function(){
+          resp[x.id]=b.dataset.v==='1'; sset('resp',resp);
+          [].forEach.call(d.querySelectorAll('[data-v]'),function(o){o.classList.toggle('sel',o===b);}); cuenta();
+        });});
+      }
+    });
+    cuenta();
+  }
+  function cuenta(){
+    var arr=lista(), r=0, b=0;
+    arr.forEach(function(x){if(resp[x.id]!==undefined){r++; if(resp[x.id]===x.a)b++;}});
+    [].forEach.call(document.querySelectorAll('.score'),function(el){
+      if(el.id==='tiempo')return;
+      el.textContent=corregido?('Puntaje: '+b+' de '+arr.length+(arr.length?' ('+Math.round(100*b/arr.length)+' %)':'')):('Respondidas: '+r+' de '+arr.length);
+    });
+  }
+  function corregir(){corregido=true;render();window.scrollTo({top:box.offsetTop-80});}
+  function reiniciar(){resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();window.scrollTo({top:0});}
+  function mezclar(){var ids=data.map(function(x){return x.id});for(var i=ids.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=ids[i];ids[i]=ids[j];ids[j]=t;}sset('orden',ids);resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();}
+  [].forEach.call(document.querySelectorAll('[data-q=corregir]'),function(b){b.addEventListener('click',corregir)});
+  [].forEach.call(document.querySelectorAll('[data-q=reiniciar]'),function(b){b.addEventListener('click',reiniciar)});
+  [].forEach.call(document.querySelectorAll('[data-q=mezclar]'),function(b){b.addEventListener('click',mezclar)});
+  if(filtro)filtro.addEventListener('change',function(){corregido=false;render();});
+  render();
+})();
+
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body></html>

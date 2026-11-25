@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Civil · Casos</title>
+<meta name="theme-color" content="#f6f3ec">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>/* Layout: una columna para celular; bandas de color suaves por tema, como un folleto plegable */
+:root{
+  --bg:#f6f3ec; --fg:#24221f; --muted:#5f5a52; --line:#d9d2c4; --card:#fffdf8;
+  --mostaza:#e7d38f; --salvia:#bfd8b8; --cielo:#b9d3e4; --rosa:#ebc0c6; --durazno:#efc9a4;
+  --tinta:#3b5a73; --ok:#3f7a52; --warn:#9a5b1f;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif; --f-label:"Archivo Narrow","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header h1{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05;letter-spacing:-.02em;margin:.4rem 0 .3rem;text-wrap:balance}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 12px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav button:focus-visible,summary:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.band{border-radius:14px;padding:14px 16px;min-width:0}
+.mostaza{background:var(--mostaza)}.salvia{background:var(--salvia)}.cielo{background:var(--cielo)}.rosa{background:var(--rosa)}.durazno{background:var(--durazno)}
+h2{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.band h3{color:inherit;opacity:.75}
+p{margin:0}
+ul{margin:4px 0 0;padding-left:1.1em}
+li{margin:2px 0}
+.def{font-size:1rem;border-left:3px solid currentColor;padding-left:10px;margin-top:6px}
+.src{font-family:var(--f-label);font-size:.8rem;color:var(--muted);margin-top:6px}
+.band .src{color:inherit;opacity:.7}
+.star{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:var(--fg);color:var(--bg);border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.tag{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-label);font-weight:700;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .in{padding:0 14px 12px;color:var(--fg)}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0}
+.step b.n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-label);font-weight:700}
+.arrow{margin-left:13px;width:2px;height:10px;background:var(--line)}
+.cmp{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-top:1px solid var(--line);padding-top:8px}
+.row:first-child{border-top:0;padding-top:0}
+.k{font-family:var(--f-label);font-weight:700}
+.num{font-variant-numeric:tabular-nums;font-weight:800}
+.quiz details summary{font-weight:600}
+.quiz .in{border-top:1px dashed var(--line);padding-top:10px}
+footer{color:var(--muted);font-size:.85rem;margin-top:18px}
+@media (prefers-reduced-motion:no-preference){section{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+/* Agregados: barra de inicio, preguntas interactivas, avisos de discrepancia */
+.home{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta);text-decoration:none;margin-top:4px}
+.ojo{border:1.5px dashed var(--warn);border-radius:12px;padding:10px 12px;background:var(--card)}
+.ojo b.t{color:var(--warn);font-family:var(--f-label);letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+.pares{display:grid;gap:10px}
+.par{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.par h2{font-size:1.05rem;margin-bottom:8px}
+.par .split{margin-top:4px}
+.par .lado{border-left:3px solid var(--line);padding-left:9px;min-width:0}
+.par .lado .tag{display:block;margin-bottom:2px}
+.par .imp{margin-top:8px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:7px}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+.qbar button,.qfoot button{font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;cursor:pointer}
+.qbar button.pri,.qfoot button.pri{background:var(--fg);color:var(--bg)}
+.qbar select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 10px}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.q .qn{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.q .qt{margin:4px 0 8px;font-weight:600}
+.q .qt i{font-weight:500}
+.q label{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start;padding:6px 6px;border-radius:8px;cursor:pointer}
+.q label:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.q input{margin-top:4px;accent-color:var(--fg)}
+.q label.ok{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.q label.bad{background:color-mix(in srgb,var(--warn) 20%,transparent);text-decoration:line-through}
+.q .exp{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.done .exp{display:block}
+.q .res{font-family:var(--f-label);font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em}
+.q .res.ok{color:var(--ok)}.q .res.bad{color:var(--warn)}
+.q .vf{display:flex;gap:10px}
+.q .vf label{grid-template-columns:22px auto;border:1px solid var(--line);padding:6px 14px}
+.qfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.menu{display:grid;gap:10px}
+.menu a{display:block;text-decoration:none;color:inherit;border-radius:14px;padding:14px 16px}
+.menu a b{font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:block}
+.menu a span{color:inherit;opacity:.8;font-size:.92rem}
+.hora{font-family:var(--f-label);font-weight:700;font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{margin-top:4px;accent-color:var(--fg);width:18px;height:18px}
+/* Casos: desarrollo breve, artículos, cronología */
+.q textarea{width:100%;box-sizing:border-box;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.q .dbb{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .dbb button{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.q .dbb button.sel{background:var(--fg);color:var(--bg)}
+.q .modelo{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.visto .modelo,.q.done .modelo{display:block}
+.q.visto .ver,.q.done .ver{display:none}
+.art{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.art b.n{font-family:var(--f-label);letter-spacing:.03em;display:block;margin-bottom:2px}
+.arts{display:grid;gap:8px}
+#buscar{width:100%;box-sizing:border-box;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 14px;margin:6px 0 10px}
+.hito{border-left:4px solid var(--fg);padding:2px 0 2px 10px;margin:12px 0 6px}
+.hito b{font-family:var(--f-display);font-weight:800}
+.ley{margin:0 0 0 14px;padding:0}
+.ley li{margin:3px 0}
+.fase{counter-increment:f}
+</style>
+</head><body data-key="civil">
+<div class="wrap">
+<header>
+  <a class="home" href="./">← Inicio</a>
+  <h3>Casos 2, 7 y 13 · torpedo</h3>
+  <h1>Instituciones civiles</h1>
+  <p>Cada institución, primero en sí misma (concepto, requisitos, plazos, efectos y artículos) y luego <b>en el caso</b>. Los artículos sin cuerpo legal son del Código Civil.</p>
+</header>
+
+<nav role="tablist" aria-label="Temas">
+  <button role="tab" aria-selected="true" data-s="pos">Posesión</button>
+  <button role="tab" aria-selected="false" data-s="pres">Prescripción</button>
+  <button role="tab" aria-selected="false" data-s="reiv">Reivindicación</button>
+  <button role="tab" aria-selected="false" data-s="evi">Compraventa y evicción</button>
+  <button role="tab" aria-selected="false" data-s="inc">Incumplimiento</button>
+  <button role="tab" aria-selected="false" data-s="dl">DL 2.695</button>
+  <button role="tab" aria-selected="false" data-s="preg">Preguntas</button>
+</nav>
+
+<!-- POSESIÓN -->
+<section id="pos" role="tabpanel">
+  <div class="band cielo">
+    <h3>La escala</h3>
+    <p><b>Dominio</b> (derecho real para gozar y disponer arbitrariamente, no siendo contra la ley o derecho ajeno, art. 582) → <b>posesión</b> (tenencia con ánimo de señor o dueño: corpus + animus, art. 700) → <b>mera tenencia</b> (se tiene la cosa en lugar o a nombre del dueño, reconociendo dominio ajeno, art. 714).</p>
+  </div>
+  <div class="par">
+    <h2>Posesión</h2>
+    <ul>
+      <li>Se puede poseer <b>por sí o por otro</b> que tenga la cosa a nombre del poseedor, y el poseedor se <b>reputa dueño</b> mientras otro no justifique serlo (art. 700).</li>
+      <li>El poseedor <b>conserva la posesión</b> aunque transfiera la tenencia dándola en arriendo, comodato, prenda, depósito o usufructo (art. 725).</li>
+      <li><b>Regular:</b> justo título + buena fe al adquirir (aunque no subsista) + tradición si el título es translaticio (art. 702). <b>Irregular:</b> le falta uno o más de esos requisitos (art. 708).</li>
+      <li><b>Justo título</b> (art. 703): constitutivo (ocupación, accesión, prescripción) o translaticio (venta, permuta, donación). La venta de cosa ajena vale (art. 1815), así que es justo título.</li>
+      <li><b>Buena fe posesoria</b> (art. 706): conciencia de haber adquirido por medios legítimos; en los títulos translaticios, persuasión de haber recibido la cosa de quien podía enajenarla. Es <b>subjetiva</b> (no la buena fe contractual objetiva del art. 1546). Se presume; la mala fe se prueba (art. 707). El error de derecho presume mala fe sin prueba en contrario.</li>
+      <li><b>Viciosas</b> (art. 709): <b>violenta</b>, adquirida por la fuerza actual o inminente (arts. 710 y 711), y <b>clandestina</b>, ejercida ocultándola a quienes tienen derecho a oponerse (art. 713).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Mera tenencia</h2>
+    <p>La tiene el arrendatario, el comodatario, el acreedor prendario, el secuestre, el usufructuario y, en general, todo el que tiene la cosa <b>reconociendo dominio ajeno</b> (art. 714). <b>Es inmutable:</b> el simple lapso de tiempo no la muda en posesión, salvo el caso del art. 2510 regla 3.ª (art. 716).</p>
+  </div>
+  <div class="par">
+    <h2>Art. 730: el mero tenedor que se apropia <span class="star">clave C2</span></h2>
+    <div class="split">
+      <div class="lado"><span class="tag ok">Usurpa</span>Si se da por dueño de la cosa, <b>ni</b> el poseedor pierde la posesión <b>ni</b> el usurpador la adquiere.</div>
+      <div class="lado"><span class="tag warn">Enajena a su nombre</span>El adquirente <b>adquiere la posesión</b> y pone fin a la anterior. Si el bien es inscrito, se necesita además la competente inscripción (inc. 2).</div>
+    </div>
+    <p class="imp"><b>En el caso 2:</b> muebles que Joaquín se llevó → Andrés sigue dueño y poseedor, Joaquín mero tenedor. Smart TV vendido a Paulina → Andrés sigue dueño, pero <b>perdió la posesión</b>, que tiene Paulina.</p>
+  </div>
+  <div class="par">
+    <h2>Tradición</h2>
+    <ul>
+      <li>Modo de adquirir: entrega del dueño con facultad e intención de transferir, y capacidad e intención de adquirir (art. 670). Los muebles se entregan materialmente o en las formas del art. 684; los inmuebles, por <b>inscripción</b> en el Conservador (art. 686).</li>
+      <li><b>Por quien no es dueño:</b> no transfiere el dominio, solo los derechos transmisibles del tradente (art. 682), pero da al adquirente la <b>posesión</b> y el derecho de ganar el dominio <b>por prescripción</b> (art. 683).</li>
+    </ul>
+    <p class="imp"><b>En el caso 2:</b> Paulina es poseedora regular (compraventa = justo título; buena fe presunta; tradición, art. 684) y puede ganar el dominio por prescripción ordinaria de 2 años desde el 10-dic-2023.</p>
+  </div>
+  <div class="par">
+    <h2>Posesión inscrita <span class="star">clave C13</span></h2>
+    <ul>
+      <li>En los inmuebles inscritos, nadie adquiere la posesión sino por la inscripción (art. 724).</li>
+      <li>Para que cese, la inscripción debe cancelarse: por voluntad de las partes, por nueva inscripción en que el poseedor transfiere su derecho o por decreto judicial. Mientras subsista, quien se apodera del inmueble <b>no adquiere posesión ni pone fin a la existente</b> (art. 728).</li>
+      <li>Contra título inscrito no hay prescripción adquisitiva, sino en virtud de otro título inscrito (art. 2505).</li>
+    </ul>
+    <p class="imp"><b>En el caso 13:</b> por el CC, la ocupación de Herrera no le daba posesión (art. 728). El DL 2.695 es justamente la excepción: opta por la posesión material y lo hace poseedor regular aunque subsista la inscripción de la sociedad (art. 15 DL).</p>
+  </div>
+  <div class="par">
+    <h2>Accesión: edificar en suelo ajeno</h2>
+    <p>Si se edificó <b>sin conocimiento</b> del dueño, este elige: hacer suyo el edificio pagando las indemnizaciones de las prestaciones mutuas, u obligar a quien edificó a pagarle el justo precio del terreno con intereses legales. Si se edificó <b>a ciencia y paciencia</b> del dueño, este debe pagar el valor del edificio para recobrar el terreno (art. 669). Construir con materiales ajenos en suelo propio es el caso inverso (art. 668).</p>
+    <p class="imp"><b>En el caso 13:</b> Herrera edificó en el retazo. Si la sociedad lo recupera, se aplica el art. 669 y las prestaciones mutuas.</p>
+  </div>
+</section>
+
+<!-- PRESCRIPCIÓN -->
+<section id="pres" role="tabpanel" hidden>
+  <div class="band mostaza">
+    <h3>Concepto</h3>
+    <p>Modo de <b>adquirir</b> las cosas ajenas por haberlas poseído, o de <b>extinguir</b> las acciones y derechos ajenos por no haberse ejercido, durante cierto tiempo y con los demás requisitos legales (art. 2492). Quien quiera aprovecharse de ella <b>debe alegarla</b>: el juez no la declara de oficio (art. 2493).</p>
+  </div>
+  <div class="par">
+    <h2>Adquisitiva</h2>
+    <div class="cmp">
+      <div class="row"><span class="k">Ordinaria</span><span>Posesión <b>regular</b> no interrumpida (art. 2507). <b>2 años muebles, 5 años inmuebles</b> (art. 2508).</span></div>
+      <div class="row"><span class="k">Extraordinaria</span><span>No exige título; se presume de derecho la buena fe (art. 2510 reglas 1.ª y 2.ª). <b>10 años</b> contra toda persona, sin suspensión (art. 2511).</span></div>
+      <div class="row"><span class="k">Mero tenedor</span><span>El título de mera tenencia hace presumir mala fe y no da lugar a la prescripción, salvo que concurran <b>dos</b> circunstancias: que el dueño no pueda probar que en los últimos 10 años se reconoció su dominio, y que el que prescribe pruebe haber poseído sin violencia, clandestinidad ni interrupción por el mismo tiempo (art. 2510 regla 3.ª).</span></div>
+      <div class="row"><span class="k">DL 2.695</span><span>Especial: <b>2 años</b> de posesión inscrita no interrumpida desde la inscripción, y <b>no se suspende</b> en caso alguno (art. 15 DL).</span></div>
+    </div>
+    <p class="imp"><b>En el caso 2:</b> Joaquín no prescribe: es mero tenedor (art. 716); el contrato reconoce el dominio de Andrés; el apoderamiento fue clandestino (arts. 709 y 713), y además no han pasado 10 años (art. 2511). Paulina sí: ordinaria de 2 años, hasta el 10-dic-2025, salvo que Andrés la demande y notifique antes.</p>
+  </div>
+  <div class="par">
+    <h2>Extintiva</h2>
+    <ul>
+      <li>Exige solo el lapso de tiempo sin ejercer la acción; se cuenta <b>desde que la obligación se hizo exigible</b> (art. 2514).</li>
+      <li><b>3 años las acciones ejecutivas, 5 las ordinarias.</b> La ejecutiva se convierte en ordinaria por 3 años y, convertida, dura solo otros 2 (art. 2515).</li>
+      <li>Plazos de meses o años: vencen el día de igual número del mes o año (art. 48).</li>
+    </ul>
+    <p class="imp"><b>En el caso 7:</b> la entrega vencía un mes después del 5-mar-2019 → exigible el <b>5-abr-2019</b> (art. 48). La resolución es acción ordinaria: prescribe el <b>5-abr-2024</b>. La ejecutiva habría prescrito el 5-abr-2022. <b>Trampa:</b> contar desde la firma da el 5-mar-2024 y la acción aparecería prescrita un día después de demandar.</p>
+  </div>
+  <div class="par">
+    <h2>Interrupción</h2>
+    <ul>
+      <li><b>Natural:</b> el deudor reconoce la obligación, expresa o tácitamente. <b>Civil:</b> por la demanda judicial, salvo los casos del art. 2503 (art. 2518).</li>
+      <li>No hay interrupción (art. 2503): 1.° si la demanda no se notificó en forma legal; 2.° si el actor desistió o se declaró abandonado el procedimiento; 3.° si el demandado fue absuelto.</li>
+      <li>Efecto: se pierde todo el tiempo corrido.</li>
+    </ul>
+    <div class="split" style="margin-top:6px">
+      <div class="lado"><span class="tag ok">Tesis de la presentación</span>Basta presentar dentro de plazo; la notificación legal es condición para alegarla, aunque llegue después. <b>CS 12.249-2024</b> (3 a 2).</div>
+      <div class="lado"><span class="tag warn">Tesis de la notificación</span>Hay que notificar antes de que venza el plazo. <b>CS 31.699-2024</b> (3 a 2). La Ley 21.226 (pandemia) permitió interrumpir con la sola presentación solo durante la catástrofe.</div>
+    </div>
+    <p class="imp"><b>En el caso 7:</b> se demandó el 4-mar-2024 y el caso no da la fecha de notificación: responde distinguiendo. <b>En el 13:</b> lo prudente es notificar antes del 30-jun-2025.</p>
+  </div>
+</section>
+
+<!-- REIVINDICACIÓN -->
+<section id="reiv" role="tabpanel" hidden>
+  <div class="band rosa">
+    <h3>Concepto · art. 889</h3>
+    <p>La que tiene el <b>dueño</b> de una <b>cosa singular</b>, de que <b>no está en posesión</b>, para que el poseedor sea condenado a restituírsela. Requisitos: dominio del actor, cosa singular reivindicable y posesión del demandado.</p>
+  </div>
+  <div class="par">
+    <h2>Reglas que se usan en los casos</h2>
+    <div class="cmp">
+      <div class="row"><span class="k">Art. 890</span><span>Pueden reivindicarse las cosas corporales, raíces y muebles. <b>Excepción:</b> quien compró en feria, tienda, almacén u otro establecimiento industrial en que se vendan cosas muebles de la misma clase no restituye sin que se le reembolse lo que pagó y gastó en reparar o mejorar. Al Marketplace con un particular difícilmente se le aplica.</span></div>
+      <div class="row"><span class="k">Art. 895</span><span>Se dirige contra el actual poseedor.</span></div>
+      <div class="row"><span class="k">Art. 898</span><span>Contra quien enajenó la cosa y se hizo imposible o difícil su persecución: restituye lo que recibió por ella y, si sabía que era ajena, toda la indemnización. Si el dueño recibe ese precio, <b>confirma la enajenación</b>.</span></div>
+      <div class="row"><span class="k">Art. 901</span><span>Si se reivindica un mueble y hay motivo de temer que se pierda o deteriore, puede pedirse su <b>secuestro</b>; el poseedor puede evitarlo dando seguridad suficiente.</span></div>
+      <div class="row"><span class="k">Art. 915</span><span>Las reglas de la reivindicación se aplican contra quien, poseyendo a nombre ajeno, <b>retiene indebidamente</b> una cosa raíz o mueble (sirve contra el mero tenedor).</span></div>
+    </div>
+  </div>
+  <div class="par">
+    <h2>Prestaciones mutuas (arts. 904 a 915)</h2>
+    <p>Obligaciones recíprocas entre el dueño que gana y el poseedor vencido. El eje es la <b>buena o mala fe</b> del poseedor, y la <b>contestación de la demanda</b> marca el corte para el de buena fe.</p>
+    <div class="split">
+      <div class="lado"><span class="tag ok">Buena fe</span>Restituye en el plazo que fije el juez (904). Deterioros: solo si se aprovechó (906). Frutos: no restituye los percibidos antes de la contestación (907). Expensas necesarias (908) y mejoras útiles hechas antes de contestar (909): se le abonan. Retención hasta que se le pague (914).</div>
+      <div class="lado"><span class="tag warn">Mala fe</span>Deterioros por su hecho o culpa (906). Todos los frutos, incluso los que el dueño habría podido percibir (907). Expensas necesarias sí (908); mejoras útiles no, solo llevarse los materiales separables (910).</div>
+    </div>
+    <p style="margin-top:6px">Mejoras voluptuarias: no se pagan a nadie (911). Frutos se miden al percibirse; expensas y mejoras, al hacerse (913).</p>
+  </div>
+  <div class="par">
+    <h2>Acciones posesorias (para descartarlas en el 13)</h2>
+    <p>Protegen la posesión de inmuebles. Exigen haber poseído tranquila e ininterrumpidamente <b>un año</b> (art. 918), y la de amparo prescribe en <b>un año</b> desde la turbación (art. 920). Después de la inscripción del DL no son la vía (art. 18 DL); antes, la sociedad pudo usar la querella de amparo.</p>
+  </div>
+  <p class="src">En el caso 2: contra Paulina, reivindicatoria (889 y 895) + secuestro (901); contra Joaquín, la del art. 915 o la del 898 por el televisor.</p>
+</section>
+
+<!-- COMPRAVENTA Y EVICCIÓN -->
+<section id="evi" role="tabpanel" hidden>
+  <div class="band salvia">
+    <h3>Venta de cosa ajena · art. 1815</h3>
+    <p><b>Vale</b>, sin perjuicio de los derechos del dueño mientras no se extingan por el lapso de tiempo. Es válida entre las partes e <b>inoponible</b> al dueño.</p>
+  </div>
+  <div class="par">
+    <h2>Saneamiento de evicción</h2>
+    <ul>
+      <li><b>Qué es:</b> obligación del vendedor de amparar al comprador en el dominio y la posesión pacífica. Es uno de los dos objetos del saneamiento; el otro son los vicios redhibitorios (art. 1837).</li>
+      <li><b>Requisitos:</b> privación de todo o parte de la cosa <b>por sentencia judicial</b> (art. 1838) y <b>causa anterior</b> a la venta (art. 1839). Si se devuelve sin juicio, no hay evicción.</li>
+      <li><b>Naturaleza:</b> es de la naturaleza del contrato; puede renunciarse, pero es nulo el pacto que exime al vendedor de mala fe (art. 1842).</li>
+      <li><b>Citación de evicción:</b> el comprador demandado debe citar al vendedor para que defienda la cosa; si no lo cita, el vendedor no sanea (art. 1843). Si el vendedor comparece, el juicio sigue contra él (art. 1844).</li>
+      <li><b>Prescripción:</b> 4 años desde la sentencia de evicción; la sola restitución del precio, según las reglas generales (art. 1856).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Qué comprende · art. 1847 <span class="star">petición concreta</span></h2>
+    <div class="flow box">
+      <div class="step"><b class="n">1</b><div>Restitución del <b>precio</b>, aunque la cosa valga menos al tiempo de la evicción (descuento solo si el comprador se aprovechó de deterioros, art. 1848).</div></div>
+      <div class="step"><b class="n">2</b><div>Las <b>costas legales del contrato</b> pagadas por el comprador.</div></div>
+      <div class="step"><b class="n">3</b><div>El valor de los <b>frutos</b> que el comprador debió restituir al dueño.</div></div>
+      <div class="step"><b class="n">4</b><div>Las <b>costas</b> que sufrió por la demanda (salvo art. 1845).</div></div>
+      <div class="step"><b class="n">5</b><div>El <b>aumento de valor</b> que tomó la cosa en poder del comprador, aun por causas naturales o el tiempo.</div></div>
+    </div>
+    <p style="margin-top:6px"><b>Vendedor de mala fe:</b> reembolsa también las mejoras, incluso las voluptuarias (art. 1849), y todo el aumento de valor, sin el tope de la cuarta parte del precio (art. 1850). <b>Comprador que sabía que la cosa era ajena:</b> pierde incluso el precio (art. 1852 inc. 3).</p>
+    <p class="imp"><b>En el caso 2:</b> Paulina cita de evicción a Joaquín antes de contestar (art. 1843; art. 584 CPC) y pide los $300.000, costas, frutos (en un TV, normalmente no hay) y aumento de valor. Los $1.200.000 son el avalúo al vender, no un «aumento de valor».</p>
+  </div>
+  <div class="par">
+    <h2>Precio vil, lesión y receptación</h2>
+    <ul>
+      <li><b>Lesión enorme:</b> la sufre el vendedor que recibe menos de la mitad del justo precio (art. 1889), pero <b>no procede en la venta de muebles</b> (art. 1891).</li>
+      <li><b>Receptación:</b> tener o comprar especies conociendo su origen o no pudiendo menos que conocerlo, incluidas las objeto de apropiación indebida (art. 456 bis A CP). El precio vil es el indicio típico.</li>
+      <li><b>Objeto ilícito:</b> hay objeto ilícito en los contratos prohibidos por las leyes (art. 1466) → nulidad absoluta (art. 1682), y quien pagó a sabiendas no puede repetir (art. 1468).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>¿Resolución antes de la evicción?</h2>
+    <p><b>Doctrina mayoritaria</b> (Barcia, citando a Meza Barros, Díez Duarte y Guzmán Correa): el vendedor que entrega cosa ajena cumple; el comprador solo tiene el saneamiento cuando sufre la evicción. <b>Tesis moderna:</b> debe entregarse lo que reza el contrato (arts. 1828 y 1569), así que podría pedirse la resolución (art. 1489). Demandada la compradora, ambas coinciden: saneamiento.</p>
+  </div>
+</section>
+
+<!-- INCUMPLIMIENTO -->
+<section id="inc" role="tabpanel" hidden>
+  <div class="band durazno">
+    <h3>Calificación · caso 7</h3>
+    <p><b>Confección de obra material</b> (art. 1996): si el artífice pone la materia, es <b>venta</b> (se perfecciona con la aprobación de quien encargó la obra); si la pone quien la encarga, es arrendamiento. A la construcción de edificios por <b>precio único prefijado</b> se suman las reglas del art. 2003.</p>
+  </div>
+  <div class="par">
+    <h2>Fuerza obligatoria y cumplimiento</h2>
+    <ul>
+      <li>Todo contrato legalmente celebrado es una <b>ley para los contratantes</b> (art. 1545); por eso solo obliga a las partes (relatividad).</li>
+      <li>Debe ejecutarse de <b>buena fe</b> y obliga a lo que emana de la naturaleza de la obligación (art. 1546).</li>
+      <li><b>Cumplimiento imperfecto:</b> también da lugar a indemnización (art. 1556).</li>
+      <li>Ninguna obra puede habitarse ni destinarse a uso alguno antes de su <b>recepción definitiva</b> (art. 145 LGUC).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Condición resolutoria tácita · art. 1489</h2>
+    <p>Va envuelta en los contratos bilaterales; el contratante diligente pide <b>a su arbitrio</b> la <b>resolución o el cumplimiento</b>, en ambos casos <b>con indemnización</b>.</p>
+    <div class="flow box">
+      <div class="step"><b class="n">1</b><div><b>Contrato bilateral.</b></div></div>
+      <div class="step"><b class="n">2</b><div><b>Incumplimiento.</b> Tradicional: imputable (culpa presunta, art. 1547). Moderna (CS 230.406-2023): <b>esencial</b>, sea o no imputable.</div></div>
+      <div class="step"><b class="n">3</b><div><b>El actor cumplió o está llano a cumplir</b> (art. 1552).</div></div>
+      <div class="step"><b class="n">4</b><div><b>Declaración judicial.</b></div></div>
+    </div>
+    <p style="margin-top:6px"><b>Criterios de esencialidad (CS 230.406-2023):</b> lo que las partes pactaron como esencial; si priva sustancialmente al acreedor de lo que esperaba, siempre que el deudor pudiera preverlo; y si la conducta del deudor hace perder la confianza en que cumplirá.</p>
+    <p><b>Efectos:</b> cumplida la condición, se restituye lo recibido (art. 1487): restituciones mutuas, en especie o en valor (Corral nº 546 y 548).</p>
+  </div>
+  <div class="par">
+    <h2>Obligación de hacer · art. 1553</h2>
+    <p>Si el deudor está en mora, el acreedor puede pedir, junto con la indemnización de la mora: 1.° que se apremie al deudor; 2.° que se le autorice para hacerla ejecutar por un tercero a costa del deudor; 3.° que el deudor le indemnice los perjuicios.</p>
+  </div>
+  <div class="par">
+    <h2>Mora</h2>
+    <ul>
+      <li>El deudor está en mora: 1.° si no cumple dentro del <b>término estipulado</b>; 2.° si dejó pasar el único tiempo en que podía cumplir; 3.° en los demás casos, desde que es <b>reconvenido judicialmente</b> (art. 1551).</li>
+      <li><b>La mora purga la mora:</b> en los bilaterales ninguno está en mora mientras el otro no cumpla o no se allane a cumplir (art. 1552). Es la base de la <b>excepción de contrato no cumplido</b>.</li>
+      <li>La indemnización se debe <b>desde la mora</b> (art. 1557).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Indemnización de perjuicios</h2>
+    <p><b>Requisitos:</b> incumplimiento, imputabilidad (culpa presunta, art. 1547), mora (art. 1557), daño cierto y causalidad con previsibilidad: sin dolo, solo los perjuicios previstos o previsibles al contratar; con dolo, todos los directos (art. 1558).</p>
+    <div class="cmp">
+      <div class="row"><span class="k">Daño emergente</span><span>Pérdida efectiva del patrimonio (art. 1556 lo nombra, no lo define).</span></div>
+      <div class="row"><span class="k">Lucro cesante</span><span>Ganancia que se deja de obtener.</span></div>
+      <div class="row"><span class="k">Daño moral</span><span>No está en el art. 1556, pero la CS lo acepta en sede contractual si es <b>significativo y previsible</b> (CS 194.783-2023 y 217.959-2023). Previsible en contratos de contenido personal, con dolo o culpa grave, o si la cosa tiene destino no patrimonial (vivienda).</span></div>
+      <div class="row"><span class="k">Relatividad</span><span>Solo el daño del contratante: la familia es tercera (art. 1545; Corral nº 468).</span></div>
+      <div class="row"><span class="k">Mitigar</span><span>Quien sufre el daño debe adoptar medidas para reducirlo; lo evitable se descuenta (Corral nº 4).</span></div>
+      <div class="row"><span class="k">Indemnización autónoma</span><span>Corral la admite sin pedir resolución ni cumplimiento si el incumplimiento no es grave, si la resolución sería inútil o si conviene más (nº 426).</span></div>
+    </div>
+    <p class="imp"><b>En el caso 7:</b> arriendos ($5 MM) = daño emergente previsible; el precio ($50 MM) <b>no</b> es perjuicio sino restitución (art. 1487); daño moral ($15 MM) procede solo el de Javier.</p>
+  </div>
+  <div class="par">
+    <h2>Arrendamiento (caso 2)</h2>
+    <ul>
+      <li>Terminado el contrato, el arrendatario debe <b>restituir</b> la cosa en el estado en que la recibió (art. 1947).</li>
+      <li><b>Mora en la renta:</b> la mora de un período entero da derecho al arrendador, tras <b>dos reconvenciones con al menos cuatro días entre ellas</b>, a hacer cesar de inmediato el arriendo, si no se da seguridad de pago en un plazo no menor a 30 días (art. 1977).</li>
+      <li>Terminado por cualquier causa, el arrendatario <b>sigue pagando renta</b> hasta restituir el inmueble (art. 6 inc. 1 Ley 18.101).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- DL 2.695 -->
+<section id="dl" role="tabpanel" hidden>
+  <div class="band cielo">
+    <h3>Qué es · arts. 1 y 2</h3>
+    <p>Permite a los <b>poseedores materiales</b> sin título inscrito de inmuebles con avalúo fiscal <b>≤ 1.000 UTM</b> pedir a Bienes Nacionales que los reconozca como <b>poseedores regulares</b>, para adquirir por prescripción (art. 1, texto de la Ley 21.737).</p>
+  </div>
+  <div class="par">
+    <h2>Requisitos del solicitante · art. 2</h2>
+    <div class="flow box">
+      <div class="step"><b class="n">1</b><div>Posesión <b>continua y exclusiva</b>, sin violencia ni clandestinidad, durante <b>5 años</b> a lo menos.</div></div>
+      <div class="step"><b class="n">2</b><div>No tener <b>juicio pendiente</b> sobre el dominio o la posesión, iniciado antes de la solicitud.</div></div>
+      <div class="step"><b class="n">3</b><div>Declaración jurada de no tener juicio ni condena por <b>usurpación</b> (Ley 21.633).</div></div>
+    </div>
+    <p style="margin-top:6px"><b>Inciso final:</b> las inscripciones de dominio anteriores <b>no son obstáculo</b>.</p>
+  </div>
+  <div class="par">
+    <h2>Efectos de la inscripción · arts. 15 a 17</h2>
+    <ul>
+      <li>La resolución es <b>justo título</b>; inscrita, el interesado es <b>poseedor regular</b> aunque existan inscripciones ajenas no canceladas (art. 15).</li>
+      <li>Con <b>2 años</b> de posesión inscrita no interrumpida se hace <b>dueño</b> por prescripción, que <b>no se suspende</b> (art. 15).</li>
+      <li>Vencidos los 2 años, prescriben las acciones del dueño anterior y su inscripción se entiende <b>cancelada por el solo ministerio de la ley</b> (art. 16).</li>
+      <li>El Conservador inscribe de oficio la prohibición de <b>gravar por 2 años y enajenar por 5</b> (art. 17), con excepciones (gravámenes a favor de organismos de crédito).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Vías de los terceros · art. 18 (vía exclusiva)</h2>
+    <p>Quien pretenda impugnar la solicitud o la inscripción <b>solo</b> puede hacerlo con los derechos del título IV del DL (art. 18). Desde la inscripción del DL quedan desplazadas la reivindicatoria común y las posesorias (CS 9.789-2022: antes de la inscripción, la reivindicatoria común es correcta).</p>
+    <div class="cmp">
+      <div class="row"><span class="k">Oposición</span><span>Ante el Servicio, hasta <b>60 días hábiles</b> desde la última publicación (art. 20). Causales taxativas del art. 19 (N° 1: poseedor inscrito con posesión exclusiva; no la invoca el comunero). Se entiende demanda y pasa al juez del lugar del predio; audiencia entre 10 y 30 días hábiles; prueba como incidentes, apreciada en conciencia (art. 22); sentencia en 10 días hábiles (art. 23).</span></div>
+      <div class="row"><span class="k">Acción de dominio</span><span>Dentro de <b>2 años</b> desde la inscripción, ante el juez del art. 20, en <b>juicio sumario</b> (art. 26). Si se acoge, se cancela la inscripción del regularizado y las anteriores conservan su plena vigencia (art. 27). Es la <b>reivindicatoria</b>, con los requisitos del art. 889 (CS 14.300-2024); sus normas decisorias son los arts. 26 y 27 (CS 29.037-2025). Procede «sin perjuicio» del art. 19: no exige haberse opuesto.</span></div>
+      <div class="row"><span class="k">Compensación</span><span>Quien acredite dominio y no accionó a tiempo, los comuneros y titulares de derechos reales: que se les pague en dinero hasta el valor del predio (art. 28). <b>5 años</b> desde la inscripción, sumario (art. 29). Valor fijado oyendo al SAG o la Conaf (rural) o al SII (urbano), comercial y <b>sin las mejoras</b> del poseedor. Pago: hasta 10 % al quedar firme y saldo en 5 a 10 años, interés hasta 6 % (art. 30).</span></div>
+      <div class="row"><span class="k">Acción penal</span><span>Obtener <b>maliciosamente</b> la calidad de poseedor regular: pena del art. 473 CP (art. 9). Dolo presunto si era arrendatario o mero tenedor, si reconoció dominio ajeno por escrito o (Ley 21.633) si había juicio o condena por usurpación. Acogida, se cancela la inscripción. Prescribe en 5 años (arts. 94 y 95 CP); procedimiento simplificado.</span></div>
+    </div>
+  </div>
+  <div class="par">
+    <h2>Línea de tiempo del caso 13</h2>
+    <div class="cmp">
+      <div class="row"><span class="k">30-jun-2023</span><span>Inscripción de Herrera: poseedor regular; corren 2 y 5 años; prohibición del art. 17.</span></div>
+      <div class="row"><span class="k">30-jun-2025</span><span>Herrera dueño por prescripción; cancelación de la inscripción de 1998; vence la acción de dominio.</span></div>
+      <div class="row"><span class="k">30-jun-2028</span><span>Vence la compensación en dinero.</span></div>
+    </div>
+  </div>
+  <div class="par">
+    <h2>Debates</h2>
+    <ul>
+      <li><b>Plazos:</b> la Ley 21.108 (2018) subió de 1 a 2 años y la oposición de 30 a 60 días hábiles; los fallos antiguos aplican un año.</li>
+      <li><b>Comunero:</b> no reivindica contra el comunero que regularizó, solo pide compensación (art. 19 N° 1; CS 19.944-2023); frente a un tercero, sí.</li>
+      <li><b>Posesión inscrita vs. material:</b> vencido el plazo, el art. 2505 protege al regularizado (CS 19.261-2018; Otárola, 2023).</li>
+      <li><b>Constitucionalidad:</b> TC 13.512-2022 acogió la inaplicabilidad solo ante anomalías concretas (falta de noticia real, cosa juzgada); 3 votos en contra.</li>
+      <li><b>Reformas:</b> Ley 21.633 (24-nov-2023) y Ley 21.737 (21-abr-2025) son posteriores a la inscripción de Herrera: no se le aplican (art. 18 CP).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<section id="preg" role="tabpanel" hidden>
+  <div class="qbar">
+    <select id="qfiltro" aria-label="Filtrar">
+      <option value="todo">Todas</option><option value="vf">Solo V/F</option><option value="sm">Solo alternativas</option><option value="db">Solo desarrollo breve</option>
+    </select>
+    <button data-q="mezclar">Mezclar</button>
+    <span class="score"></span>
+  </div>
+  <div id="quizbox" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div class="qfoot"><button class="pri" data-q="corregir">Corregir</button><button data-q="reiniciar">Borrar respuestas</button><span class="score"></span></div>
+</section>
+<footer>Fuente: «Casos integracion 2, 7 y 13» (versión de 24 páginas) y el texto vigente de cada ley.</footer>
+</div>
+<script>
+window.PREG=[
+// POSESIÓN Y TENENCIA
+{t:'sm',q:'El arrendatario de una casa amoblada, respecto de los muebles del inventario, es:',o:['Mero tenedor.','Poseedor irregular.','Poseedor regular.','Usufructuario.'],a:0,e:'Tiene las cosas reconociendo dominio ajeno, en lugar y a nombre del dueño (art. 714).',s:'Art. 714'},
+{t:'vf',q:'El arrendador pierde la posesión de la cosa al entregarla en arriendo, porque deja de tenerla materialmente.',a:false,e:'El poseedor conserva la posesión aunque transfiera la tenencia dándola en arriendo, comodato, prenda, depósito o usufructo (art. 725). Posee por medio del arrendatario (art. 700).',s:'Arts. 700 y 725'},
+{t:'vf',q:'Terminado el arrendamiento, si el arrendatario sigue con las cosas por varios años, su mera tenencia se transforma en posesión.',a:false,e:'El simple lapso de tiempo no muda la mera tenencia en posesión, salvo el caso del art. 2510 regla 3.ª (art. 716).',s:'Art. 716'},
+{t:'sm',q:'Según el art. 730, si el mero tenedor usurpa la cosa dándose por dueño, pero sin enajenarla:',o:['Ni el poseedor pierde la posesión ni el usurpador la adquiere.','El usurpador adquiere la posesión irregular.','El poseedor pierde la posesión, pero conserva el dominio.','Se produce interrupción natural de la posesión.'],a:0,e:'Solo si el usurpador enajena a su propio nombre, el adquirente adquiere la posesión y pone fin a la anterior (art. 730).',s:'Art. 730'},
+{t:'vf',q:'Si el mero tenedor de un mueble lo vende y entrega a un tercero a su propio nombre, el tercero adquiere la posesión y se pone fin a la del poseedor anterior.',a:true,e:'Es la segunda parte del art. 730. Por eso Andrés perdió la posesión del Smart TV, aunque sigue siendo dueño.',s:'Art. 730'},
+{t:'sm',q:'Son requisitos de la posesión regular:',o:['Justo título, buena fe al adquirir y tradición si el título es translaticio.','Justo título y buena fe que subsista durante todo el plazo.','Buena fe y posesión no interrumpida por cinco años.','Título inscrito y ánimo de señor.'],a:0,e:'Art. 702: la buena fe se exige al adquirir, aunque no subsista después; y si el título es translaticio, también la tradición.',s:'Art. 702'},
+{t:'vf',q:'La compraventa de cosa ajena no puede servir de justo título, porque es nula.',a:false,e:'La venta de cosa ajena vale (art. 1815) y la compraventa es título translaticio de dominio (art. 703).',s:'Arts. 703 y 1815'},
+{t:'sm',q:'La buena fe posesoria, en los títulos translaticios de dominio, consiste en:',o:['La persuasión de haber recibido la cosa de quien tenía la facultad de enajenarla.','Ejecutar el contrato conforme a lo que emana de su naturaleza.','No haber celebrado el contrato con dolo.','Pagar un precio justo por la cosa.'],a:0,e:'Art. 706 inc. 2. Es buena fe subjetiva, distinta de la buena fe contractual objetiva del art. 1546.',s:'Art. 706'},
+{t:'vf',q:'La buena fe se presume, y la mala fe debe probarse, salvo los casos en que la ley establece la presunción contraria.',a:true,e:'Art. 707. Un caso de presunción contraria es el título de mera tenencia en la prescripción extraordinaria (art. 2510 regla 3.ª) y el error de derecho (art. 706 inc. final).',s:'Art. 707'},
+{t:'sm',q:'Quien en ausencia del dueño se apodera de la cosa y, volviendo el dueño, le repele, es:',o:['Poseedor violento.','Poseedor clandestino.','Mero tenedor.','Poseedor irregular de buena fe.'],a:0,e:'Art. 711. La posesión violenta es la que se adquiere por la fuerza (art. 710); la clandestina se ejerce ocultándola (art. 713).',s:'Arts. 710, 711 y 713'},
+{t:'vf',q:'Sacar los muebles de una casa arrendada a la medianoche, a escondidas, es un apoderamiento clandestino.',a:true,e:'La posesión clandestina es la que se ejerce ocultándola a los que tienen derecho para oponerse a ella (art. 713); es viciosa (art. 709).',s:'Arts. 709 y 713'},
+{t:'sm',q:'Si quien hace la tradición no es dueño de la cosa:',o:['El adquirente no adquiere el dominio, pero sí la posesión y el derecho a ganarlo por prescripción.','La tradición es nula.','El adquirente adquiere el dominio si está de buena fe.','El adquirente solo adquiere la mera tenencia.'],a:0,e:'No se adquieren más derechos que los transmisibles del tradente (art. 682), pero la tradición da derecho a ganar el dominio por prescripción (art. 683).',s:'Arts. 682 y 683'},
+{t:'vf',q:'En un inmueble inscrito, quien se apodera materialmente del predio adquiere la posesión si actúa con ánimo de dueño.',a:false,e:'Mientras subsista la inscripción, el que se apodera de la cosa no adquiere posesión de ella ni pone fin a la existente (art. 728).',s:'Arts. 724 y 728'},
+{t:'sm',q:'Si alguien edifica en terreno ajeno a ciencia y paciencia del dueño del terreno:',o:['El dueño, para recobrar el terreno, debe pagar el valor del edificio.','El dueño hace suyo el edificio sin pagar nada.','El que edificó adquiere el terreno por accesión.','El dueño solo puede exigir el justo precio del terreno.'],a:0,e:'Art. 669 inc. 2. Si se edificó sin su conocimiento, el dueño elige entre hacer suyo el edificio pagando las indemnizaciones o exigir el justo precio del terreno con intereses (inc. 1).',s:'Art. 669'},
+// PRESCRIPCIÓN
+{t:'sm',q:'El plazo de la prescripción adquisitiva ordinaria de un bien mueble es:',o:['Dos años.','Cinco años.','Diez años.','Un año.'],a:0,e:'Dos años para muebles y cinco para inmuebles (art. 2508).',s:'Art. 2508'},
+{t:'vf',q:'La prescripción adquisitiva extraordinaria requiere diez años y justo título.',a:false,e:'Son diez años (art. 2511), pero no se necesita título alguno (art. 2510 regla 1.ª).',s:'Arts. 2510 y 2511'},
+{t:'sm',q:'Para que un mero tenedor pueda prescribir extraordinariamente (art. 2510 regla 3.ª) se requiere:',o:['Que el dueño no pueda probar que en los últimos diez años se reconoció su dominio, y que el tenedor pruebe haber poseído sin violencia, clandestinidad ni interrupción por el mismo tiempo.','Que haya transcurrido el doble del plazo ordinario.','Que el dueño haya abandonado la cosa.','Que el tenedor haya pagado todas las rentas.'],a:0,e:'Son dos circunstancias copulativas. En el caso 2 no se cumplen: el contrato reconoce el dominio, el apoderamiento fue clandestino y no han pasado diez años.',s:'Art. 2510 regla 3.ª'},
+{t:'vf',q:'El juez puede declarar de oficio la prescripción si consta en el proceso que el plazo venció.',a:false,e:'El que quiera aprovecharse de la prescripción debe alegarla; el juez no puede declararla de oficio (art. 2493). En el ejecutivo, el tribunal debe denegar la ejecución si la acción ejecutiva está prescrita (art. 442 CPC), que es otra cosa.',s:'Art. 2493'},
+{t:'sm',q:'La prescripción extintiva de las acciones ordinarias es, en general, de:',o:['Cinco años.','Tres años.','Dos años.','Diez años.'],a:0,e:'Tres años las ejecutivas y cinco las ordinarias (art. 2515).',s:'Art. 2515'},
+{t:'sm',q:'La prescripción extintiva se cuenta:',o:['Desde que la obligación se haya hecho exigible.','Desde la celebración del contrato.','Desde la notificación de la demanda.','Desde que el acreedor conoce el incumplimiento.'],a:0,e:'Art. 2514. En el caso 7: desde el 5-abr-2019, no desde la firma.',s:'Art. 2514'},
+{t:'vf',q:'La acción ejecutiva se convierte en ordinaria por el lapso de tres años y, convertida, dura solamente otros dos.',a:true,e:'Art. 2515 inc. 2. Los «dos años más» rigen solo para la acción ejecutiva convertida; la de resolución es ordinaria desde el principio.',s:'Art. 2515'},
+{t:'sm',q:'Según el art. 2503, NO se produce interrupción civil cuando:',o:['La demanda no se notificó en forma legal.','El demandado contestó la demanda.','El juicio se tramitó en procedimiento sumario.','La demanda se presentó ante tribunal incompetente.'],a:0,e:'Los tres casos son: notificación no legal, desistimiento o abandono, y sentencia absolutoria (art. 2503).',s:'Art. 2503'},
+{t:'vf',q:'La Corte Suprema tiene una jurisprudencia uniforme según la cual basta presentar la demanda dentro de plazo para interrumpir la prescripción.',a:false,e:'Está dividida: CS 12.249-2024 (tesis de la presentación) y CS 31.699-2024 (tesis de la notificación), ambas 3 a 2 en la misma sala.',s:'Caso 7'},
+{t:'vf',q:'Contra un título inscrito no tiene lugar la prescripción adquisitiva de inmuebles sino en virtud de otro título inscrito.',a:true,e:'Art. 2505. En el caso 13, vencido el plazo del DL, es el regularizado quien queda protegido por esta norma (CS 19.261-2018).',s:'Art. 2505'},
+// REIVINDICACIÓN
+{t:'sm',q:'Son requisitos de la acción reivindicatoria:',o:['Dominio del actor, cosa singular reivindicable y posesión del demandado.','Posesión del actor y despojo violento.','Dominio inscrito del actor y mala fe del demandado.','Contrato entre las partes y su incumplimiento.'],a:0,e:'Art. 889: la tiene el dueño de una cosa singular de que no está en posesión, contra el poseedor.',s:'Art. 889'},
+{t:'vf',q:'La reivindicación también puede dirigirse contra quien, poseyendo a nombre ajeno, retiene indebidamente una cosa.',a:true,e:'Art. 915. Sirve contra el mero tenedor, como Joaquín.',s:'Art. 915'},
+{t:'sm',q:'Si el dueño recibe de quien enajenó su cosa lo que este obtuvo por ella (art. 898):',o:['Confirma por ese hecho la enajenación.','Conserva la reivindicatoria contra el adquirente.','Debe restituir lo recibido si reivindica.','Interrumpe la prescripción del adquirente.'],a:0,e:'Art. 898. Por eso Andrés debe elegir: o reivindica de Paulina o cobra a Joaquín.',s:'Art. 898'},
+{t:'sm',q:'El poseedor vencido de buena fe, en las prestaciones mutuas:',o:['No restituye los frutos percibidos antes de la contestación de la demanda.','Restituye todos los frutos, incluso los que el dueño pudo percibir.','No tiene derecho a que se le abonen las expensas necesarias.','Responde de todos los deterioros, aun sin culpa.'],a:0,e:'Art. 907. El de mala fe restituye todos los frutos; el de buena fe solo los posteriores a la contestación.',s:'Arts. 906 a 910'},
+{t:'vf',q:'Al poseedor de mala fe vencido no se le abonan las mejoras útiles, pero puede llevarse los materiales si se separan sin detrimento y el dueño no paga su precio.',a:true,e:'Art. 910. Las mejoras voluptuarias no se pagan a nadie (art. 911).',s:'Arts. 910 y 911'},
+{t:'vf',q:'Quien compra un mueble en una feria o tienda donde se venden cosas de la misma clase no está obligado a restituirlo al dueño mientras no se le reembolse lo que pagó.',a:true,e:'Excepción del art. 890 inc. 2. En el caso 2 difícilmente aplica: Paulina compró a un particular por Marketplace.',s:'Art. 890'},
+// EVICCIÓN
+{t:'sm',q:'Hay evicción cuando el comprador:',o:['Es privado del todo o parte de la cosa por sentencia judicial, por causa anterior a la venta.','Devuelve voluntariamente la cosa al verdadero dueño.','Descubre que la cosa tiene vicios ocultos.','No recibe la cosa en el plazo convenido.'],a:0,e:'Arts. 1838 y 1839. Si se devuelve sin juicio, no hay evicción.',s:'Arts. 1838 y 1839'},
+{t:'vf',q:'Si el comprador demandado no cita de evicción al vendedor y la cosa es evicta, el vendedor no queda obligado al saneamiento.',a:true,e:'Art. 1843. La citación se pide antes de contestar la demanda (art. 584 CPC).',s:'Art. 1843; art. 584 CPC'},
+{t:'sm',q:'¿Cuál de estas partidas NO está comprendida en el saneamiento de evicción del art. 1847?',o:['La diferencia entre el precio pagado y el avalúo comercial de la cosa al tiempo de la venta.','La restitución del precio.','Las costas legales del contrato.','El aumento de valor que la cosa tomó en poder del comprador.'],a:0,e:'El art. 1847 comprende precio, costas del contrato, frutos restituidos, costas del juicio y aumento de valor en poder del comprador. El avalúo al vender no es «aumento de valor».',s:'Art. 1847'},
+{t:'vf',q:'El vendedor de mala fe debe pagar todo el aumento de valor de la cosa, sin el límite de la cuarta parte del precio.',a:true,e:'Art. 1850. Además reembolsa incluso las mejoras voluptuarias (art. 1849).',s:'Arts. 1849 y 1850'},
+{t:'vf',q:'Quien compra sabiendo que la cosa era ajena conserva el derecho a que se le restituya el precio en caso de evicción.',a:false,e:'Lo pierde (art. 1852 inc. 3), lo que coincide con que quien paga a sabiendas por objeto ilícito no repite (art. 1468).',s:'Art. 1852'},
+{t:'sm',q:'La acción de saneamiento por evicción prescribe en:',o:['Cuatro años desde la sentencia de evicción.','Cinco años desde la compraventa.','Un año desde la entrega.','Dos años desde la citación de evicción.'],a:0,e:'Art. 1856; la sola restitución del precio sigue las reglas generales.',s:'Art. 1856'},
+{t:'vf',q:'Si un mueble se vende en menos de la mitad de su justo precio, el vendedor puede pedir la rescisión por lesión enorme.',a:false,e:'No hay lesión enorme en la venta de bienes muebles (art. 1891).',s:'Arts. 1889 y 1891'},
+// INCUMPLIMIENTO
+{t:'sm',q:'Si el artífice suministra la materia para la confección de una obra material, el contrato es:',o:['Compraventa, que se perfecciona con la aprobación de quien encargó la obra.','Arrendamiento de obra.','Mandato.','Contrato innominado de construcción.'],a:0,e:'Art. 1996. Si la materia la pone quien encarga la obra, es arrendamiento.',s:'Art. 1996'},
+{t:'sm',q:'Según el art. 1489, ante el incumplimiento de un contrato bilateral, el otro contratante puede pedir:',o:['A su arbitrio, la resolución o el cumplimiento, en ambos casos con indemnización de perjuicios.','Solo la resolución, y la indemnización por separado.','El cumplimiento y, si no lo obtiene, la nulidad.','La resolución, sin indemnización.'],a:0,e:'Art. 1489 inc. 2.',s:'Art. 1489'},
+{t:'vf',q:'Para la Corte Suprema (CS 230.406-2023), la resolución exige un incumplimiento esencial, sea o no imputable.',a:true,e:'Fijó tres criterios: lo pactado como esencial, la privación sustancial previsible y la pérdida de confianza en el cumplimiento.',s:'CS 230.406-2023'},
+{t:'sm',q:'En un contrato bilateral, el comprador que no paga el saldo porque el vendedor entregó la obra incompleta:',o:['No está en mora, porque la mora purga la mora.','Está en mora desde el vencimiento del plazo.','Pierde la acción resolutoria.','Debe consignar el saldo para demandar.'],a:0,e:'Art. 1552. Además cumple el requisito de estar llano a cumplir.',s:'Art. 1552'},
+{t:'vf',q:'El deudor está en mora, entre otros casos, cuando no ha cumplido la obligación dentro del término estipulado.',a:true,e:'Art. 1551 N° 1. La indemnización se debe desde la mora (art. 1557).',s:'Arts. 1551 y 1557'},
+{t:'sm',q:'En una obligación de hacer, si el deudor está en mora, el acreedor puede pedir, además de la indemnización de la mora:',o:['Que se apremie al deudor, que se le autorice a hacerla ejecutar por un tercero a costa del deudor, o que se le indemnicen los perjuicios.','Solo la resolución del contrato.','La nulidad del contrato.','Que el deudor rinda caución.'],a:0,e:'Art. 1553, a elección del acreedor.',s:'Art. 1553'},
+{t:'vf',q:'Declarada la resolución, el precio pagado se recupera como indemnización de daño emergente.',a:false,e:'Se recupera como restitución (art. 1487), no como perjuicio. Solo si se demandara la indemnización sin resolución podría cobrarse como daño emergente (Corral nº 426).',s:'Art. 1487'},
+{t:'sm',q:'Sin dolo, el deudor contractual responde:',o:['De los perjuicios que se previeron o pudieron preverse al tiempo del contrato.','De todos los perjuicios directos e indirectos.','Solo del daño emergente.','Solo de los perjuicios que el acreedor pruebe con documentos.'],a:0,e:'Art. 1558. Con dolo, de todos los que fueron consecuencia inmediata o directa.',s:'Art. 1558'},
+{t:'vf',q:'La Corte Suprema acepta el daño moral contractual si es significativo y previsible, y lo ha considerado previsible cuando la cosa es una vivienda.',a:true,e:'CS 194.783-2023 y CS 217.959-2023.',s:'Caso 7'},
+{t:'vf',q:'En la acción contractual, el contratante puede cobrar el daño moral sufrido por su familia.',a:false,e:'Los familiares son terceros: el contrato solo obliga y protege a las partes (art. 1545; Corral nº 468).',s:'Art. 1545'},
+{t:'sm',q:'Para que el arrendador pueda hacer cesar el arriendo por mora en la renta, el art. 1977 exige:',o:['Mora de un período entero y dos reconvenciones con al menos cuatro días entre ellas.','Mora de tres meses y una reconvención.','Mora de cualquier período y aviso por carta certificada.','Sentencia ejecutiva previa.'],a:0,e:'Art. 1977, salvo que se preste seguridad de pago en un plazo no menor a 30 días.',s:'Art. 1977'},
+// DL 2.695
+{t:'sm',q:'Hoy, el DL 2.695 permite regularizar inmuebles cuyo avalúo fiscal sea:',o:['Igual o inferior a 1.000 UTM, rurales o urbanos.','Inferior a 800 UTM los rurales y a 380 UTM los urbanos.','Inferior a 500 UTM.','Cualquier avalúo, si son rurales.'],a:0,e:'Art. 1, texto de la Ley 21.737 (2025). Los límites de 800 y 380 eran los anteriores.',s:'Art. 1 DL 2.695'},
+{t:'sm',q:'El solicitante de la regularización debe acreditar posesión material:',o:['Continua y exclusiva, sin violencia ni clandestinidad, por cinco años a lo menos.','Inscrita, por dos años.','Tranquila, por un año.','De buena fe, por diez años.'],a:0,e:'Art. 2 N° 1 DL. Además: no tener juicio pendiente sobre el dominio o la posesión, y la declaración jurada sobre usurpación.',s:'Art. 2 DL 2.695'},
+{t:'vf',q:'La existencia de una inscripción de dominio anterior sobre el inmueble impide la regularización.',a:false,e:'No es obstáculo (art. 2 inc. final DL). Da, en cambio, la causal de oposición del art. 19 N° 1 y la acción del art. 26.',s:'Art. 2 DL 2.695'},
+{t:'sm',q:'Practicada la inscripción conforme al DL 2.695, el regularizado se hace dueño por prescripción tras:',o:['Dos años completos de posesión inscrita no interrumpida, sin suspensión.','Un año de posesión inscrita.','Cinco años de posesión inscrita.','Diez años, como en la extraordinaria.'],a:0,e:'Art. 15 DL. La Ley 21.108 (2018) subió el plazo de uno a dos años.',s:'Art. 15 DL 2.695'},
+{t:'vf',q:'Vencido el plazo del art. 15, las inscripciones anteriores se entienden canceladas por el solo ministerio de la ley.',a:true,e:'Art. 16 DL; además prescriben las acciones de los derechos reales sobre el inmueble.',s:'Art. 16 DL 2.695'},
+{t:'sm',q:'La acción de dominio de los terceros del art. 26 DL 2.695 debe deducirse:',o:['Dentro de dos años desde la inscripción, en juicio sumario.','Dentro de cinco años desde la inscripción, en juicio ordinario.','Dentro de 60 días hábiles desde la última publicación.','En cualquier tiempo, porque la reivindicatoria es imprescriptible.'],a:0,e:'Art. 26 DL. Los 60 días hábiles son para la oposición (art. 20); los cinco años, para la compensación (art. 29).',s:'Art. 26 DL 2.695'},
+{t:'vf',q:'Para ejercer la acción de dominio del art. 26, el tercero debe haberse opuesto antes a la solicitud.',a:false,e:'El art. 26 la concede «sin perjuicio» del art. 19: son vías distintas.',s:'Art. 26 DL 2.695'},
+{t:'sm',q:'Los terceros que acrediten dominio y no ejercieron a tiempo la acción de dominio pueden:',o:['Pedir que sus derechos se les compensen en dinero, dentro de cinco años desde la inscripción.','Reivindicar por la vía común en juicio ordinario.','Interponer una querella de restitución.','Pedir la nulidad de la resolución administrativa en cualquier tiempo.'],a:0,e:'Arts. 28 y 29 DL, en juicio sumario. El valor se fija sin las mejoras del poseedor (art. 28).',s:'Arts. 28 y 29 DL 2.695'},
+{t:'vf',q:'Según el art. 18 DL 2.695, después de la inscripción los terceros solo pueden impugnar ejerciendo los derechos del propio título IV del DL.',a:true,e:'Por eso quedan desplazadas las posesorias y la reivindicatoria común. Antes de la inscripción, la reivindicatoria común procede (CS 9.789-2022).',s:'Art. 18 DL 2.695'},
+{t:'vf',q:'El comunero puede ejercer la acción de dominio del art. 26 contra el comunero que regularizó el inmueble común.',a:false,e:'El art. 19 N° 1 se lo impide: solo puede pedir compensación en dinero (CS 19.944-2023). Frente a un tercero extraño, sí puede reivindicar.',s:'CS 19.944-2023'},
+{t:'sm',q:'El delito del art. 9 DL 2.695 consiste en:',o:['Obtener maliciosamente el reconocimiento de la calidad de poseedor regular.','Ocupar un inmueble ajeno sin título.','No pagar la compensación del art. 30.','Enajenar el inmueble regularizado antes de cinco años.'],a:0,e:'Pena del art. 473 CP; si se acoge, se cancela la inscripción (art. 9 inc. 3). Prescribe en cinco años desde el delito.',s:'Art. 9 DL 2.695'},
+{t:'vf',q:'La presunción de dolo por juicio pendiente de usurpación, agregada por la Ley 21.633, se aplica a Herrera, que inscribió el 30 de junio de 2023.',a:false,e:'La Ley 21.633 se publicó el 24-nov-2023, después de la inscripción, y no puede aplicarse a un hecho anterior (art. 18 CP).',s:'Art. 18 CP'},
+// DESARROLLO BREVE
+{t:'db',q:'Distinga posesión y mera tenencia, con sus artículos, y diga por qué la mera tenencia no permite prescribir.',e:'Posesión: tenencia de una cosa determinada con ánimo de señor o dueño (art. 700), con corpus y animus; el poseedor se reputa dueño. Mera tenencia: se ejerce no como dueño sino en lugar o a nombre del dueño, reconociendo dominio ajeno (art. 714). La prescripción adquisitiva exige posesión (art. 2492), y el simple lapso no muda la mera tenencia en posesión (art. 716). La única excepción es el art. 2510 regla 3.ª, con sus dos requisitos y diez años.',s:'Arts. 700, 714, 716 y 2510'},
+{t:'db',q:'Explique el art. 730 y sus dos hipótesis.',e:'Regula al que tiene la cosa en lugar y a nombre de otro y se la apropia. Si solo la usurpa dándose por dueño, no se pierde por una parte la posesión ni se adquiere por otra. Si la enajena a su propio nombre, el adquirente adquiere la posesión y pone fin a la anterior. Si el poseedor es inscrito, se requiere además la competente inscripción.',s:'Art. 730'},
+{t:'db',q:'¿Qué es la posesión regular y qué importancia práctica tiene?',e:'La que procede de justo título y fue adquirida de buena fe, más la tradición si el título es translaticio (art. 702). Es la que permite la prescripción ordinaria (art. 2507): dos años para muebles y cinco para inmuebles (art. 2508). La irregular (art. 708) solo permite la extraordinaria de diez años (arts. 2510 y 2511). Además, la buena fe incide en las prestaciones mutuas (arts. 906 a 910).',s:'Arts. 702, 708, 2507, 2508'},
+{t:'db',q:'Requisitos de la acción resolutoria del art. 1489 y diferencia entre la doctrina tradicional y la moderna.',e:'Contrato bilateral; incumplimiento del demandado; que el actor haya cumplido o esté llano a cumplir (art. 1552), y declaración judicial. La tradicional exige incumplimiento imputable, con culpa presunta (art. 1547). La moderna, acogida por la CS (230.406-2023), exige incumplimiento esencial, sea o no imputable, con tres criterios: lo pactado como esencial, la privación sustancial previsible y la pérdida de confianza en el cumplimiento.',s:'Arts. 1489, 1547 y 1552'},
+{t:'db',q:'Requisitos de la indemnización de perjuicios contractual y tipos de daño.',e:'Incumplimiento (incluso imperfecto o tardío, art. 1556), imputabilidad (culpa presunta, art. 1547), mora (art. 1557), daño cierto y causalidad, con previsibilidad: sin dolo, solo los perjuicios previstos o previsibles al contratar (art. 1558). Daños: emergente (pérdida efectiva), lucro cesante (ganancia que se deja de obtener) y daño moral, que la CS acepta si es significativo y previsible.',s:'Arts. 1547, 1556 a 1558'},
+{t:'db',q:'Prescripción extintiva: plazos, cómputo, interrupción y alegación.',e:'Tres años las acciones ejecutivas y cinco las ordinarias; la ejecutiva se convierte en ordinaria y dura otros dos (art. 2515). Se cuenta desde que la obligación se hizo exigible (art. 2514); los plazos de años vencen el día de igual número (art. 48). Se interrumpe naturalmente por reconocimiento del deudor y civilmente por la demanda, salvo los casos del art. 2503 (art. 2518). Debe alegarse; no se declara de oficio (art. 2493).',s:'Arts. 48, 2493, 2503, 2514, 2515, 2518'},
+{t:'db',q:'Saneamiento de evicción: qué es, requisitos, citación y qué comprende.',e:'Obligación del vendedor de amparar al comprador en el dominio y la posesión pacífica (art. 1837). Requisitos: privación por sentencia judicial (art. 1838) y causa anterior a la venta (art. 1839). El comprador demandado debe citar al vendedor antes de contestar (art. 1843; art. 584 CPC), o pierde el saneamiento. Comprende el precio, las costas del contrato, los frutos restituidos, las costas del juicio y el aumento de valor (art. 1847); el vendedor de mala fe, además, todas las mejoras y todo el aumento (arts. 1849 y 1850). Prescribe en cuatro años desde la sentencia (art. 1856).',s:'Arts. 1837 a 1856'},
+{t:'db',q:'Explique las vías que el DL 2.695 da a los terceros y sus plazos.',e:'Vía exclusiva (art. 18). 1) Oposición ante el Servicio, hasta 60 días hábiles desde la última publicación, por las causales del art. 19 (arts. 19 y 20). 2) Acción de dominio, dos años desde la inscripción, juicio sumario ante el juez del predio (arts. 26 y 27). 3) Compensación en dinero, cinco años, sumario (arts. 28 a 30). 4) Fuera del título IV, la acción penal del art. 9, que permite cancelar la inscripción.',s:'Arts. 9, 18 a 30 DL 2.695'},
+{t:'db',q:'¿Qué efectos produce la inscripción practicada conforme al DL 2.695?',e:'La resolución es justo título y el interesado queda como poseedor regular aunque existan inscripciones no canceladas (art. 15). A los dos años de posesión inscrita no interrumpida se hace dueño por prescripción, que no se suspende (art. 15); prescriben las acciones de los derechos reales anteriores y sus inscripciones se entienden canceladas por el solo ministerio de la ley (art. 16). Además, el Conservador inscribe de oficio la prohibición de gravar por dos años y de enajenar por cinco (art. 17).',s:'Arts. 15 a 17 DL 2.695'},
+{t:'db',q:'Prestaciones mutuas: qué son y cómo influye la buena o mala fe.',e:'Obligaciones recíprocas entre el reivindicante vencedor y el poseedor vencido (arts. 904 a 915). El poseedor restituye la cosa, responde de deterioros y restituye frutos; el dueño abona expensas y mejoras. De buena fe: deterioros solo si se aprovechó; no restituye frutos anteriores a la contestación; se le abonan mejoras útiles anteriores a la contestación. De mala fe: deterioros por su culpa, todos los frutos, sin mejoras útiles. Se aplican también contra el que retiene indebidamente (art. 915).',s:'Arts. 904 a 915'}
+];
+
+</script>
+
+<script>
+/* Pestañas + motor de preguntas. Datos en window.PREG = [{t:'sm'|'vf'|'db', q, o:[...], a:indice|true|false, e, s, k}]
+   'db' = desarrollo breve: q (pregunta), e (respuesta modelo); se responde escribiendo y luego se autocorrige («La sabía» / «No la sabía»). */
+(function(){
+  var KEY=document.body.dataset.key||'casos';
+  function sget(k){try{return JSON.parse(localStorage.getItem(KEY+'-'+k))}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+
+  // Pestañas
+  var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+  function show(id){
+    tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);var p=document.getElementById(t.dataset.s);if(p)p.hidden=!on;});
+    sset('tab',id);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.s);window.scrollTo({top:0});});});
+  var s=sget('tab'); if(s&&document.getElementById(s)&&tabs.length)show(s);
+
+  // Buscador de artículos (pestaña Artículos)
+  var bus=document.getElementById('buscar');
+  if(bus){bus.addEventListener('input',function(){
+    var v=bus.value.trim().toLowerCase();
+    [].forEach.call(document.querySelectorAll('.art'),function(a){a.hidden=v&&a.textContent.toLowerCase().indexOf(v)<0;});
+    if(v){[].forEach.call(document.querySelectorAll('section[role=tabpanel]'),function(p){p.hidden=false;});}
+    else{var t=sget('tab')||(tabs[0]&&tabs[0].dataset.s);if(t)show(t);}
+  });}
+
+  // Preguntas
+  var box=document.getElementById('quizbox'); if(!box||!window.PREG)return;
+  var L='abcdefgh';
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  var data=window.PREG.map(function(x,i){
+    x.id=i;
+    if(x.t==='db')x.a=true;
+    if(x.t==='sm'&&!x.fijo){
+      var r=rng(i*7919+(document.body.dataset.key||'').length*31+17), idx=x.o.map(function(_,j){return j;});
+      for(var k=idx.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var t=idx[k];idx[k]=idx[j];idx[j]=t;}
+      x.o=idx.map(function(j){return x.o[j];}); x.a=idx.indexOf(x.a);
+    }
+    return x;
+  });
+  var resp=sget('resp')||{}; var txt=sget('txt')||{}; var corregido=false;
+  var filtro=document.getElementById('qfiltro');
+  var NOM={vf:'Verdadero o falso',sm:'Selección múltiple',db:'Desarrollo breve'};
+  function lista(){
+    var f=filtro?filtro.value:'todo';
+    var orden=sget('orden');
+    var arr=data.filter(function(x){return f==='todo'||x.t===f||(x.k&&x.k===f);});
+    if(orden){var pos={};orden.forEach(function(id,i){pos[id]=i});arr.sort(function(a,b){return (pos[a.id]??a.id)-(pos[b.id]??b.id)});}
+    return arr;
+  }
+  function render(){
+    var arr=lista(); box.innerHTML='';
+    arr.forEach(function(x,n){
+      var d=document.createElement('div'); d.className='q'+(corregido?' done':'')+(x.t==='db'&&resp[x.id]!==undefined?' visto':'');
+      var head='<div class="qn"><span>'+(n+1)+' · '+NOM[x.t]+'</span>'+(x.k?'<span>· '+x.k+'</span>':'')+'</div>';
+      var body='<p class="qt">'+x.q+'</p>';
+      var nm='q'+x.id;
+      if(x.t==='db'){
+        body+='<textarea rows="4" placeholder="Escribe tu respuesta (o dila en voz alta) y luego abre la respuesta modelo"'+(corregido?' disabled':'')+'>'+(txt[x.id]||'').replace(/</g,'&lt;')+'</textarea>';
+        body+='<div class="dbb"><button type="button" class="ver">Ver respuesta modelo</button></div>';
+        body+='<div class="modelo"><p class="res">Respuesta modelo</p><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+
+              '<div class="dbb"><button type="button" data-v="1"'+(resp[x.id]===true?' class="sel"':'')+'>La sabía</button><button type="button" data-v="0"'+(resp[x.id]===false?' class="sel"':'')+'>No la sabía</button></div></div>';
+      }else if(x.t==='vf'){
+        body+='<div class="vf">'+[['V',true],['F',false]].map(function(p){
+          var ch=resp[x.id]===p[1]?' checked':'';
+          var cls=corregido?(p[1]===x.a?' class="ok"':(resp[x.id]===p[1]?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+p[1]+'"'+ch+(corregido?' disabled':'')+'><span><b>'+p[0]+'</b></span></label>';
+        }).join('')+'</div>';
+      }else{
+        body+=x.o.map(function(o,j){
+          var ch=resp[x.id]===j?' checked':'';
+          var cls=corregido?(j===x.a?' class="ok"':(resp[x.id]===j?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+j+'"'+ch+(corregido?' disabled':'')+'><span>'+L[j]+') '+o+'</span></label>';
+        }).join('');
+      }
+      if(x.t!=='db'){
+        var ok=resp[x.id]===x.a;
+        var correcta=x.t==='vf'?(x.a?'Verdadero':'Falso'):(L[x.a]+')');
+        body+='<div class="exp"><span class="res '+(ok?'ok':'bad')+'">'+(resp[x.id]===undefined?'Sin responder':(ok?'Correcta':'Incorrecta'))+' · respuesta: '+correcta+'</span><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+'</div>';
+      }
+      d.innerHTML=head+body; box.appendChild(d);
+      [].forEach.call(d.querySelectorAll('input'),function(inp){inp.addEventListener('change',function(){
+        resp[x.id]=x.t==='vf'?(inp.value==='true'):parseInt(inp.value,10); sset('resp',resp); cuenta();
+      });});
+      if(x.t==='db'){
+        var ta=d.querySelector('textarea');
+        ta.addEventListener('input',function(){txt[x.id]=ta.value;sset('txt',txt);});
+        d.querySelector('.ver').addEventListener('click',function(){d.classList.add('visto');});
+        [].forEach.call(d.querySelectorAll('[data-v]'),function(b){b.addEventListener('click',function(){
+          resp[x.id]=b.dataset.v==='1'; sset('resp',resp);
+          [].forEach.call(d.querySelectorAll('[data-v]'),function(o){o.classList.toggle('sel',o===b);}); cuenta();
+        });});
+      }
+    });
+    cuenta();
+  }
+  function cuenta(){
+    var arr=lista(), r=0, b=0;
+    arr.forEach(function(x){if(resp[x.id]!==undefined){r++; if(resp[x.id]===x.a)b++;}});
+    [].forEach.call(document.querySelectorAll('.score'),function(el){
+      if(el.id==='tiempo')return;
+      el.textContent=corregido?('Puntaje: '+b+' de '+arr.length+(arr.length?' ('+Math.round(100*b/arr.length)+' %)':'')):('Respondidas: '+r+' de '+arr.length);
+    });
+  }
+  function corregir(){corregido=true;render();window.scrollTo({top:box.offsetTop-80});}
+  function reiniciar(){resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();window.scrollTo({top:0});}
+  function mezclar(){var ids=data.map(function(x){return x.id});for(var i=ids.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=ids[i];ids[i]=ids[j];ids[j]=t;}sset('orden',ids);resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();}
+  [].forEach.call(document.querySelectorAll('[data-q=corregir]'),function(b){b.addEventListener('click',corregir)});
+  [].forEach.call(document.querySelectorAll('[data-q=reiniciar]'),function(b){b.addEventListener('click',reiniciar)});
+  [].forEach.call(document.querySelectorAll('[data-q=mezclar]'),function(b){b.addEventListener('click',mezclar)});
+  if(filtro)filtro.addEventListener('change',function(){corregido=false;render();});
+  render();
+})();
+
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body></html>

@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Procesal · Casos</title>
+<meta name="theme-color" content="#f6f3ec">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>/* Layout: una columna para celular; bandas de color suaves por tema, como un folleto plegable */
+:root{
+  --bg:#f6f3ec; --fg:#24221f; --muted:#5f5a52; --line:#d9d2c4; --card:#fffdf8;
+  --mostaza:#e7d38f; --salvia:#bfd8b8; --cielo:#b9d3e4; --rosa:#ebc0c6; --durazno:#efc9a4;
+  --tinta:#3b5a73; --ok:#3f7a52; --warn:#9a5b1f;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif; --f-label:"Archivo Narrow","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header h1{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05;letter-spacing:-.02em;margin:.4rem 0 .3rem;text-wrap:balance}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 12px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav button:focus-visible,summary:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.band{border-radius:14px;padding:14px 16px;min-width:0}
+.mostaza{background:var(--mostaza)}.salvia{background:var(--salvia)}.cielo{background:var(--cielo)}.rosa{background:var(--rosa)}.durazno{background:var(--durazno)}
+h2{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.band h3{color:inherit;opacity:.75}
+p{margin:0}
+ul{margin:4px 0 0;padding-left:1.1em}
+li{margin:2px 0}
+.def{font-size:1rem;border-left:3px solid currentColor;padding-left:10px;margin-top:6px}
+.src{font-family:var(--f-label);font-size:.8rem;color:var(--muted);margin-top:6px}
+.band .src{color:inherit;opacity:.7}
+.star{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:var(--fg);color:var(--bg);border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.tag{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-label);font-weight:700;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .in{padding:0 14px 12px;color:var(--fg)}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0}
+.step b.n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-label);font-weight:700}
+.arrow{margin-left:13px;width:2px;height:10px;background:var(--line)}
+.cmp{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-top:1px solid var(--line);padding-top:8px}
+.row:first-child{border-top:0;padding-top:0}
+.k{font-family:var(--f-label);font-weight:700}
+.num{font-variant-numeric:tabular-nums;font-weight:800}
+.quiz details summary{font-weight:600}
+.quiz .in{border-top:1px dashed var(--line);padding-top:10px}
+footer{color:var(--muted);font-size:.85rem;margin-top:18px}
+@media (prefers-reduced-motion:no-preference){section{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+/* Agregados: barra de inicio, preguntas interactivas, avisos de discrepancia */
+.home{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta);text-decoration:none;margin-top:4px}
+.ojo{border:1.5px dashed var(--warn);border-radius:12px;padding:10px 12px;background:var(--card)}
+.ojo b.t{color:var(--warn);font-family:var(--f-label);letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+.pares{display:grid;gap:10px}
+.par{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.par h2{font-size:1.05rem;margin-bottom:8px}
+.par .split{margin-top:4px}
+.par .lado{border-left:3px solid var(--line);padding-left:9px;min-width:0}
+.par .lado .tag{display:block;margin-bottom:2px}
+.par .imp{margin-top:8px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:7px}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+.qbar button,.qfoot button{font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;cursor:pointer}
+.qbar button.pri,.qfoot button.pri{background:var(--fg);color:var(--bg)}
+.qbar select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 10px}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.q .qn{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.q .qt{margin:4px 0 8px;font-weight:600}
+.q .qt i{font-weight:500}
+.q label{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start;padding:6px 6px;border-radius:8px;cursor:pointer}
+.q label:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.q input{margin-top:4px;accent-color:var(--fg)}
+.q label.ok{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.q label.bad{background:color-mix(in srgb,var(--warn) 20%,transparent);text-decoration:line-through}
+.q .exp{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.done .exp{display:block}
+.q .res{font-family:var(--f-label);font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em}
+.q .res.ok{color:var(--ok)}.q .res.bad{color:var(--warn)}
+.q .vf{display:flex;gap:10px}
+.q .vf label{grid-template-columns:22px auto;border:1px solid var(--line);padding:6px 14px}
+.qfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.menu{display:grid;gap:10px}
+.menu a{display:block;text-decoration:none;color:inherit;border-radius:14px;padding:14px 16px}
+.menu a b{font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:block}
+.menu a span{color:inherit;opacity:.8;font-size:.92rem}
+.hora{font-family:var(--f-label);font-weight:700;font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{margin-top:4px;accent-color:var(--fg);width:18px;height:18px}
+/* Casos: desarrollo breve, artículos, cronología */
+.q textarea{width:100%;box-sizing:border-box;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.q .dbb{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .dbb button{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.q .dbb button.sel{background:var(--fg);color:var(--bg)}
+.q .modelo{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.visto .modelo,.q.done .modelo{display:block}
+.q.visto .ver,.q.done .ver{display:none}
+.art{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.art b.n{font-family:var(--f-label);letter-spacing:.03em;display:block;margin-bottom:2px}
+.arts{display:grid;gap:8px}
+#buscar{width:100%;box-sizing:border-box;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 14px;margin:6px 0 10px}
+.hito{border-left:4px solid var(--fg);padding:2px 0 2px 10px;margin:12px 0 6px}
+.hito b{font-family:var(--f-display);font-weight:800}
+.ley{margin:0 0 0 14px;padding:0}
+.ley li{margin:3px 0}
+.fase{counter-increment:f}
+</style>
+</head><body data-key="procesal">
+<div class="wrap">
+<header>
+  <a class="home" href="./">← Inicio</a>
+  <h3>Casos 2, 7 y 13 · torpedo</h3>
+  <h1>Procedimientos y fases</h1>
+  <p>Cada procedimiento con sus fases en orden, sus plazos y su artículo, y al final de cada uno, <b>en el caso</b>. Los artículos sin cuerpo legal son del CPC.</p>
+</header>
+
+<nav role="tablist" aria-label="Temas">
+  <button role="tab" aria-selected="true" data-s="ord">Ordinario</button>
+  <button role="tab" aria-selected="false" data-s="sum">Sumario</button>
+  <button role="tab" aria-selected="false" data-s="arr">Ley 18.101</button>
+  <button role="tab" aria-selected="false" data-s="mon">Monitorio</button>
+  <button role="tab" aria-selected="false" data-s="eje">Ejecutivo</button>
+  <button role="tab" aria-selected="false" data-s="comp">Competencia</button>
+  <button role="tab" aria-selected="false" data-s="exc">Excepciones y medidas</button>
+  <button role="tab" aria-selected="false" data-s="pen">Penal</button>
+  <button role="tab" aria-selected="false" data-s="preg">Preguntas</button>
+</nav>
+
+<!-- ORDINARIO -->
+<section id="ord" role="tabpanel">
+  <div class="band mostaza">
+    <h3>Qué es · art. 3</h3>
+    <p>Procedimiento declarativo de lato conocimiento, <b>regla general y supletoria</b>: se aplica a todo lo que no tenga una regla especial. <b>Mayor cuantía:</b> más de 500 UTM. Entre 10 y 500 UTM es de menor cuantía, sin réplica ni dúplica y con 8 días para contestar (art. 698). Es escrito y con amplio régimen de recursos.</p>
+  </div>
+  <div class="flow box">
+    <div class="step"><b class="n">1</b><div><b>Discusión.</b> Demanda (art. 253) con los requisitos del art. 254: tribunal, individualización de las partes, hechos y fundamentos de derecho, peticiones en la conclusión. Primera resolución: <b>«traslado»</b> (art. 257). Notificación personal o por el art. 44 (art. 40). <b>Emplazamiento: 18 días</b> si se notifica en el territorio del tribunal (art. 258), más la tabla si es en otro (art. 259); <b>10 días</b> si se rechazan las dilatorias (art. 308). Réplica y dúplica: <b>6 días</b> cada una (art. 311); en ellas se amplían o modifican acciones y excepciones sin alterar las principales (art. 312). Si el demandado acepta los hechos, se cita a oír sentencia sin prueba (art. 313).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">2</b><div><b>Conciliación obligatoria.</b> Agotada la discusión, audiencia entre el 5.° y el 15.° día; el juez propone bases de arreglo (art. 262) y actúa como amigable componedor (art. 263).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">3</b><div><b>Recepción a prueba.</b> Si hay hechos sustanciales, pertinentes y controvertidos, el juez los fija (art. 318). Reposición dentro de <b>3 días</b>, apelación solo en subsidio (art. 319). Minuta de puntos y lista de testigos: <b>5 días</b> (art. 320).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">4</b><div><b>Término probatorio: 20 días</b> en el territorio del tribunal (art. 328), aumentado según la tabla si se rinde fuera (art. 329).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">5</b><div><b>Observaciones a la prueba: 10 días</b> (art. 430). Luego, <b>citación para oír sentencia</b>: solo reposición por error de hecho dentro de 3 días (art. 432). Es el límite para la prescripción como excepción anómala en primera instancia (art. 310).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">6</b><div><b>Sentencia</b> dentro de <b>60 días</b> desde que la causa queda en estado (art. 162); medidas para mejor resolver dentro de ese plazo (art. 159).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">7</b><div><b>Recursos y cumplimiento.</b> Apelación: <b>10 días</b> contra la definitiva (5 contra las demás, art. 189). Casación: <b>15 días</b> (art. 770). Firme, la ejecuta el tribunal de primera instancia (art. 231): dentro de 1 año, cumplimiento incidental (art. 233); después, juicio ejecutivo con la sentencia firme como título (art. 434 N° 1).</div></div>
+  </div>
+  <p class="src">En el caso 7: resolución con indemnización ($70 MM, más de 500 UTM) → ordinario de mayor cuantía; «A la demanda interpuesta, traslado» lo confirma (art. 257).</p>
+</section>
+
+<!-- SUMARIO -->
+<section id="sum" role="tabpanel" hidden>
+  <div class="band cielo">
+    <h3>Qué es · art. 680</h3>
+    <p>Declarativo <b>especial, concentrado y verbal</b>. Se aplica, a falta de otra regla especial, a las acciones que por su naturaleza requieren <b>tramitación rápida</b> (inc. 1) y a los casos que enumera: el N° 1 son los casos en que <b>la ley ordena proceder sumariamente</b>. Solo los casos del inc. 1 pueden cambiar a ordinario (art. 681).</p>
+  </div>
+  <div class="flow box">
+    <div class="step"><b class="n">1</b><div><b>Demanda.</b> Verbal, con minutas escritas facultativas (art. 682); en la práctica, escrita con el art. 254.</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">2</b><div><b>Notificación y citación.</b> Personal (art. 40) o por el art. 44. Audiencia al <b>quinto día hábil</b> después de la última notificación, con el aumento de la tabla si el demandado no está en el lugar del juicio (arts. 683 y 259). <b>No hay plazo en días para contestar:</b> se contesta en la audiencia.</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">3</b><div><b>Audiencia.</b> Contestación verbal o por minuta y excepciones; llamado a conciliación (art. 262). Incidentes en la misma audiencia, sin paralizar lo principal (art. 690). En rebeldía, se recibe a prueba o, con fundamento plausible, se accede provisionalmente a lo pedido; el demandado puede oponerse en 5 días (arts. 684 y 685).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">4</b><div><b>Prueba</b> en la forma de los <b>incidentes</b> (art. 686): término de <b>8 días</b>, nómina de testigos en los 2 primeros, ampliable hasta 30 si hay diligencias fuera (art. 90).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">5</b><div><b>Sentencia.</b> Vencida la prueba se cita de inmediato a oír sentencia (art. 687); definitiva en <b>10 días</b>, demás resoluciones dentro de segundo día (art. 688).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">6</b><div><b>Recursos.</b> Definitiva apelable en <b>ambos efectos</b>, salvo que así se eludan sus resultados; las demás, en el solo devolutivo; se tramita como incidente (art. 691). La Corte puede fallar todo lo debatido en primera (art. 692).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">7</b><div><b>Cumplimiento.</b> Por el tribunal de primera instancia (art. 231); la entrega de inmuebles, con fuerza pública si es necesario (art. 235 N° 1).</div></div>
+  </div>
+  <p class="src">En el caso 13: acción de dominio y compensación → sumario porque lo ordenan los arts. 26 y 29 del DL (art. 680 N° 1), ante el juez de San Vicente (arts. 20, 26 y 29 DL). Puede pedirse la compensación en subsidio (art. 17 inc. 2).</p>
+</section>
+
+<!-- LEY 18.101 -->
+<section id="arr" role="tabpanel" hidden>
+  <div class="band salvia">
+    <h3>Ámbito · arts. 1 y 7</h3>
+    <p>Juicios sobre arrendamiento de <b>inmuebles urbanos</b>: desahucio, <b>terminación</b>, restitución por expiración del plazo o extinción del derecho del arrendador, <b>indemnización de perjuicios</b> y <b>demás cuestiones derivadas</b> del contrato (art. 7). Competencia absoluta: juez de letras según el COT (art. 17).</p>
+  </div>
+  <div class="flow box">
+    <div class="step"><b class="n">1</b><div><b>Demanda</b> con los medios de prueba y la nómina de testigos; hasta <b>4 testigos</b> por parte (art. 8 N° 3). Se acumulan rentas y consumos (art. 611 inc. 2) e indemnización (art. 7 N° 5).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">2</b><div><b>Notificación.</b> Por el art. 553 inc. 1; para el art. 44 se <b>presume de pleno derecho</b> que el domicilio del demandado es el <b>inmueble arrendado</b> (art. 8 N° 2). Audiencia al <b>quinto día hábil</b> (art. 8 N° 1). La segunda reconvención del art. 1977 se practica ante el tribunal (art. 611 inc. 1). El demandado presenta testigos hasta las 12:00 del día anterior.</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">3</b><div><b>Audiencia.</b> Con la parte que asista: relación de la demanda, contestación verbal, reconvención (art. 8 N° 4 y 5); retención por indemnizaciones del arrendatario se alega aquí (art. 9); <b>conciliación obligatoria</b>; incidentes en la audiencia (art. 8 N° 8).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">4</b><div><b>Prueba.</b> Sin avenimiento, se fijan los puntos y se recibe de inmediato (art. 8 N° 6); prueba de oficio (art. 15); <b>sana crítica</b> (art. 8 N° 7).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">5</b><div><b>Sentencia y recursos.</b> Solo apelables la definitiva y las que ponen término al juicio; <b>solo efecto devolutivo</b>, preferencia en la vista, sin orden de no innovar (art. 8 N° 9).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">6</b><div><b>Cumplimiento.</b> Lanzamiento conforme al art. 595, suspendible hasta 30 días en casos graves (art. 13).</div></div>
+  </div>
+  <div class="par">
+    <h2>Abandono del inmueble · art. 6 inc. 2</h2>
+    <p>Si el arrendatario abandona sin restituir, el arrendador pide al juez que se lo entregue <b>sin forma de juicio</b>, con la sola certificación del abandono por un <b>ministro de fe</b>, que levanta acta del estado del inmueble y la remite al tribunal. Y el arrendatario sigue debiendo la renta hasta la restitución (inc. 1).</p>
+    <p class="imp"><b>En el caso 2:</b> Andrés recupera la casa así; la demanda de la Ley 18.101 le sirve para terminar el contrato, cobrar rentas e indemnizar, y es la que <b>conviene</b>, porque reúne todo en un juicio.</p>
+  </div>
+</section>
+
+<!-- MONITORIO -->
+<section id="mon" role="tabpanel" hidden>
+  <div class="band rosa">
+    <h3>Qué es · arts. 18-A a 18-K Ley 18.101</h3>
+    <p>Para el <b>cobro de rentas</b> y la <b>restitución consecuencial</b> del inmueble. Se apoya en la conducta del deudor: si no paga ni se opone, queda condenado sin juicio declarativo. No se acumula con desahucio o restitución de fundamento distinto del no pago (art. 18-B).</p>
+  </div>
+  <div class="flow box">
+    <div class="step"><b class="n">1</b><div><b>Demanda monitoria</b> (art. 18-A): partes, inmueble, rentas y cuentas adeudadas con su relación precisa, y petición de requerir el pago en <b>10 días corridos</b>, con los antecedentes.</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">2</b><div><b>Admisibilidad</b> (art. 18-B): subsanar en no más de 10 días; inadmisible de plano si hay defecto manifiesto (incompetencia absoluta, litispendencia); solo reposición.</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">3</b><div><b>Resolución que acoge</b> (art. 18-C): requiere de pago en <b>10 días corridos</b>; si no paga, no comparece o no se opone, queda condenado y será lanzado dentro de 10 días. Tiene fuerza de <b>sentencia definitiva firme</b>.</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">4</b><div><b>Notificación y requerimientos</b> (art. 18-D): en la forma del art. 8 N° 2; la notificación es el 1.° requerimiento y el 2.° se entiende hecho <b>5 días</b> después, por el solo ministerio de la ley (cumplen las dos reconvenciones del art. 1977).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">5</b><div><b>Conducta del deudor:</b> paga todo → termina (18-E); se opone por escrito con toda su prueba (18-F); solo dilatorias → incidente y, rechazadas, condenado (18-G); otras excepciones → termina el monitorio y se va al <b>juicio declarativo</b>, delimitado por la oposición (18-H).</div></div>
+    <div class="arrow"></div>
+    <div class="step"><b class="n">6</b><div><b>Costas y recursos:</b> solo las del 18-C (18-I); solo apelable, en el devolutivo, la resolución sobre la oposición (18-J).</div></div>
+  </div>
+  <p class="src">En el caso 2: le serviría a Andrés solo para las 90 UF de rentas; los muebles y su indemnización quedan fuera, y la restitución de la casa ya no tiene objeto.</p>
+</section>
+
+<!-- EJECUTIVO -->
+<section id="eje" role="tabpanel" hidden>
+  <div class="band durazno">
+    <h3>Para contrastar</h3>
+    <p>El ejecutivo <b>no declara</b> derechos: cumple los que constan en un <b>título ejecutivo</b>. Exige obligación <b>determinada, líquida o liquidable y actualmente exigible</b>, y acción ejecutiva no prescrita.</p>
+  </div>
+  <div class="par">
+    <h2>Títulos · art. 434</h2>
+    <p>1.° <b>Sentencia firme</b>, definitiva o interlocutoria; 2.° copia autorizada de <b>escritura pública</b>; 3.° acta de avenimiento; 4.° <b>instrumento privado reconocido</b> judicialmente o mandado tener por reconocido (la firma autorizada ante notario basta solo en la letra, el pagaré y el cheque); entre otros.</p>
+    <ul>
+      <li>La gestión preparatoria de <b>reconocimiento de firma</b> hoy solo sirve para obligaciones de <b>dinero líquidas</b> (art. 435).</li>
+      <li>La ejecución recae sobre especie, su valor o cantidad líquida (art. 438).</li>
+      <li>El tribunal examina el título y <b>deniega la ejecución</b> si la acción ejecutiva está prescrita (art. 442).</li>
+      <li><b>Obligación de hacer:</b> arts. 530 y siguientes; procede si la obligación consta en título ejecutivo (art. 530). Excepción propia: imposibilidad absoluta de ejecutar la obra (art. 534).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Defensa del ejecutado</h2>
+    <p><b>Oposición: 8 días</b> si se le requiere en el territorio del tribunal (art. 459), con aumento si es fuera (art. 460), con las excepciones del <b>art. 464</b>: entre ellas, N° 7 <b>insuficiencia del título</b> y N° 17 <b>prescripción</b> de la deuda o solo de la acción ejecutiva.</p>
+    <p class="imp"><b>En el caso 7:</b> no procede: no hay título (instrumento privado ante notario, no escritura pública) y la acción ejecutiva prescribió el 5-abr-2022 (art. 2515). <b>En el caso 2:</b> tampoco para las rentas (art. 434 N° 4).</p>
+  </div>
+</section>
+
+<!-- COMPETENCIA -->
+<section id="comp" role="tabpanel" hidden>
+  <div class="par">
+    <h2>Competencia relativa civil (COT)</h2>
+    <div class="cmp">
+      <div class="row"><span class="k">Inmueble · 135</span><span>Juez estipulado; a falta, a elección del demandante: el del lugar donde se contrajo la obligación o el del lugar de la especie.</span></div>
+      <div class="row"><span class="k">Mixta · 137</span><span>Si se reclaman muebles e inmuebles, o se acumulan acciones y al menos una es inmueble: juez del lugar del inmueble.</span></div>
+      <div class="row"><span class="k">Mueble · 138</span><span>Juez estipulado; a falta, el del <b>domicilio del demandado</b>. Las acciones son muebles o inmuebles según la cosa (art. 580 CC).</span></div>
+      <div class="row"><span class="k">Persona jurídica · 142</span><span>Domicilio = lugar de su asiento; si tiene varias oficinas, el de la oficina que celebró el contrato (inc. 2).</span></div>
+      <div class="row"><span class="k">Absoluta · 45 N° 2</span><span>Juez de letras en primera instancia en las causas civiles de mayor cuantía.</span></div>
+      <div class="row"><span class="k">DL 2.695 · 20</span><span>Juez de letras en lo civil del lugar del predio.</span></div>
+    </div>
+    <p class="imp"><b>Caso 2:</b> la casa ya se recuperó → todas las acciones son muebles → art. 138 (o el domicilio especial del art. 69 CC). <b>Caso 7:</b> Puerto Montt (COT 138 y 142), salvo que contratara una oficina de Santiago. <b>Caso 13:</b> San Vicente.</p>
+  </div>
+  <div class="par">
+    <h2>Notificación</h2>
+    <ul>
+      <li><b>Personal</b> la primera (art. 40); si no es habido, <b>art. 44</b> (buscado en dos días distintos y acreditado que está en el lugar del juicio: entrega a un adulto o fijación).</li>
+      <li><b>Por avisos</b> si la residencia es difícil de determinar, con conocimiento de causa: tres avisos y, por ser primera notificación, en el Diario Oficial del 1 o 15 (art. 54).</li>
+      <li><b>Ley 18.101:</b> art. 553 inc. 1 + presunción de domicilio en el inmueble arrendado (art. 8 N° 2). Solo sirve en esos juicios.</li>
+      <li>Los plazos de días del CPC se <b>suspenden en feriados</b> (art. 66).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- EXCEPCIONES Y MEDIDAS -->
+<section id="exc" role="tabpanel" hidden>
+  <div class="par">
+    <h2>Actitudes del demandado</h2>
+    <p>No contestar (rebeldía), allanarse, oponer <b>dilatorias</b>, contestar con <b>perentorias</b> o <b>reconvenir</b>.</p>
+    <div class="split">
+      <div class="lado"><span class="tag ok">Dilatorias · 303</span>Corrigen el procedimiento sin afectar el fondo: incompetencia, falta de capacidad o personería, litispendencia, ineptitud del libelo, beneficio de excusión. Todas en un escrito, dentro del emplazamiento (art. 305).</div>
+      <div class="lado"><span class="tag warn">Perentorias</span>Atacan el fondo (prescripción, pago). Se oponen en la contestación (art. 309 N° 3) y se resuelven en la sentencia.</div>
+    </div>
+    <p style="margin-top:6px"><b>Anómalas · art. 310:</b> prescripción, cosa juzgada, transacción y pago documentado pueden oponerse en cualquier estado, por escrito, antes de la citación para oír sentencia (1.ª) o la vista de la causa (2.ª). Después de recibida a prueba se tramitan como incidente y se reservan para la definitiva; en segunda, la Corte falla en única instancia. La prescripción <b>no se declara de oficio</b> (art. 2493 CC).</p>
+  </div>
+  <div class="par">
+    <h2>Medidas precautorias · arts. 290 y ss.</h2>
+    <ul>
+      <li>En cualquier estado del juicio, aun antes de contestar: <b>secuestro, interventor, retención, prohibición de celebrar actos o contratos</b> (art. 290).</li>
+      <li>Secuestro: en los casos del art. 901 CC o contra quien tiene un mueble y hay temor de que se pierda (art. 291).</li>
+      <li>Se exigen comprobantes de <b>presunción grave</b> del derecho (art. 298). La prohibición sobre inmuebles debe <b>inscribirse</b> para afectar a terceros (art. 297). Cesan si desaparece el peligro o se dan cauciones (art. 301).</li>
+    </ul>
+  </div>
+  <div class="par">
+    <h2>Medidas prejudiciales</h2>
+    <p><b>Preparatorias</b> (art. 273: declaración jurada, exhibición de la cosa o de títulos…) y <b>precautorias</b> como prejudiciales (art. 279): motivos graves y calificados, monto de los bienes y garantía. Concedidas, demandar en <b>10 días</b>, ampliables a <b>30</b>; si no, responde de los perjuicios y su procedimiento se considera doloso (art. 280).</p>
+  </div>
+  <div class="par">
+    <h2>Citación de evicción · arts. 584 a 587</h2>
+    <div class="flow box">
+      <div class="step"><b class="n">1</b><div>Se pide <b>antes de contestar</b>, con antecedentes que la hagan aceptable (584).</div></div>
+      <div class="step"><b class="n">2</b><div>El juicio se <b>suspende 10 días</b> (más la tabla) para practicarla; si no se hace, caduca el derecho (585).</div></div>
+      <div class="step"><b class="n">3</b><div>El vendedor tiene el <b>término de emplazamiento</b> para comparecer (586); si comparece, sigue el juicio contra él (587; art. 1844 CC).</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PENAL -->
+<section id="pen" role="tabpanel" hidden>
+  <div class="par">
+    <h2>Delitos de los casos</h2>
+    <div class="cmp">
+      <div class="row"><span class="k">Apropiación indebida</span><span>Apropiarse o distraer cosas muebles recibidas por un título que obliga a <b>devolverlas</b> (art. 470 N° 1 CP); pena según el monto (art. 467). Caso 2: los muebles y el Smart TV.</span></div>
+      <div class="row"><span class="k">Receptación</span><span>Art. 456 bis A CP: Paulina, si no podía menos que conocer el origen.</span></div>
+      <div class="row"><span class="k">Art. 9 DL 2.695</span><span>Obtener maliciosamente la regularización: pena del art. 473 CP (simple delito, arts. 3 y 21); prescribe en 5 años (arts. 94 y 95); presunción de la Ley 21.633 no retroactiva (art. 18 CP).</span></div>
+    </div>
+  </div>
+  <div class="par">
+    <h2>Procedimiento ordinario penal</h2>
+    <div class="flow box">
+      <div class="step"><b class="n">1</b><div><b>Investigación</b> por denuncia o querella (art. 172 CPP); querella ante el juez de garantía (arts. 111 y 113). Salidas: acuerdo reparatorio (241) o suspensión condicional (237).</div></div>
+      <div class="step"><b class="n">2</b><div><b>Formalización</b> (229): suspende la prescripción y corre el plazo de 2 años para cerrar (233 y 247).</div></div>
+      <div class="step"><b class="n">3</b><div><b>Cierre y acusación</b> (248); el querellante adhiere o acusa y deduce la <b>demanda civil</b> hasta 15 días antes de la preparación (261 y 60).</div></div>
+      <div class="step"><b class="n">4</b><div><b>Preparación del juicio oral</b> ante el juez de garantía, 25 a 35 días después de la acusación (260); auto de apertura (281).</div></div>
+      <div class="step"><b class="n">5</b><div><b>Juicio oral</b> ante el TOP: libre valoración (297), más allá de toda duda razonable (340); falla también la acción civil (342).</div></div>
+    </div>
+  </div>
+  <div class="par">
+    <h2>Simplificado · arts. 388 a 399 CPP</h2>
+    <p>Si el fiscal pide pena que no exceda de presidio menor en su grado mínimo (388): requerimiento; audiencia entre 20 y 40 días (393), con acuerdo reparatorio o suspensión (394); juicio en la misma audiencia o dentro de 30 días (396); solo recurso de <b>nulidad</b> (399). Falla el juez de garantía (COT 14). Es el del art. 9 DL.</p>
+  </div>
+  <div class="par">
+    <h2>Acción civil en el proceso penal</h2>
+    <ul>
+      <li>La que solo busca la <b>restitución de la cosa</b> se interpone siempre en el proceso penal (art. 59 inc. 1 CPP; COT 171).</li>
+      <li>La <b>indemnización</b> contra el imputado: en sede penal o civil, no en ambas; contra terceros (Paulina), siempre en lo civil (art. 59).</li>
+      <li>Preparar y cautelar la demanda civil interrumpe la prescripción, pero se tiene por no interrumpida si no se deduce después (art. 61); si el proceso penal termina sin decisión civil, sigue interrumpida si se demanda en lo civil dentro de <b>60 días</b> (art. 68).</li>
+      <li>Competencia: donde se dio comienzo a la ejecución del delito (COT 157): Osorno.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<section id="preg" role="tabpanel" hidden>
+  <div class="qbar">
+    <select id="qfiltro" aria-label="Filtrar">
+      <option value="todo">Todas</option><option value="vf">Solo V/F</option><option value="sm">Solo alternativas</option><option value="db">Solo desarrollo breve</option>
+    </select>
+    <button data-q="mezclar">Mezclar</button>
+    <span class="score"></span>
+  </div>
+  <div id="quizbox" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div class="qfoot"><button class="pri" data-q="corregir">Corregir</button><button data-q="reiniciar">Borrar respuestas</button><span class="score"></span></div>
+</section>
+<footer>Fuente: «Casos integracion 2, 7 y 13» (versión de 24 páginas) y el texto vigente de cada ley.</footer>
+</div>
+<script>
+window.PREG=[
+// ORDINARIO
+{t:'sm',q:'El procedimiento ordinario se aplica:',o:['A todas las gestiones que no estén sometidas a una regla especial diversa.','Solo a los juicios de más de 500 UTM.','Solo cuando las partes lo eligen.','Solo a las acciones reales.'],a:0,e:'Es la regla general y supletoria (art. 3 CPC). La cuantía distingue mayor (más de 500 UTM) y menor cuantía (art. 698).',s:'Art. 3 CPC'},
+{t:'sm',q:'Notificada la demanda en el territorio jurisdiccional del tribunal, el plazo para contestar en el juicio ordinario de mayor cuantía es:',o:['18 días.','15 días.','10 días.','8 días.'],a:0,e:'Art. 258; se aumenta según la tabla de emplazamiento si se notifica en otro territorio (art. 259). Ocho días es el de menor cuantía (art. 698) y el de oposición en el ejecutivo (art. 459).',s:'Arts. 258 y 259 CPC'},
+{t:'vf',q:'Si se rechazan las excepciones dilatorias, el demandado tiene diez días para contestar.',a:true,e:'Art. 308 CPC.',s:'Art. 308 CPC'},
+{t:'sm',q:'El traslado para replicar y para duplicar en el juicio ordinario es de:',o:['Seis días cada uno.','Tres días cada uno.','Diez días cada uno.','Quince días cada uno.'],a:0,e:'Art. 311 CPC.',s:'Art. 311 CPC'},
+{t:'vf',q:'La conciliación es obligatoria en el juicio ordinario y se intercala entre la discusión y la prueba.',a:true,e:'Art. 262 CPC: audiencia entre el quinto y el decimoquinto día; el juez propone bases de arreglo.',s:'Art. 262 CPC'},
+{t:'sm',q:'Contra la resolución que recibe la causa a prueba procede:',o:['Reposición dentro de tercero día y apelación solo en subsidio.','Solo apelación en ambos efectos.','Ningún recurso.','Casación en la forma.'],a:0,e:'Art. 319 CPC.',s:'Art. 319 CPC'},
+{t:'sm',q:'El término probatorio ordinario para rendir prueba dentro del territorio del tribunal es de:',o:['20 días.','8 días.','10 días.','30 días.'],a:0,e:'Art. 328 CPC; se amplía según la tabla si se rinde fuera (art. 329). Ocho días es el término de los incidentes, que usa el sumario.',s:'Art. 328 CPC'},
+{t:'vf',q:'Vencido el término de prueba, las partes tienen diez días para formular observaciones a la prueba.',a:true,e:'Art. 430 CPC. Luego viene la citación para oír sentencia (art. 432).',s:'Art. 430 CPC'},
+{t:'sm',q:'La sentencia definitiva en el juicio ordinario debe pronunciarse dentro de:',o:['60 días desde que la causa queda en estado de sentencia.','10 días desde la citación para oír sentencia.','30 días desde la última diligencia.','No tiene plazo legal.'],a:0,e:'Art. 162 CPC. Diez días es el plazo del sumario (art. 688).',s:'Art. 162 CPC'},
+{t:'sm',q:'El plazo para apelar de una sentencia definitiva es:',o:['10 días.','5 días.','15 días.','3 días.'],a:0,e:'Art. 189: cinco días por regla general, diez contra las sentencias definitivas. La casación es de quince (art. 770).',s:'Arts. 189 y 770 CPC'},
+{t:'vf',q:'Si se pide el cumplimiento de la sentencia ante el tribunal que la dictó dentro de un año desde que se hizo exigible, se tramita incidentalmente.',a:true,e:'Art. 233 CPC. Pasado el año, la sentencia firme es título para el juicio ejecutivo (art. 434 N° 1).',s:'Arts. 233 y 434 CPC'},
+// SUMARIO
+{t:'sm',q:'El juicio sumario se aplica, entre otros casos:',o:['Cuando la ley ordena proceder sumariamente o breve y sumariamente.','A todos los juicios de menor cuantía.','Solo a las acciones posesorias.','Cuando el demandado no contesta.'],a:0,e:'Art. 680 N° 1 CPC; y, en general, a las acciones que por su naturaleza requieren tramitación rápida (inc. 1).',s:'Art. 680 CPC'},
+{t:'vf',q:'En el juicio sumario el demandado tiene 18 días para contestar por escrito.',a:false,e:'No hay plazo en días: se cita a audiencia al quinto día hábil después de la última notificación, y ahí se contesta (art. 683), con el aumento de la tabla si no está en el lugar del juicio.',s:'Art. 683 CPC'},
+{t:'vf',q:'Un juicio sumario ordenado por ley (art. 680 N° 1) puede sustituirse por el ordinario si hay motivos fundados.',a:false,e:'El art. 681 solo permite el cambio en los casos del inciso primero del art. 680, no en los que la ley manda proceder sumariamente.',s:'Art. 681 CPC'},
+{t:'sm',q:'En el juicio sumario la prueba se rinde:',o:['En el plazo y la forma de los incidentes.','En un término de veinte días.','Solo por documentos.','En la audiencia de contestación, sin término.'],a:0,e:'Art. 686: término de ocho días (art. 90), ampliable hasta treinta si hay diligencias fuera.',s:'Arts. 686 y 90 CPC'},
+{t:'sm',q:'En el sumario, la sentencia definitiva debe dictarse:',o:['Dentro de los 10 días siguientes a la citación para oír sentencia.','Dentro de 60 días.','Dentro de segundo día.','En la misma audiencia.'],a:0,e:'Art. 688; las demás resoluciones, dentro de segundo día.',s:'Art. 688 CPC'},
+{t:'vf',q:'Si el demandado no comparece a la audiencia del sumario, el actor puede pedir, con fundamento plausible, que se acceda provisionalmente a la demanda.',a:true,e:'Art. 684; el demandado puede oponerse dentro de cinco días, sin que se suspenda lo decretado (art. 685).',s:'Arts. 684 y 685 CPC'},
+{t:'sm',q:'La sentencia definitiva del juicio sumario es apelable:',o:['En ambos efectos, salvo que así hayan de eludirse sus resultados.','Solo en el efecto devolutivo.','No es apelable.','Solo por casación.'],a:0,e:'Art. 691 CPC; las demás resoluciones, en el solo efecto devolutivo.',s:'Art. 691 CPC'},
+// LEY 18.101 Y MONITORIO
+{t:'sm',q:'En los juicios de la Ley 18.101, para la notificación del art. 44 CPC se presume de pleno derecho que el domicilio del demandado es:',o:['El inmueble arrendado.','El lugar donde se firmó el contrato.','El último domicilio informado al Registro Civil.','El domicilio del arrendador.'],a:0,e:'Art. 8 N° 2 Ley 18.101, en relación con el art. 553 inc. 1 CPC. No fija competencia ni sirve fuera de esos juicios.',s:'Art. 8 N° 2 Ley 18.101'},
+{t:'vf',q:'En el procedimiento de la Ley 18.101 la apelación de la sentencia definitiva se concede en el solo efecto devolutivo.',a:true,e:'Art. 8 N° 9: además tiene preferencia y no procede orden de no innovar.',s:'Art. 8 N° 9 Ley 18.101'},
+{t:'sm',q:'En el juicio de arrendamiento de la Ley 18.101, la audiencia se celebra:',o:['Al quinto día hábil después de la última notificación.','A los 18 días de notificada la demanda.','Dentro de tercero día.','Entre el quinto y el decimoquinto día.'],a:0,e:'Art. 8 N° 1. Cada parte puede presentar hasta cuatro testigos (art. 8 N° 3); la prueba se aprecia según la sana crítica (art. 8 N° 7).',s:'Art. 8 Ley 18.101'},
+{t:'vf',q:'Si el arrendatario abandona el inmueble, el arrendador puede pedir al juez que se lo entregue sin forma de juicio, con la sola certificación del abandono por un ministro de fe.',a:true,e:'Art. 6 inc. 2 Ley 18.101; el ministro de fe levanta acta del estado del inmueble.',s:'Art. 6 Ley 18.101'},
+{t:'sm',q:'En el monitorio de arriendo, el plazo para pagar desde el requerimiento es de:',o:['Diez días corridos.','Diez días hábiles.','Cinco días hábiles.','Quince días corridos.'],a:0,e:'Arts. 18-A y 18-C Ley 18.101.',s:'Art. 18-C Ley 18.101'},
+{t:'vf',q:'En el monitorio, la notificación de la demanda vale como primer requerimiento de pago, y el segundo se entiende hecho cinco días después por el solo ministerio de la ley.',a:true,e:'Art. 18-D. Cumplen la función de las dos reconvenciones del art. 1977.',s:'Art. 18-D Ley 18.101'},
+{t:'sm',q:'Si en el monitorio el deudor se opone con excepciones distintas de las dilatorias:',o:['Termina el monitorio y el arrendador puede iniciar el juicio declarativo, delimitado por la oposición.','El juez falla la oposición en el mismo monitorio.','Se le tiene por condenado.','Se suspende el juicio hasta que pague.'],a:0,e:'Art. 18-H. Si solo opone dilatorias, se tramitan como incidente (art. 18-G).',s:'Art. 18-H Ley 18.101'},
+{t:'vf',q:'El monitorio le permite al arrendador cobrar, en el mismo procedimiento, las rentas y la indemnización por los muebles que el arrendatario se llevó.',a:false,e:'Solo sirve para el cobro de rentas y cuentas y la restitución consecuencial del inmueble (art. 18-A). Por eso al caso 2 le conviene el juicio de la Ley 18.101 (art. 7 N° 2, 5 y 6).',s:'Art. 18-A Ley 18.101'},
+// EJECUTIVO
+{t:'sm',q:'¿Cuál de estos es título ejecutivo según el art. 434 CPC?',o:['La sentencia firme, definitiva o interlocutoria.','El instrumento privado firmado ante notario, cualquiera sea su contenido.','La demanda notificada.','El contrato verbal reconocido por testigos.'],a:0,e:'Art. 434 N° 1. El instrumento privado debe estar reconocido; la firma autorizada ante notario basta solo en la letra, el pagaré y el cheque (N° 4).',s:'Art. 434 CPC'},
+{t:'vf',q:'Hoy la gestión preparatoria de reconocimiento de firma sirve para obtener título en obligaciones de hacer.',a:false,e:'Solo procede respecto de obligaciones de dinero líquidas (art. 435). Por eso Javier no podía preparar la vía ejecutiva.',s:'Art. 435 CPC'},
+{t:'sm',q:'El ejecutado requerido en el territorio del tribunal tiene para oponerse:',o:['Ocho días.','Dieciocho días.','Cinco días.','Diez días.'],a:0,e:'Art. 459; con aumento si es requerido fuera (art. 460).',s:'Art. 459 CPC'},
+{t:'sm',q:'La prescripción en el juicio ejecutivo se opone como excepción del:',o:['Art. 464 N° 17.','Art. 303 N° 1.','Art. 464 N° 7.','Art. 310.'],a:0,e:'N° 17: prescripción de la deuda o solo de la acción ejecutiva. El N° 7 es la insuficiencia del título.',s:'Art. 464 CPC'},
+{t:'vf',q:'En el juicio ejecutivo, el tribunal debe denegar la ejecución si la acción ejecutiva está prescrita, aunque el deudor no lo alegue.',a:true,e:'Art. 442 CPC. Es distinto del juicio ordinario, donde rige el art. 2493 CC.',s:'Art. 442 CPC'},
+// COMPETENCIA Y NOTIFICACIÓN
+{t:'sm',q:'Si la acción es mueble y no hay estipulación, es competente el juez:',o:['Del domicilio del demandado.','Del lugar donde se contrajo la obligación.','Del lugar donde está la cosa.','Del domicilio del demandante.'],a:0,e:'Art. 138 COT. Las acciones son muebles o inmuebles según la cosa (art. 580 CC).',s:'Art. 138 COT'},
+{t:'sm',q:'Si se acumulan varias acciones y al menos una es inmueble, es competente:',o:['El juez del lugar del inmueble.','El juez del domicilio del demandado.','Cualquier juez, a elección del demandante.','El juez del lugar del contrato.'],a:0,e:'Art. 137 COT. En el caso 2 no aplica, porque la casa ya se recuperó y todas las acciones restantes son muebles.',s:'Art. 137 COT'},
+{t:'vf',q:'Si una sociedad tiene oficinas en distintos lugares, debe ser demandada ante el juez del lugar de la oficina que celebró el contrato.',a:true,e:'Art. 142 inc. 2 COT. En el caso 7: Puerto Montt, salvo que contratara una oficina en Santiago.',s:'Art. 142 COT'},
+{t:'sm',q:'La acción de dominio del art. 26 del DL 2.695 se deduce ante:',o:['El juez de letras en lo civil del lugar del predio.','El juez del domicilio del demandado.','El Ministerio de Bienes Nacionales.','La Corte de Apelaciones respectiva.'],a:0,e:'Arts. 20 y 26 DL 2.695. En el caso 13, San Vicente.',s:'Arts. 20 y 26 DL 2.695'},
+{t:'vf',q:'La notificación por avisos procede respecto de personas cuya residencia sea difícil de determinar, con autorización del tribunal con conocimiento de causa.',a:true,e:'Art. 54 CPC. Por ser la primera notificación, se publica también en el Diario Oficial del 1 o 15 de algún mes.',s:'Art. 54 CPC'},
+{t:'vf',q:'Los plazos de días del CPC se suspenden durante los días feriados.',a:true,e:'Art. 66 CPC.',s:'Art. 66 CPC'},
+// EXCEPCIONES Y MEDIDAS
+{t:'sm',q:'¿Cuál de estas es una excepción dilatoria?',o:['La ineptitud del libelo.','La prescripción.','El pago.','La cosa juzgada.'],a:0,e:'Art. 303 N° 4. Las demás son perentorias; la prescripción, la cosa juzgada, la transacción y el pago documentado pueden además oponerse como anómalas (art. 310).',s:'Art. 303 CPC'},
+{t:'vf',q:'Las excepciones dilatorias deben oponerse todas en un mismo escrito y dentro del término de emplazamiento.',a:true,e:'Art. 305 CPC; si no, solo como alegación o defensa en el progreso del juicio.',s:'Art. 305 CPC'},
+{t:'sm',q:'Como excepción anómala, la prescripción puede oponerse en primera instancia hasta:',o:['La citación para oír sentencia.','La contestación de la demanda.','La recepción de la causa a prueba.','La notificación de la sentencia.'],a:0,e:'Art. 310: por escrito, antes de la citación para oír sentencia en primera instancia o de la vista de la causa en segunda.',s:'Art. 310 CPC'},
+{t:'vf',q:'Si la prescripción se opone en primera instancia después de recibida la causa a prueba, se tramita como incidente y su resolución se reserva para la sentencia definitiva.',a:true,e:'Art. 310 inc. 2; en segunda instancia, la Corte la falla en única instancia.',s:'Art. 310 CPC'},
+{t:'sm',q:'¿Cuál NO es una medida precautoria del art. 290 CPC?',o:['La citación de evicción.','El secuestro de la cosa.','La retención de bienes determinados.','La prohibición de celebrar actos o contratos sobre bienes determinados.'],a:0,e:'Las cuatro del art. 290 son secuestro, interventor, retención y prohibición de celebrar actos o contratos.',s:'Art. 290 CPC'},
+{t:'vf',q:'La prohibición de celebrar actos o contratos sobre un inmueble produce efecto respecto de terceros aunque no se inscriba.',a:false,e:'Respecto de terceros, solo produce efecto si se inscribe en el Conservador (art. 297 CPC).',s:'Art. 297 CPC'},
+{t:'sm',q:'Concedida una medida prejudicial precautoria, el solicitante debe presentar la demanda en:',o:['Diez días, ampliables hasta treinta por motivos fundados.','Treinta días, improrrogables.','Cinco días.','El plazo que fije el juez, sin límite.'],a:0,e:'Art. 280; si no, responde de los perjuicios y su procedimiento se considera doloso.',s:'Art. 280 CPC'},
+{t:'vf',q:'La citación de evicción debe pedirse antes de la contestación de la demanda.',a:true,e:'Art. 584 CPC; decretada, el juicio se suspende por diez días para practicarla (art. 585).',s:'Art. 584 CPC'},
+// PENAL
+{t:'sm',q:'Si hay proceso penal por apropiación indebida, la acción civil que solo busca la restitución de la cosa:',o:['Debe interponerse siempre en el procedimiento penal.','Puede deducirse en sede civil o penal, a elección.','Solo procede en sede civil.','Se extingue con la querella.'],a:0,e:'Art. 59 inc. 1 CPP y COT 171. La indemnización contra el imputado puede ir a una u otra sede, no a ambas.',s:'Art. 59 CPP'},
+{t:'sm',q:'El procedimiento simplificado procede cuando el fiscal requiere una pena que no excede de:',o:['Presidio menor en su grado mínimo.','Presidio menor en su grado máximo.','Presidio mayor en su grado mínimo.','Multa.'],a:0,e:'Art. 388 CPP. Contra la sentencia solo procede el recurso de nulidad (art. 399).',s:'Art. 388 CPP'},
+{t:'vf',q:'El delito se considera cometido en el lugar donde se dio comienzo a su ejecución, para fijar la competencia penal.',a:true,e:'COT 157. En el caso 2, Osorno.',s:'COT 157'},
+// DESARROLLO BREVE
+{t:'db',q:'Enumere las etapas del juicio ordinario de mayor cuantía con sus plazos.',e:'1) Discusión: demanda (arts. 253 y 254), traslado (257), contestación en 18 días (258, más tabla, 259; 10 si se rechazan dilatorias, 308), réplica y dúplica de 6 días (311). 2) Conciliación obligatoria (262). 3) Recepción a prueba (318), reposición en 3 días (319), minuta y testigos en 5 (320). 4) Término probatorio de 20 días (328). 5) Observaciones en 10 días (430) y citación para oír sentencia (432). 6) Sentencia en 60 días (162). 7) Apelación en 10 días (189), casación en 15 (770), cumplimiento incidental dentro de un año (233).',s:'CPC'},
+{t:'db',q:'Enumere las etapas del juicio sumario y diga en qué se diferencia del ordinario.',e:'Demanda verbal o con minuta (682); citación a audiencia al quinto día hábil después de la última notificación, más tabla (683); audiencia: contestación, conciliación, incidentes en la misma audiencia (690), y en rebeldía se puede acceder provisionalmente (684); prueba como incidentes, 8 días (686 y 90); citación inmediata y sentencia en 10 días (687 y 688); apelación en ambos efectos (691). Diferencias: verbal y concentrado, sin plazo en días para contestar, sin réplica ni dúplica, prueba breve.',s:'Arts. 680 a 692 CPC'},
+{t:'db',q:'Etapas del juicio de arrendamiento de la Ley 18.101.',e:'1) Demanda con medios de prueba y nómina de hasta 4 testigos (art. 8 N° 3). 2) Notificación por el art. 553 inc. 1 CPC, con presunción de domicilio en el inmueble (art. 8 N° 2), y audiencia al quinto día hábil (art. 8 N° 1). 3) Audiencia: contestación verbal, reconvención, conciliación obligatoria, incidentes (art. 8 N° 4, 5 y 8). 4) Prueba inmediata, sana crítica (art. 8 N° 6 y 7). 5) Sentencia; apelación en el solo efecto devolutivo (art. 8 N° 9). 6) Cumplimiento y lanzamiento (art. 13).',s:'Arts. 7 y 8 Ley 18.101'},
+{t:'db',q:'Etapas del procedimiento monitorio de arriendo.',e:'1) Demanda monitoria (18-A). 2) Control de admisibilidad (18-B). 3) Resolución que acoge y requiere el pago en 10 días corridos, con apercibimiento de condena y lanzamiento (18-C). 4) Notificación: primer requerimiento; el segundo se entiende hecho a los 5 días (18-D). 5) Conducta del deudor: paga (18-E), se opone (18-F), dilatorias como incidente (18-G), otras excepciones terminan el monitorio y abren el declarativo (18-H). 6) Costas del 18-C y apelación solo de la resolución sobre la oposición (18-I y 18-J).',s:'Arts. 18-A a 18-J Ley 18.101'},
+{t:'db',q:'Actitudes del demandado y diferencia entre excepciones dilatorias, perentorias y anómalas.',e:'Puede no contestar, allanarse, oponer dilatorias, contestar con perentorias o reconvenir. Dilatorias: corrigen el procedimiento sin afectar el fondo (art. 303), todas en un escrito dentro del emplazamiento (305). Perentorias: atacan el fondo, se oponen en la contestación (309) y se resuelven en la sentencia. Anómalas: prescripción, cosa juzgada, transacción y pago documentado, en cualquier estado hasta la citación para oír sentencia o la vista de la causa (310).',s:'Arts. 303, 305, 309 y 310 CPC'},
+{t:'db',q:'Medidas precautorias y prejudiciales: cuáles son y sus requisitos.',e:'Precautorias (art. 290): secuestro, interventor, retención y prohibición de celebrar actos o contratos, en cualquier estado del juicio; exigen comprobantes de presunción grave del derecho (298); la prohibición sobre inmuebles se inscribe (297). Como prejudiciales (279): motivos graves y calificados, monto de los bienes y garantía; luego demandar en 10 días, ampliables a 30 (280). Las preparatorias (273) son otra cosa: preparan la demanda.',s:'Arts. 273, 279, 280, 290 a 301 CPC'},
+{t:'db',q:'Reglas de competencia relativa en materia civil que se usan en los casos.',e:'Acción inmueble: juez estipulado o, a elección, el del lugar del contrato o el de la especie (COT 135). Mixta o acumuladas con una inmueble: juez del inmueble (137). Mueble: juez estipulado o del domicilio del demandado (138). Persona jurídica: su asiento o la oficina que contrató (142). DL 2.695: juez civil del lugar del predio (art. 20 DL).',s:'COT 135, 137, 138, 142'}
+];
+
+</script>
+
+<script>
+/* Pestañas + motor de preguntas. Datos en window.PREG = [{t:'sm'|'vf'|'db', q, o:[...], a:indice|true|false, e, s, k}]
+   'db' = desarrollo breve: q (pregunta), e (respuesta modelo); se responde escribiendo y luego se autocorrige («La sabía» / «No la sabía»). */
+(function(){
+  var KEY=document.body.dataset.key||'casos';
+  function sget(k){try{return JSON.parse(localStorage.getItem(KEY+'-'+k))}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+
+  // Pestañas
+  var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+  function show(id){
+    tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);var p=document.getElementById(t.dataset.s);if(p)p.hidden=!on;});
+    sset('tab',id);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.s);window.scrollTo({top:0});});});
+  var s=sget('tab'); if(s&&document.getElementById(s)&&tabs.length)show(s);
+
+  // Buscador de artículos (pestaña Artículos)
+  var bus=document.getElementById('buscar');
+  if(bus){bus.addEventListener('input',function(){
+    var v=bus.value.trim().toLowerCase();
+    [].forEach.call(document.querySelectorAll('.art'),function(a){a.hidden=v&&a.textContent.toLowerCase().indexOf(v)<0;});
+    if(v){[].forEach.call(document.querySelectorAll('section[role=tabpanel]'),function(p){p.hidden=false;});}
+    else{var t=sget('tab')||(tabs[0]&&tabs[0].dataset.s);if(t)show(t);}
+  });}
+
+  // Preguntas
+  var box=document.getElementById('quizbox'); if(!box||!window.PREG)return;
+  var L='abcdefgh';
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  var data=window.PREG.map(function(x,i){
+    x.id=i;
+    if(x.t==='db')x.a=true;
+    if(x.t==='sm'&&!x.fijo){
+      var r=rng(i*7919+(document.body.dataset.key||'').length*31+17), idx=x.o.map(function(_,j){return j;});
+      for(var k=idx.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var t=idx[k];idx[k]=idx[j];idx[j]=t;}
+      x.o=idx.map(function(j){return x.o[j];}); x.a=idx.indexOf(x.a);
+    }
+    return x;
+  });
+  var resp=sget('resp')||{}; var txt=sget('txt')||{}; var corregido=false;
+  var filtro=document.getElementById('qfiltro');
+  var NOM={vf:'Verdadero o falso',sm:'Selección múltiple',db:'Desarrollo breve'};
+  function lista(){
+    var f=filtro?filtro.value:'todo';
+    var orden=sget('orden');
+    var arr=data.filter(function(x){return f==='todo'||x.t===f||(x.k&&x.k===f);});
+    if(orden){var pos={};orden.forEach(function(id,i){pos[id]=i});arr.sort(function(a,b){return (pos[a.id]??a.id)-(pos[b.id]??b.id)});}
+    return arr;
+  }
+  function render(){
+    var arr=lista(); box.innerHTML='';
+    arr.forEach(function(x,n){
+      var d=document.createElement('div'); d.className='q'+(corregido?' done':'')+(x.t==='db'&&resp[x.id]!==undefined?' visto':'');
+      var head='<div class="qn"><span>'+(n+1)+' · '+NOM[x.t]+'</span>'+(x.k?'<span>· '+x.k+'</span>':'')+'</div>';
+      var body='<p class="qt">'+x.q+'</p>';
+      var nm='q'+x.id;
+      if(x.t==='db'){
+        body+='<textarea rows="4" placeholder="Escribe tu respuesta (o dila en voz alta) y luego abre la respuesta modelo"'+(corregido?' disabled':'')+'>'+(txt[x.id]||'').replace(/</g,'&lt;')+'</textarea>';
+        body+='<div class="dbb"><button type="button" class="ver">Ver respuesta modelo</button></div>';
+        body+='<div class="modelo"><p class="res">Respuesta modelo</p><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+
+              '<div class="dbb"><button type="button" data-v="1"'+(resp[x.id]===true?' class="sel"':'')+'>La sabía</button><button type="button" data-v="0"'+(resp[x.id]===false?' class="sel"':'')+'>No la sabía</button></div></div>';
+      }else if(x.t==='vf'){
+        body+='<div class="vf">'+[['V',true],['F',false]].map(function(p){
+          var ch=resp[x.id]===p[1]?' checked':'';
+          var cls=corregido?(p[1]===x.a?' class="ok"':(resp[x.id]===p[1]?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+p[1]+'"'+ch+(corregido?' disabled':'')+'><span><b>'+p[0]+'</b></span></label>';
+        }).join('')+'</div>';
+      }else{
+        body+=x.o.map(function(o,j){
+          var ch=resp[x.id]===j?' checked':'';
+          var cls=corregido?(j===x.a?' class="ok"':(resp[x.id]===j?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+j+'"'+ch+(corregido?' disabled':'')+'><span>'+L[j]+') '+o+'</span></label>';
+        }).join('');
+      }
+      if(x.t!=='db'){
+        var ok=resp[x.id]===x.a;
+        var correcta=x.t==='vf'?(x.a?'Verdadero':'Falso'):(L[x.a]+')');
+        body+='<div class="exp"><span class="res '+(ok?'ok':'bad')+'">'+(resp[x.id]===undefined?'Sin responder':(ok?'Correcta':'Incorrecta'))+' · respuesta: '+correcta+'</span><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+'</div>';
+      }
+      d.innerHTML=head+body; box.appendChild(d);
+      [].forEach.call(d.querySelectorAll('input'),function(inp){inp.addEventListener('change',function(){
+        resp[x.id]=x.t==='vf'?(inp.value==='true'):parseInt(inp.value,10); sset('resp',resp); cuenta();
+      });});
+      if(x.t==='db'){
+        var ta=d.querySelector('textarea');
+        ta.addEventListener('input',function(){txt[x.id]=ta.value;sset('txt',txt);});
+        d.querySelector('.ver').addEventListener('click',function(){d.classList.add('visto');});
+        [].forEach.call(d.querySelectorAll('[data-v]'),function(b){b.addEventListener('click',function(){
+          resp[x.id]=b.dataset.v==='1'; sset('resp',resp);
+          [].forEach.call(d.querySelectorAll('[data-v]'),function(o){o.classList.toggle('sel',o===b);}); cuenta();
+        });});
+      }
+    });
+    cuenta();
+  }
+  function cuenta(){
+    var arr=lista(), r=0, b=0;
+    arr.forEach(function(x){if(resp[x.id]!==undefined){r++; if(resp[x.id]===x.a)b++;}});
+    [].forEach.call(document.querySelectorAll('.score'),function(el){
+      if(el.id==='tiempo')return;
+      el.textContent=corregido?('Puntaje: '+b+' de '+arr.length+(arr.length?' ('+Math.round(100*b/arr.length)+' %)':'')):('Respondidas: '+r+' de '+arr.length);
+    });
+  }
+  function corregir(){corregido=true;render();window.scrollTo({top:box.offsetTop-80});}
+  function reiniciar(){resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();window.scrollTo({top:0});}
+  function mezclar(){var ids=data.map(function(x){return x.id});for(var i=ids.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=ids[i];ids[i]=ids[j];ids[j]=t;}sset('orden',ids);resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();}
+  [].forEach.call(document.querySelectorAll('[data-q=corregir]'),function(b){b.addEventListener('click',corregir)});
+  [].forEach.call(document.querySelectorAll('[data-q=reiniciar]'),function(b){b.addEventListener('click',reiniciar)});
+  [].forEach.call(document.querySelectorAll('[data-q=mezclar]'),function(b){b.addEventListener('click',mezclar)});
+  if(filtro)filtro.addEventListener('change',function(){corregido=false;render();});
+  render();
+})();
+
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body></html>

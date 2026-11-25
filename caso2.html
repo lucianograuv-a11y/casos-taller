@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Caso 2 · Arrendamiento y venta de cosa ajena</title>
+<meta name="theme-color" content="#f6f3ec">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Archivo+Narrow:wght@500;700&display=swap">
+<style>/* Layout: una columna para celular; bandas de color suaves por tema, como un folleto plegable */
+:root{
+  --bg:#f6f3ec; --fg:#24221f; --muted:#5f5a52; --line:#d9d2c4; --card:#fffdf8;
+  --mostaza:#e7d38f; --salvia:#bfd8b8; --cielo:#b9d3e4; --rosa:#ebc0c6; --durazno:#efc9a4;
+  --tinta:#3b5a73; --ok:#3f7a52; --warn:#9a5b1f;
+  --f-display:"Archivo",system-ui,sans-serif; --f-body:"Archivo",system-ui,sans-serif; --f-label:"Archivo Narrow","Arial Narrow",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1b19; --fg:#ece7dd; --muted:#b3ab9d; --line:#3b3833; --card:#252321;
+  --mostaza:#5c5232; --salvia:#3d5240; --cielo:#34495a; --rosa:#5a3c42; --durazno:#5c4632;
+  --tinta:#a9c6dc; --ok:#8fc29f; --warn:#e2ad78; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header h1{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05;letter-spacing:-.02em;margin:.4rem 0 .3rem;text-wrap:balance}
+header p{margin:0;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:10px 0 4px;border-bottom:1px solid var(--line)}
+nav button{flex:0 0 auto;font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 12px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav button:focus-visible,summary:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+section{display:flex;flex-direction:column;gap:12px;padding-top:8px}
+.band{border-radius:14px;padding:14px 16px;min-width:0}
+.mostaza{background:var(--mostaza)}.salvia{background:var(--salvia)}.cielo{background:var(--cielo)}.rosa{background:var(--rosa)}.durazno{background:var(--durazno)}
+h2{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.band h3{color:inherit;opacity:.75}
+p{margin:0}
+ul{margin:4px 0 0;padding-left:1.1em}
+li{margin:2px 0}
+.def{font-size:1rem;border-left:3px solid currentColor;padding-left:10px;margin-top:6px}
+.src{font-family:var(--f-label);font-size:.8rem;color:var(--muted);margin-top:6px}
+.band .src{color:inherit;opacity:.7}
+.star{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;background:var(--fg);color:var(--bg);border-radius:6px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.tag{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-label);font-weight:700;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details .in{padding:0 14px 12px;color:var(--fg)}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:8px 0}
+.step b.n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--f-label);font-weight:700}
+.arrow{margin-left:13px;width:2px;height:10px;background:var(--line)}
+.cmp{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:10px;border-top:1px solid var(--line);padding-top:8px}
+.row:first-child{border-top:0;padding-top:0}
+.k{font-family:var(--f-label);font-weight:700}
+.num{font-variant-numeric:tabular-nums;font-weight:800}
+.quiz details summary{font-weight:600}
+.quiz .in{border-top:1px dashed var(--line);padding-top:10px}
+footer{color:var(--muted);font-size:.85rem;margin-top:18px}
+@media (prefers-reduced-motion:no-preference){section{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+/* Agregados: barra de inicio, preguntas interactivas, avisos de discrepancia */
+.home{display:inline-block;font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--tinta);text-decoration:none;margin-top:4px}
+.ojo{border:1.5px dashed var(--warn);border-radius:12px;padding:10px 12px;background:var(--card)}
+.ojo b.t{color:var(--warn);font-family:var(--f-label);letter-spacing:.04em;text-transform:uppercase;font-size:.8rem;display:block;margin-bottom:2px}
+.pares{display:grid;gap:10px}
+.par{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.par h2{font-size:1.05rem;margin-bottom:8px}
+.par .split{margin-top:4px}
+.par .lado{border-left:3px solid var(--line);padding-left:9px;min-width:0}
+.par .lado .tag{display:block;margin-bottom:2px}
+.par .imp{margin-top:8px;font-size:.92rem;border-top:1px dashed var(--line);padding-top:7px}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 2px}
+.qbar button,.qfoot button{font-family:var(--f-label);font-weight:700;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;cursor:pointer}
+.qbar button.pri,.qfoot button.pri{background:var(--fg);color:var(--bg)}
+.qbar select{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:7px 10px}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.2rem}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.q .qn{font-family:var(--f-label);font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.q .qt{margin:4px 0 8px;font-weight:600}
+.q .qt i{font-weight:500}
+.q label{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start;padding:6px 6px;border-radius:8px;cursor:pointer}
+.q label:hover{background:color-mix(in srgb,var(--fg) 6%,transparent)}
+.q input{margin-top:4px;accent-color:var(--fg)}
+.q label.ok{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+.q label.bad{background:color-mix(in srgb,var(--warn) 20%,transparent);text-decoration:line-through}
+.q .exp{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.done .exp{display:block}
+.q .res{font-family:var(--f-label);font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em}
+.q .res.ok{color:var(--ok)}.q .res.bad{color:var(--warn)}
+.q .vf{display:flex;gap:10px}
+.q .vf label{grid-template-columns:22px auto;border:1px solid var(--line);padding:6px 14px}
+.qfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.menu{display:grid;gap:10px}
+.menu a{display:block;text-decoration:none;color:inherit;border-radius:14px;padding:14px 16px}
+.menu a b{font-family:var(--f-display);font-weight:800;font-size:1.15rem;display:block}
+.menu a span{color:inherit;opacity:.8;font-size:.92rem}
+.hora{font-family:var(--f-label);font-weight:700;font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{margin-top:4px;accent-color:var(--fg);width:18px;height:18px}
+/* Casos: desarrollo breve, artículos, cronología */
+.q textarea{width:100%;box-sizing:border-box;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.q .dbb{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.q .dbb button{font-family:var(--f-label);font-weight:700;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;border:1px solid var(--fg);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.q .dbb button.sel{background:var(--fg);color:var(--bg)}
+.q .modelo{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:.93rem}
+.q.visto .modelo,.q.done .modelo{display:block}
+.q.visto .ver,.q.done .ver{display:none}
+.art{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.93rem}
+.art b.n{font-family:var(--f-label);letter-spacing:.03em;display:block;margin-bottom:2px}
+.arts{display:grid;gap:8px}
+#buscar{width:100%;box-sizing:border-box;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 14px;margin:6px 0 10px}
+.hito{border-left:4px solid var(--fg);padding:2px 0 2px 10px;margin:12px 0 6px}
+.hito b{font-family:var(--f-display);font-weight:800}
+.ley{margin:0 0 0 14px;padding:0}
+.ley li{margin:3px 0}
+.fase{counter-increment:f}
+</style>
+</head><body data-key="caso2">
+<div class="wrap">
+<header>
+  <a class="home" href="./">← Inicio</a>
+  <h3>Taller de integración · caso</h3>
+  <h1>Caso 2 · Arrendamiento y venta de cosa ajena</h1>
+  <p>Casa amoblada en Osorno; el arrendatario vende el Smart TV por Marketplace y abandona la casa con los muebles.</p>
+</header>
+<nav role="tablist" aria-label="Partes">
+  <button role="tab" aria-selected="true" data-s="cro">Cronología</button>
+  <button role="tab" aria-selected="false" data-s="enu">Enunciado y preguntas</button>
+  <button role="tab" aria-selected="false" data-s="preg">Practicar</button>
+</nav>
+<section id="cro" role="tabpanel">
+  <div class="box"><div class="hito"><b>25-may-2022</b> · Contrato de arriendo por instrumento privado ante notario (Chillán); 30 UF mensuales anticipadas.</div><ul class="ley"><li>Arrendamiento de inmueble urbano con muebles: Ley 18.101 y, en lo no previsto, Código Civil (art. 1 Ley 18.101).</li><li>El instrumento privado ante notario <b>no es título ejecutivo</b> para las rentas (art. 434 N° 4 CPC).</li></ul><div class="hito"><b>1-jun-2023</b> · Empieza a regir el contrato.</div><ul class="ley"><li>Joaquín recibe casa y muebles como <b>mero tenedor</b> (art. 714); Andrés <b>conserva la posesión</b> aunque arriende (art. 725) y posee por medio de Joaquín (art. 700).</li></ul><div class="hito"><b>10-dic-2023</b> · Joaquín vende el Smart TV a Paulina por Marketplace ($300.000; avalúo $1.200.000).</div><ul class="ley"><li>Venta de cosa ajena: <b>válida</b> entre las partes, inoponible al dueño (art. 1815).</li><li>Enajenación a nombre propio: Paulina <b>adquiere la posesión</b> y se pone fin a la de Andrés (art. 730).</li><li>No adquiere el dominio por tradición (art. 682), pero sí el derecho a ganarlo por prescripción (art. 683): <b>ordinaria de 2 años</b> (art. 2508) → 10-dic-2025.</li><li>Precio vil: indicio para discutir su buena fe (art. 707) y receptación (art. 456 bis A CP); no hay lesión enorme en muebles (art. 1891).</li><li>Joaquín se apropia de una cosa que debía devolver: <b>apropiación indebida</b> (art. 470 N° 1 CP).</li></ul><div class="hito"><b>Últimos 3 meses</b> · Joaquín no paga las rentas.</div><ul class="ley"><li><b>Mora</b> en la renta: con dos reconvenciones separadas por al menos 4 días, el arrendador hace cesar el arriendo (art. 1977).</li></ul><div class="hito"><b>21-may-2024, medianoche</b> · Abandona furtivamente la casa y se lleva todos los muebles.</div><ul class="ley"><li><b>Usurpación</b> del mero tenedor: Andrés no pierde la posesión ni Joaquín la adquiere (art. 730).</li><li>Apoderamiento <b>clandestino</b>: posesión viciosa (arts. 709 y 713).</li><li>Joaquín no puede prescribir: mera tenencia inmutable (art. 716) y no se cumple el art. 2510 regla 3.ª; además no han pasado 10 años (art. 2511).</li><li>Querella por apropiación indebida ante el juez de garantía de Osorno (COT 157; art. 113 CPP).</li></ul><div class="hito"><b>Después</b> · Andrés recupera la casa vacía.</div><ul class="ley"><li>Entrega <b>sin forma de juicio</b> con certificación del abandono por ministro de fe (art. 6 inc. 2 Ley 18.101); la renta se debe hasta la restitución (inc. 1).</li><li>Acciones: contra Joaquín, restitución contractual (art. 1947) en el juicio de la Ley 18.101 (art. 7 N° 6) o la del art. 915; contra Paulina, <b>reivindicatoria</b> (arts. 889 y 895) antes del 10-dic-2025, con secuestro prejudicial (art. 901; arts. 279 y 291 CPC); alternativa del art. 898.</li><li>Competencia: todas las acciones que quedan son muebles → art. 138 COT.</li><li>Si Andrés reivindica, Paulina cita de evicción a Joaquín antes de contestar (art. 1843; art. 584 CPC) y pide lo del art. 1847.</li></ul></div>
+</section>
+<section id="enu" role="tabpanel" hidden>
+  <div class="box"><h2>Hechos</h2><p>El 25 de mayo de 2022, por instrumento privado firmado ante notario de Chillán, Andrés Salamanca Urrutia y Joaquín González Hernández celebraron un contrato de arrendamiento de una casa habitación en calle Arturo Prat N° 7649, Osorno, con una renta mensual de 30 UF, pagadera por anticipado el día 1 de cada mes.</p><p>El arriendo comprende los muebles del inventario, entre ellos un Smart TV de 70 pulgadas. El contrato comenzaría a regir el 1 de junio de 2023, por un año renovable.</p><p>El 10 de diciembre del mismo año, Joaquín, agobiado por las deudas, vende el Smart TV por Marketplace a Paulina Arancibia Luna en $300.000 (avalúo comercial $1.200.000).</p><p>Por no pagar las últimas 3 rentas, González abandona furtivamente la casa a la medianoche del 21 de mayo de 2024. Cuando Andrés logra que se le restituya la casa, está vacía: González se llevó todos los muebles.</p></div>
+  <div class="box"><h2>Preguntas del caso</h2><ol><li>Explique qué calidad tenían Joaquín González y Andrés Salamanca en relación con el inmueble y los muebles arrendados después de la celebración del contrato y después de su término.</li><li>Explique si Joaquín González puede adquirir por prescripción los bienes muebles, ya que los tiene en su poder, y de ser procedente, en qué plazo.</li><li>Determine qué calidad tiene Paulina Arancibia Luna en relación con el Smart TV que compró y si puede adquirir su dominio y, de ser posible, por qué modo.</li><li>Evalúe si tiene alguna importancia que Paulina desconociera que el Smart TV no pertenecía a Joaquín.</li><li><i>Procesal 1.</i> Asesore a Andrés Salamanca y determine las acciones que puede ejercer para recuperar sus bienes.</li><li><i>Procesal 2.</i> Determine qué tribunal sería competente para conocer de las acciones derivadas del contrato.</li><li><i>Procesal 3.</i> Explique cuál es el procedimiento aplicable para pedir la terminación del contrato de arrendamiento y en qué se fundaría.</li><li><i>Procesal 4.</i> Explique qué acción podría ejercer Paulina Arancibia si es obligada a devolver el Smart TV, su fundamento y la petición concreta.</li></ol><p class="src">En «Practicar», las preguntas de desarrollo breve son estas mismas, con la respuesta modelo; las de alternativas y V/F cubren los plazos, artículos y requisitos que las sostienen.</p></div>
+</section>
+<section id="preg" role="tabpanel" hidden>
+  <div class="qbar">
+    <select id="qfiltro" aria-label="Filtrar">
+      <option value="todo">Todas</option><option value="db">Solo desarrollo breve</option><option value="vf">Solo V/F</option><option value="sm">Solo alternativas</option>
+    </select>
+    <button data-q="mezclar">Mezclar</button>
+    <span class="score"></span>
+  </div>
+  <div id="quizbox" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div class="qfoot"><button class="pri" data-q="corregir">Corregir</button><button data-q="reiniciar">Borrar respuestas</button><span class="score"></span></div>
+</section>
+<footer>Fuente: «Casos integracion 2, 7 y 13» (versión de 24 páginas).</footer>
+</div>
+<script>
+window.PREG=[
+{t:'db',q:'<b>Civil 1.</b> Explique qué calidad tenían Joaquín González y Andrés Salamanca en relación con el inmueble y los muebles arrendados después de la celebración del contrato y después de su término.',e:'Durante el contrato, Andrés es dueño y poseedor, y posee por medio de Joaquín (art. 700): el poseedor conserva la posesión aunque dé la cosa en arriendo (art. 725). Joaquín es mero tenedor (art. 714). Terminado el contrato, nada cambia: el simple lapso no muda la mera tenencia en posesión (art. 716); solo nace la obligación de restituir (art. 1947). El art. 730 obliga a distinguir: en los muebles que se llevó, Andrés sigue dueño y poseedor y Joaquín mero tenedor, porque usurpar no hace perder la posesión; en el Smart TV, Andrés sigue dueño pero perdió la posesión, que tiene Paulina, porque Joaquín lo enajenó a su propio nombre.',s:'Arts. 700, 714, 716, 725, 730 y 1947'},
+{t:'db',q:'<b>Civil 2.</b> Explique si Joaquín González puede adquirir por prescripción los bienes muebles, ya que los tiene en su poder, y de ser procedente, en qué plazo.',e:'No por la ordinaria: no es poseedor sino mero tenedor (art. 716). Solo cabría la extraordinaria de diez años (arts. 2510 regla 3.ª y 2511), pero el título de mera tenencia hace presumir mala fe, salvo que Andrés no pueda probar que en los últimos diez años se reconoció su dominio y que Joaquín pruebe haber poseído sin violencia, clandestinidad ni interrupción. No se cumple: el contrato reconoce el dominio, el apoderamiento fue clandestino (arts. 709 y 713) y, además, no han pasado diez años: tiene los muebles desde 2023.',s:'Arts. 709, 713, 716, 2510 y 2511'},
+{t:'db',q:'<b>Civil 3.</b> Determine qué calidad tiene Paulina Arancibia Luna en relación con el Smart TV que compró y si puede adquirir su dominio y, de ser posible, por qué modo.',e:'Es poseedora, porque Joaquín enajenó a nombre propio (art. 730), y poseedora regular (art. 702): justo título translaticio, la compraventa, válida aunque la cosa sea ajena (arts. 703 y 1815); buena fe presunta (arts. 706 y 707), y tradición (art. 684). No adquiere el dominio por tradición, porque Joaquín no era dueño (art. 682), pero sí el derecho a ganarlo por prescripción (art. 683): ordinaria de dos años desde el 10-dic-2023 (art. 2508). Si Andrés no la demanda y notifica antes del 10-dic-2025, Paulina se hace dueña.',s:'Arts. 682, 683, 702, 703, 706, 707, 730, 1815 y 2508'},
+{t:'db',q:'<b>Civil 4.</b> Evalúe si tiene alguna importancia que Paulina desconociera que el Smart TV no pertenecía a Joaquín.',e:'Sí: es su buena fe posesoria (art. 706 inc. 2), que se presume (art. 707), distinta de la buena fe contractual del art. 1546. Importa en tres planos: 1) posesión regular y prescripción de dos años en vez de diez (arts. 2508 y 2511); 2) prestaciones mutuas si la reivindican: no responde de los deterioros salvo provecho, no restituye frutos anteriores a la contestación y se le abonan las mejoras útiles (arts. 904 a 914); 3) el reembolso del art. 890, que difícilmente aplica a la compra a un particular por Marketplace. Si se probara mala fe (el precio vil es indicio): poseedora irregular, diez años, pierde el precio en la evicción (art. 1852 inc. 3) y posible receptación (art. 456 bis A CP).',s:'Arts. 706, 707, 890, 904 a 914, 1852'},
+{t:'db',q:'<b>Procesal 1.</b> Asesore a Andrés Salamanca y determine las acciones que puede ejercer para recuperar sus bienes.',e:'Contra Joaquín, por los muebles: acción personal de restitución del contrato (art. 1947), por el procedimiento de la Ley 18.101 (art. 7 N° 6), acumulando rentas e indemnización; o la reivindicatoria contra el que retiene indebidamente (art. 915). Contra Paulina, por el Smart TV: reivindicatoria (arts. 889 y 895), antes del 10-dic-2025, con secuestro como medida prejudicial precautoria (art. 901 CC; arts. 279, 290 N° 1 y 291 CPC). Alternativa contra Joaquín por el televisor: art. 898 (lo que recibió más perjuicios), pero si Andrés lo recibe confirma la venta. Además, querella por apropiación indebida (art. 470 N° 1 CP).',s:'Arts. 889, 895, 898, 901, 915, 1947'},
+{t:'db',q:'<b>Procesal 2.</b> Determine qué tribunal sería competente para conocer de las acciones derivadas del contrato.',e:'Absoluta: juez de letras, según las reglas generales del COT (art. 17 Ley 18.101). Relativa: como la casa ya se recuperó, todas las acciones que quedan son muebles (art. 580 CC): no rige el art. 137 COT sino el 138: juez estipulado o, a falta, el del domicilio del demandado (o el domicilio especial del art. 69 CC). Contra Paulina, el de su domicilio. Joaquín se notifica en la casa por la presunción del art. 8 N° 2 Ley 18.101. En lo penal: juez de garantía de Osorno (COT 157).',s:'COT 137, 138, 157; art. 17 Ley 18.101'},
+{t:'db',q:'<b>Procesal 3.</b> Explique cuál es el procedimiento aplicable para pedir la terminación del contrato de arrendamiento y en qué se fundaría.',e:'El especial de la Ley 18.101 (arts. 7 N° 2 y 5 y 8): verbal; audiencia al quinto día hábil después de la última notificación; notificación en el inmueble (art. 8 N° 2); en la audiencia, contestación, conciliación obligatoria y prueba; sana crítica; apelación en el solo efecto devolutivo. Fundamento: la mora en la renta (art. 1977): tres rentas, con dos reconvenciones separadas por al menos cuatro días. Como Joaquín abandonó, Andrés recuperó la casa sin juicio (art. 6 inc. 2), y la demanda sirve para terminar, cobrar las rentas hasta la entrega (art. 6 inc. 1) e indemnizar. El monitorio (arts. 18-A y ss.) es más rápido pero solo cobra rentas: conviene la Ley 18.101.',s:'Arts. 6, 7 y 8 Ley 18.101; art. 1977'},
+{t:'db',q:'<b>Procesal 4.</b> Explique qué acción podría ejercer Paulina Arancibia si es obligada a devolver el Smart TV, su fundamento y la petición concreta.',e:'Saneamiento de evicción contra Joaquín (art. 1837): venta válida aunque la cosa sea ajena (art. 1815), causa anterior (art. 1839) y privación por sentencia (art. 1838). Debe citarlo de evicción antes de contestar (art. 1843; art. 584 CPC), o pierde el saneamiento. Petición (art. 1847): el precio ($300.000), las costas del contrato, el valor de los frutos restituidos, las costas del juicio y el aumento de valor; como Joaquín vendió de mala fe, además todas las mejoras y todo el aumento (arts. 1849 y 1850). Prescribe en cuatro años desde la sentencia (art. 1856).',s:'Arts. 1837 a 1856; arts. 584 a 587 CPC'},
+{t:'sm',q:'Después del 21 de mayo de 2024, respecto de los muebles que Joaquín se llevó (no del Smart TV), Andrés es:',o:['Dueño y poseedor.','Dueño, pero no poseedor.','Solo poseedor.','Ni dueño ni poseedor.'],a:0,e:'La usurpación del mero tenedor no hace perder la posesión (art. 730). Solo con el Smart TV, enajenado a nombre propio, perdió la posesión.',s:'Art. 730'},
+{t:'sm',q:'¿Hasta cuándo tiene Andrés para demandar y notificar a Paulina antes de que ella se haga dueña?',o:['10 de diciembre de 2025.','10 de diciembre de 2028.','21 de mayo de 2026.','10 de diciembre de 2033.'],a:0,e:'Prescripción ordinaria de muebles, dos años desde la entrega del 10-dic-2023 (art. 2508).',s:'Art. 2508'},
+{t:'vf',q:'El instrumento privado firmado ante notario permite a Andrés cobrar las rentas en juicio ejecutivo.',a:false,e:'La firma autorizada por notario da mérito ejecutivo solo a la letra, el pagaré y el cheque (art. 434 N° 4 CPC).',s:'Art. 434 CPC'},
+{t:'vf',q:'Como la casa ya fue recuperada, la competencia relativa para las acciones contra Joaquín se rige por el art. 138 COT.',a:true,e:'Todas las acciones que quedan son muebles (rentas, indemnización, muebles): no hay acción inmueble para aplicar los arts. 135 o 137.',s:'COT 138'},
+{t:'sm',q:'Si hay proceso penal por apropiación indebida, la restitución de los muebles se pide:',o:['En el proceso penal.','Solo ante el juez civil.','En el juicio de la Ley 18.101, necesariamente.','Por la vía monitoria.'],a:0,e:'La acción civil que solo persigue la restitución de la cosa se interpone siempre en el procedimiento penal (art. 59 inc. 1 CPP).',s:'Art. 59 CPP'},
+{t:'vf',q:'El precio vil ($300.000 por un TV de $1.200.000) permite a Joaquín pedir la rescisión por lesión enorme.',a:false,e:'No hay lesión enorme en la venta de muebles (art. 1891). El precio vil sirve como indicio contra la buena fe de Paulina y de receptación.',s:'Art. 1891'},
+{t:'sm',q:'Si Andrés recibe de Joaquín el precio que este obtuvo por el Smart TV:',o:['Confirma la venta y ya no puede reivindicarlo de Paulina.','Conserva la reivindicatoria contra Paulina.','Paulina pierde la posesión.','Se interrumpe la prescripción de Paulina.'],a:0,e:'Art. 898.',s:'Art. 898'},
+{t:'vf',q:'La presunción de domicilio en el inmueble arrendado sirve también para notificar a Joaquín la acción del art. 915.',a:false,e:'Solo opera en los juicios de la Ley 18.101; la del art. 915 no deriva del contrato. Para ubicarlo: art. 54 CPC (avisos).',s:'Art. 8 N° 2 Ley 18.101'}
+];
+
+</script>
+
+<script>
+/* Pestañas + motor de preguntas. Datos en window.PREG = [{t:'sm'|'vf'|'db', q, o:[...], a:indice|true|false, e, s, k}]
+   'db' = desarrollo breve: q (pregunta), e (respuesta modelo); se responde escribiendo y luego se autocorrige («La sabía» / «No la sabía»). */
+(function(){
+  var KEY=document.body.dataset.key||'casos';
+  function sget(k){try{return JSON.parse(localStorage.getItem(KEY+'-'+k))}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(KEY+'-'+k,JSON.stringify(v))}catch(e){}}
+
+  // Pestañas
+  var tabs=[].slice.call(document.querySelectorAll('nav [role=tab]'));
+  function show(id){
+    tabs.forEach(function(t){var on=t.dataset.s===id;t.setAttribute('aria-selected',on);var p=document.getElementById(t.dataset.s);if(p)p.hidden=!on;});
+    sset('tab',id);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.s);window.scrollTo({top:0});});});
+  var s=sget('tab'); if(s&&document.getElementById(s)&&tabs.length)show(s);
+
+  // Buscador de artículos (pestaña Artículos)
+  var bus=document.getElementById('buscar');
+  if(bus){bus.addEventListener('input',function(){
+    var v=bus.value.trim().toLowerCase();
+    [].forEach.call(document.querySelectorAll('.art'),function(a){a.hidden=v&&a.textContent.toLowerCase().indexOf(v)<0;});
+    if(v){[].forEach.call(document.querySelectorAll('section[role=tabpanel]'),function(p){p.hidden=false;});}
+    else{var t=sget('tab')||(tabs[0]&&tabs[0].dataset.s);if(t)show(t);}
+  });}
+
+  // Preguntas
+  var box=document.getElementById('quizbox'); if(!box||!window.PREG)return;
+  var L='abcdefgh';
+  function rng(seed){return function(){seed=(seed*1103515245+12345)%2147483648;return seed/2147483648;};}
+  var data=window.PREG.map(function(x,i){
+    x.id=i;
+    if(x.t==='db')x.a=true;
+    if(x.t==='sm'&&!x.fijo){
+      var r=rng(i*7919+(document.body.dataset.key||'').length*31+17), idx=x.o.map(function(_,j){return j;});
+      for(var k=idx.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var t=idx[k];idx[k]=idx[j];idx[j]=t;}
+      x.o=idx.map(function(j){return x.o[j];}); x.a=idx.indexOf(x.a);
+    }
+    return x;
+  });
+  var resp=sget('resp')||{}; var txt=sget('txt')||{}; var corregido=false;
+  var filtro=document.getElementById('qfiltro');
+  var NOM={vf:'Verdadero o falso',sm:'Selección múltiple',db:'Desarrollo breve'};
+  function lista(){
+    var f=filtro?filtro.value:'todo';
+    var orden=sget('orden');
+    var arr=data.filter(function(x){return f==='todo'||x.t===f||(x.k&&x.k===f);});
+    if(orden){var pos={};orden.forEach(function(id,i){pos[id]=i});arr.sort(function(a,b){return (pos[a.id]??a.id)-(pos[b.id]??b.id)});}
+    return arr;
+  }
+  function render(){
+    var arr=lista(); box.innerHTML='';
+    arr.forEach(function(x,n){
+      var d=document.createElement('div'); d.className='q'+(corregido?' done':'')+(x.t==='db'&&resp[x.id]!==undefined?' visto':'');
+      var head='<div class="qn"><span>'+(n+1)+' · '+NOM[x.t]+'</span>'+(x.k?'<span>· '+x.k+'</span>':'')+'</div>';
+      var body='<p class="qt">'+x.q+'</p>';
+      var nm='q'+x.id;
+      if(x.t==='db'){
+        body+='<textarea rows="4" placeholder="Escribe tu respuesta (o dila en voz alta) y luego abre la respuesta modelo"'+(corregido?' disabled':'')+'>'+(txt[x.id]||'').replace(/</g,'&lt;')+'</textarea>';
+        body+='<div class="dbb"><button type="button" class="ver">Ver respuesta modelo</button></div>';
+        body+='<div class="modelo"><p class="res">Respuesta modelo</p><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+
+              '<div class="dbb"><button type="button" data-v="1"'+(resp[x.id]===true?' class="sel"':'')+'>La sabía</button><button type="button" data-v="0"'+(resp[x.id]===false?' class="sel"':'')+'>No la sabía</button></div></div>';
+      }else if(x.t==='vf'){
+        body+='<div class="vf">'+[['V',true],['F',false]].map(function(p){
+          var ch=resp[x.id]===p[1]?' checked':'';
+          var cls=corregido?(p[1]===x.a?' class="ok"':(resp[x.id]===p[1]?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+p[1]+'"'+ch+(corregido?' disabled':'')+'><span><b>'+p[0]+'</b></span></label>';
+        }).join('')+'</div>';
+      }else{
+        body+=x.o.map(function(o,j){
+          var ch=resp[x.id]===j?' checked':'';
+          var cls=corregido?(j===x.a?' class="ok"':(resp[x.id]===j?' class="bad"':'')):'';
+          return '<label'+cls+'><input type="radio" name="'+nm+'" value="'+j+'"'+ch+(corregido?' disabled':'')+'><span>'+L[j]+') '+o+'</span></label>';
+        }).join('');
+      }
+      if(x.t!=='db'){
+        var ok=resp[x.id]===x.a;
+        var correcta=x.t==='vf'?(x.a?'Verdadero':'Falso'):(L[x.a]+')');
+        body+='<div class="exp"><span class="res '+(ok?'ok':'bad')+'">'+(resp[x.id]===undefined?'Sin responder':(ok?'Correcta':'Incorrecta'))+' · respuesta: '+correcta+'</span><p>'+x.e+'</p>'+(x.s?'<p class="src">'+x.s+'</p>':'')+'</div>';
+      }
+      d.innerHTML=head+body; box.appendChild(d);
+      [].forEach.call(d.querySelectorAll('input'),function(inp){inp.addEventListener('change',function(){
+        resp[x.id]=x.t==='vf'?(inp.value==='true'):parseInt(inp.value,10); sset('resp',resp); cuenta();
+      });});
+      if(x.t==='db'){
+        var ta=d.querySelector('textarea');
+        ta.addEventListener('input',function(){txt[x.id]=ta.value;sset('txt',txt);});
+        d.querySelector('.ver').addEventListener('click',function(){d.classList.add('visto');});
+        [].forEach.call(d.querySelectorAll('[data-v]'),function(b){b.addEventListener('click',function(){
+          resp[x.id]=b.dataset.v==='1'; sset('resp',resp);
+          [].forEach.call(d.querySelectorAll('[data-v]'),function(o){o.classList.toggle('sel',o===b);}); cuenta();
+        });});
+      }
+    });
+    cuenta();
+  }
+  function cuenta(){
+    var arr=lista(), r=0, b=0;
+    arr.forEach(function(x){if(resp[x.id]!==undefined){r++; if(resp[x.id]===x.a)b++;}});
+    [].forEach.call(document.querySelectorAll('.score'),function(el){
+      if(el.id==='tiempo')return;
+      el.textContent=corregido?('Puntaje: '+b+' de '+arr.length+(arr.length?' ('+Math.round(100*b/arr.length)+' %)':'')):('Respondidas: '+r+' de '+arr.length);
+    });
+  }
+  function corregir(){corregido=true;render();window.scrollTo({top:box.offsetTop-80});}
+  function reiniciar(){resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();window.scrollTo({top:0});}
+  function mezclar(){var ids=data.map(function(x){return x.id});for(var i=ids.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=ids[i];ids[i]=ids[j];ids[j]=t;}sset('orden',ids);resp={};txt={};sset('resp',resp);sset('txt',txt);corregido=false;render();}
+  [].forEach.call(document.querySelectorAll('[data-q=corregir]'),function(b){b.addEventListener('click',corregir)});
+  [].forEach.call(document.querySelectorAll('[data-q=reiniciar]'),function(b){b.addEventListener('click',reiniciar)});
+  [].forEach.call(document.querySelectorAll('[data-q=mezclar]'),function(b){b.addEventListener('click',mezclar)});
+  if(filtro)filtro.addEventListener('change',function(){corregido=false;render();});
+  render();
+})();
+
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>
+</body></html>
